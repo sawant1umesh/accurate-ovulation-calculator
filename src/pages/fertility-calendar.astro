@@ -1,0 +1,554 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+// SEO Title & Description (50-60 chars, 150-160 chars)
+const pageTitle = "Fertility Calendar - Free Accurate Fertility Calendar Calculator";
+const pageDescription = "Track your cycle with our free accurate fertility calendar. View fertile windows, ovulation days, and symptom insights. Irregular cycle support. 100% private.";
+
+// Calculator JSON-LD Schema (Calculator type for consistency)
+const calendarSchema = {
+  "@context": "https://schema.org",
+  "@type": "Calculator",
+  "name": "Fertility Calendar",
+  "description": "Interactive menstrual cycle calendar with fertile window tracking, ovulation day markers, cervical mucus patterns, BBT guidance, and ICS export for Google/Apple Calendar. Free, private, no account needed.",
+  "category": "Health Calculator",
+  "url": "https://accurateovulationcalculator.com/fertility-calendar"
+};
+---
+
+<Layout title={pageTitle} description={pageDescription} schema={calendarSchema}>
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10 md:py-16">
+    <h1 class="text-3xl md:text-4xl font-semibold text-primary mb-8">Fertility Calendar</h1>
+    
+    <!-- Empty State Container -->
+    <div id="calendar-empty-state" class="hidden max-w-xl mx-auto text-center py-16 animate-fade-in">
+      <div class="flex h-16 w-16 items-center justify-center rounded-full bg-brand-blush text-brand-rose mx-auto mb-6 border border-brand-rose-border">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
+        </svg>
+      </div>
+      <h2 class="text-2xl font-semibold text-primary mb-3">No Saved Cycle Data Found</h2>
+      <p class="text-sm text-secondary leading-relaxed mb-8">
+        For complete privacy, Accurate Ovulation Calculator stores your data only inside your local browser. To view your calendar, please enter your cycle parameters on the calculator page first.
+      </p>
+      <a href="/ovulation-calculator" class="btn-primary">
+        Calculate Your Cycle
+      </a>
+    </div>
+
+    <!-- Active Dashboard -->
+    <div id="calendar-dashboard" class="hidden space-y-10 animate-fade-in">
+      <!-- Top Overview Card -->
+      <div class="card-container flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+        <div>
+          <span class="text-xs font-mono font-semibold text-brand-rose uppercase">Fertility Dashboard</span>
+          <h2 class="text-2xl md:text-3xl font-semibold text-primary mt-1">Your Personal Cycle Schedule</h2>
+          <p class="text-xs text-secondary mt-1">Calculations processed client-side. Saved locally in your browser.</p>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <button id="export-ics-btn" class="btn-secondary text-xs h-9 px-4 flex items-center gap-1.5">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-3.5 h-3.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+            </svg>
+            Export to Calendar (ICS)
+          </button>
+          <button id="print-calendar-btn" class="btn-secondary text-xs h-9 px-4 flex items-center gap-1.5">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-3.5 h-3.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6.72 13.82l-.24.24c-.428.428-1.124.428-1.552 0L2.85 11.99c-.428-.428-.428-1.124 0-1.552l.24-.24m-1.09 5.092l-.24-.24c-.428-.428-.428-1.124 0-1.552l1.99-1.99c.428-.428 1.124-.428 1.552 0l.24.24m-1.09 5.092h14.71c.621 0 1.125-.504 1.125-1.125V6.75c0-.621-.504-1.125-1.125-1.125H3.75c-.621 0-1.125.504-1.125 1.125v10.5c0 .621.504 1.125 1.125 1.125z" />
+            </svg>
+            Print Schedule
+          </button>
+          <button id="reset-data-btn" class="btn-secondary text-xs h-9 px-4 text-brand-rose hover:bg-brand-blush hover:border-brand-rose-border">
+            Clear Data
+          </button>
+        </div>
+      </div>
+
+      <!-- Quick Metrics Grid -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="p-4 bg-canvas border border-hairline rounded-lg shadow-sm text-center">
+          <span class="text-[10px] font-mono uppercase tracking-wider text-secondary block">Calculation Method</span>
+          <span id="metric-method" class="text-sm font-semibold text-primary mt-1 block">-</span>
+        </div>
+        <div class="p-4 bg-canvas border border-hairline rounded-lg shadow-sm text-center">
+          <span class="text-[10px] font-mono uppercase tracking-wider text-secondary block">Cycle Length</span>
+          <span id="metric-length" class="text-sm font-semibold text-primary mt-1 block">-</span>
+        </div>
+        <div class="p-4 bg-canvas border border-hairline rounded-lg shadow-sm text-center">
+          <span class="text-[10px] font-mono uppercase tracking-wider text-secondary block">Next Period Date</span>
+          <span id="metric-period" class="text-sm font-semibold text-primary mt-1 block">-</span>
+        </div>
+        <div class="p-4 bg-canvas border border-hairline rounded-lg shadow-sm text-center">
+          <span class="text-[10px] font-mono uppercase tracking-wider text-secondary block">Peak Ovulation Date</span>
+          <span id="metric-ovulation" class="text-sm font-semibold text-primary mt-1 block">-</span>
+        </div>
+      </div>
+
+      <!-- Main Calendar Panel (3-Month view) -->
+      <div class="flex flex-col lg:flex-row gap-8">
+        <!-- Calendars Stack -->
+        <div class="flex-grow space-y-8">
+          <!-- Calendar 1 -->
+          <div class="card-container">
+            <div class="flex items-center justify-between mb-4">
+              <h2 id="month-title-1" class="text-lg font-semibold text-primary"></h2>
+            </div>
+            <div class="grid grid-cols-7 gap-1 text-center text-xs font-mono font-medium text-secondary mb-2">
+              <div>Su</div><div>Mo</div><div>Tu</div><div>We</div><div>Th</div><div>Fr</div><div>Sa</div>
+            </div>
+            <div id="month-grid-1" class="grid grid-cols-7 gap-1 text-center text-sm font-medium"></div>
+          </div>
+
+          <!-- Calendar 2 -->
+          <div class="card-container">
+            <div class="flex items-center justify-between mb-4">
+              <h2 id="month-title-2" class="text-lg font-semibold text-primary"></h2>
+            </div>
+            <div class="grid grid-cols-7 gap-1 text-center text-xs font-mono font-medium text-secondary mb-2">
+              <div>Su</div><div>Mo</div><div>Tu</div><div>We</div><div>Th</div><div>Fr</div><div>Sa</div>
+            </div>
+            <div id="month-grid-2" class="grid grid-cols-7 gap-1 text-center text-sm font-medium"></div>
+          </div>
+        </div>
+
+        <!-- Sticky Day Inspector Sidebar -->
+        <div class="w-full lg:w-80 shrink-0">
+          <div class="card-container sticky top-24 space-y-6">
+            <div>
+              <span id="inspect-sidebar-date" class="text-xs font-mono text-brand-rose font-semibold uppercase block"></span>
+              <h3 id="inspect-sidebar-title" class="text-xl font-semibold text-primary mt-1"></h3>
+            </div>
+
+            <div class="space-y-4 pt-4 border-t border-hairline">
+              <div>
+                <span class="text-[10px] font-mono uppercase tracking-wider text-secondary">Fertility Status</span>
+                <div id="inspect-sidebar-fertility-level" class="flex items-center gap-2 mt-1">
+                  <span id="inspect-sidebar-fertility-icon" class="text-lg"></span>
+                  <div class="flex-1">
+                    <span id="inspect-sidebar-fertility-label" class="text-sm font-semibold text-primary block"></span>
+                    <span id="inspect-sidebar-fertility-desc" class="text-[11px] text-secondary leading-snug block mt-0.5"></span>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <span class="text-[10px] font-mono uppercase tracking-wider text-secondary">Cervical Fluid Type</span>
+                <p id="inspect-sidebar-mucus" class="text-xs text-secondary mt-1 leading-relaxed"></p>
+              </div>
+
+              <div>
+                <span class="text-[10px] font-mono uppercase tracking-wider text-secondary">Symptoms to Expect</span>
+                <p id="inspect-sidebar-symptoms" class="text-xs text-secondary mt-1 leading-relaxed"></p>
+              </div>
+
+              <div>
+                <span class="text-[10px] font-mono uppercase tracking-wider text-secondary">Actionable Tips</span>
+                <p id="inspect-sidebar-tips" class="text-xs text-secondary mt-1 leading-relaxed"></p>
+              </div>
+
+              <p class="text-[9px] text-secondary/60 text-center leading-snug pt-2 border-t border-hairline">Disclaimer: Results are estimates based on the menstrual cycle information you provide. They are intended for educational purposes only and should not be interpreted as an exact probability or guarantee of pregnancy. Individual cycles and fertility can vary.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Educational Content -->
+    <section class="mt-16 md:mt-24 max-w-3xl mx-auto space-y-10" aria-labelledby="education-heading">
+      <h2 id="education-heading" class="text-2xl md:text-3xl font-semibold text-primary text-center">
+        Understanding Your Fertility Calendar
+      </h2>
+
+      <div class="prose prose-sm text-secondary max-w-none">
+        <p class="leading-relaxed">
+          A <strong>fertility calendar</strong> helps you visualize your menstrual cycle and identify the days when conception is most likely. By tracking your period start dates and cycle length, our tool calculates your estimated fertile window — the 5 days before ovulation plus ovulation day itself — when sperm can survive long enough to meet the egg.
+        </p>
+
+        <p class="leading-relaxed mt-4">
+          This <strong>accurate fertility calendar</strong> uses the Ogino-Knaus method, a clinically recognized approach that subtracts the luteal phase (typically 14 days) from your cycle length to pinpoint ovulation. For those with irregular cycles, the calculator adapts by using your shortest and longest cycles from the past 6–12 months to provide a wider, more conservative fertile window.
+        </p>
+
+        <p class="leading-relaxed mt-4">
+          Unlike basic period trackers, this <strong>fertility calendar calculator</strong> also displays cervical mucus patterns, basal body temperature guidance, implantation windows, and optimal pregnancy test dates. Each day on the calendar is color-coded: menstrual days, fertile window (low to high), peak ovulation, implantation phase, and testing windows — so you can see your entire cycle at a glance.
+        </p>
+
+        <p class="leading-relaxed mt-4">
+          All calculations run locally in your browser. No data leaves your device, and no account is required. You can export your personalized calendar to Google Calendar, Apple Calendar, or any ICS-compatible app for reminders and planning.
+        </p>
+
+        <h3 class="text-lg font-semibold text-primary mt-8 mb-3">Key Features</h3>
+        <ul class="list-disc list-inside space-y-2 text-sm leading-relaxed">
+          <li>Color-coded 3-month calendar view with daily fertility insights</li>
+          <li>Supports regular cycles, custom luteal phase, and irregular cycles</li>
+          <li>Cervical mucus descriptions and expected symptoms per phase</li>
+          <li>BBT (basal body temperature) tracking guidance</li>
+          <li>Implantation window and pregnancy test timing</li>
+          <li>One-click ICS export for Google/Apple Calendar</li>
+          <li>100% private — all data stored locally in your browser</li>
+        </ul>
+
+        <h3 class="text-lg font-semibold text-primary mt-8 mb-3">How to Use This Calendar</h3>
+        <ol class="list-decimal list-inside space-y-2 text-sm leading-relaxed">
+          <li>Enter your last period date and average cycle length on the <a href="/ovulation-calculator" class="text-brand-rose underline hover:no-underline">Ovulation Calculator</a> page</li>
+          <li>Return here to view your personalized fertility calendar</li>
+          <li>Click any day to see detailed fertility status, mucus type, symptoms, and actionable tips</li>
+          <li>Use the export button to sync dates with your digital calendar</li>
+          <li>Track cycles over time — the calculator adapts as you log more data</li>
+        </ol>
+
+        <p class="text-xs text-secondary/70 mt-6 text-center">
+          <em>Disclaimer: This tool provides estimates based on standardized reproductive health models. It is not a substitute for medical advice, diagnosis, or treatment. Consult a healthcare provider for personalized fertility guidance.</em>
+        </p>
+      </div>
+    </section>
+
+  </div>
+</Layout>
+
+<script>
+  import { addDays, subDays, startOfMonth, endOfMonth, startOfWeek, endOfWeek, isSameDay, format, parseISO, isAfter } from 'date-fns';
+
+  // State
+  let cycleData: any = null;
+  let selectedDate: Date | null = null;
+
+  // DOM Elements
+  const emptyState = document.getElementById('calendar-empty-state');
+  const dashboard = document.getElementById('calendar-dashboard');
+  
+  // Dashboard Metrics
+  const metricMethod = document.getElementById('metric-method');
+  const metricLength = document.getElementById('metric-length');
+  const metricPeriod = document.getElementById('metric-period');
+  const metricOvulation = document.getElementById('metric-ovulation');
+
+  // Sidebar Inspector
+  const sidebarDate = document.getElementById('inspect-sidebar-date');
+  const sidebarTitle = document.getElementById('inspect-sidebar-title');
+  const sidebarFertilityIcon = document.getElementById('inspect-sidebar-fertility-icon');
+  const sidebarFertilityLabel = document.getElementById('inspect-sidebar-fertility-label');
+  const sidebarFertilityDesc = document.getElementById('inspect-sidebar-fertility-desc');
+  const sidebarMucus = document.getElementById('inspect-sidebar-mucus');
+  const sidebarSymptoms = document.getElementById('inspect-sidebar-symptoms');
+  const sidebarTips = document.getElementById('inspect-sidebar-tips');
+
+  // Buttons
+  const resetBtn = document.getElementById('reset-data-btn');
+  const printBtn = document.getElementById('print-calendar-btn');
+  const exportBtn = document.getElementById('export-ics-btn');
+
+  // Load from local storage
+  function initDashboard() {
+    const rawData = localStorage.getItem('saved_cycle_data');
+    if (!rawData) {
+      if (emptyState) emptyState.classList.remove('hidden');
+      if (dashboard) dashboard.classList.add('hidden');
+      return;
+    }
+
+    cycleData = JSON.parse(rawData);
+    if (emptyState) emptyState.classList.add('hidden');
+    if (dashboard) dashboard.classList.remove('hidden');
+
+    // Set Metrics
+    if (metricMethod) {
+      metricMethod.textContent = 
+        cycleData.method === 'lmp' ? 'Last Period' : 
+        cycleData.method === 'luteal' ? 'Custom Luteal' : 'Irregular Cycle';
+    }
+    if (metricLength) {
+      metricLength.textContent = cycleData.method === 'irregular' 
+        ? `${cycleData.inputs.shortestLength}-${cycleData.inputs.longestLength} Days`
+        : `${cycleData.inputs.cycleLength} Days`;
+    }
+    if (metricPeriod) {
+      const nextPeriod = parseISO(cycleData.dates.nextPeriodDate);
+      metricPeriod.textContent = format(nextPeriod, 'MMM dd, yyyy');
+    }
+    if (metricOvulation) {
+      const ov = parseISO(cycleData.dates.ovulationDay);
+      metricOvulation.textContent = format(ov, 'MMM dd, yyyy');
+    }
+
+    // Default selection
+    selectedDate = parseISO(cycleData.dates.ovulationDay);
+    inspectDate(selectedDate);
+
+    // Render Months (1st Month: Ovulation month, 2nd Month: Next Month)
+    const baseMonth = parseISO(cycleData.dates.ovulationDay);
+    renderMonth(baseMonth, 'month-title-1', 'month-grid-1');
+    renderMonth(addDays(endOfMonth(baseMonth), 1), 'month-title-2', 'month-grid-2');
+  }
+
+  // Clear data
+  resetBtn?.addEventListener('click', () => {
+    if (confirm('Are you sure you want to clear your saved fertility data?')) {
+      localStorage.removeItem('saved_cycle_data');
+      initDashboard();
+    }
+  });
+
+  // Print
+  printBtn?.addEventListener('click', () => {
+    window.print();
+  });
+
+  // Export ICS
+  exportBtn?.addEventListener('click', () => {
+    if (!cycleData) return;
+
+    const ovulationDateStr = cycleData.dates.ovulationDay.replace(/-/g, '');
+    const fertileStartStr = cycleData.dates.fertileWindowStart.replace(/-/g, '');
+    const fertileEndStr = format(addDays(parseISO(cycleData.dates.fertileWindowEnd), 1), 'yyyyMMdd');
+    const periodStartStr = cycleData.inputs.lmpDate.replace(/-/g, '');
+    const periodEndStr = format(addDays(parseISO(cycleData.inputs.lmpDate), 4), 'yyyyMMdd');
+    const nextPeriodStartStr = cycleData.dates.nextPeriodDate.replace(/-/g, '');
+    const nextPeriodEndStr = format(addDays(parseISO(cycleData.dates.nextPeriodDate), 4), 'yyyyMMdd');
+
+    const dtStamp = format(new Date(), "yyyyMMdd'T'HHmmss'Z'");
+
+    const icsContent = [
+      'BEGIN:VCALENDAR',
+      'VERSION:2.0',
+      'PRODID:-//Accurate Ovulation Calculator//Fertility Tracker//EN',
+      'CALSCALE:GREGORIAN',
+      'METHOD:PUBLISH',
+      
+      // Ovulation Event
+      'BEGIN:VEVENT',
+      `UID:ov-${ovulationDateStr}@accurateovulationcalculator.com`,
+      `DTSTAMP:${dtStamp}`,
+      `DTSTART;VALUE=DATE:${ovulationDateStr}`,
+      `DTEND;VALUE=DATE:${format(addDays(parseISO(cycleData.dates.ovulationDay), 1), 'yyyyMMdd')}`,
+      'SUMMARY:Peak Ovulation Day 🌸',
+      'DESCRIPTION:Your estimated peak fertility day. Conception probability is highest today.',
+      'END:VEVENT',
+
+      // Fertile Window Event
+      'BEGIN:VEVENT',
+      `UID:fertile-${fertileStartStr}@accurateovulationcalculator.com`,
+      `DTSTAMP:${dtStamp}`,
+      `DTSTART;VALUE=DATE:${fertileStartStr}`,
+      `DTEND;VALUE=DATE:${fertileEndStr}`,
+      'SUMMARY:Fertile Window (High Chance of Conception) 💗',
+      'DESCRIPTION:Having intercourse during this window maximizes your chances of conception.',
+      'END:VEVENT',
+
+      // Next Period Event
+      'BEGIN:VEVENT',
+      `UID:period-${nextPeriodStartStr}@accurateovulationcalculator.com`,
+      `DTSTAMP:${dtStamp}`,
+      `DTSTART;VALUE=DATE:${nextPeriodStartStr}`,
+      `DTEND;VALUE=DATE:${nextPeriodEndStr}`,
+      'SUMMARY:Expected Period Start 🩸',
+      'DESCRIPTION:Expected start date of your next menstrual flow.',
+      'END:VEVENT',
+
+      'END:VCALENDAR'
+    ].join('\r\n');
+
+    const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'fertility_calendar.ics';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  });
+
+  function getDayType(date: Date) {
+    if (!cycleData) return { type: 'normal', name: 'Regular Day', fertilityLevel: 'very-low', fertilityLabel: 'Very Low Chance', fertilityIcon: '🩶', fertilityDesc: 'Pregnancy is less likely based on your estimated cycle timing.' };
+    const formatted = format(date, 'yyyy-MM-dd');
+
+    // 1. Period Days
+    for (let p of cycleData.periodDays) {
+      if (p === formatted) return { type: 'period', name: 'Menstrual Period', fertilityLevel: 'very-low', fertilityLabel: 'Very Low Chance', fertilityIcon: '🩶', fertilityDesc: 'Pregnancy is less likely based on your estimated cycle timing.' };
+    }
+
+    // 2. Next Period Predictions (approx. 5 days)
+    const nextP = parseISO(cycleData.dates.nextPeriodDate);
+    for (let i = 0; i < 5; i++) {
+      if (format(addDays(nextP, i), 'yyyy-MM-dd') === formatted) {
+        return { type: 'period', name: 'Predicted Period', fertilityLevel: 'very-low', fertilityLabel: 'Very Low Chance', fertilityIcon: '🩶', fertilityDesc: 'Pregnancy is less likely based on your estimated cycle timing.' };
+      }
+    }
+
+    // 3. Ovulation Day
+    if (formatted === cycleData.dates.ovulationDay) {
+      return { type: 'ovulation', name: 'Ovulation Day (Peak)', fertilityLevel: 'peak', fertilityLabel: 'Peak Fertility', fertilityIcon: '🔴', fertilityDesc: 'This is your estimated ovulation period and generally the most fertile time of your cycle.' };
+    }
+
+    // 4. Fertile Days
+    for (let index = 0; index < cycleData.fertileDays.length; index++) {
+      const f = cycleData.fertileDays[index];
+      if (f === formatted) {
+        const fertilityMap = [
+          { level: 'low', label: 'Low Chance', icon: '🟢', desc: 'A small possibility exists based on your estimated cycle.' },
+          { level: 'low', label: 'Low Chance', icon: '🟢', desc: 'A small possibility exists based on your estimated cycle.' },
+          { level: 'moderate', label: 'Moderate Chance', icon: '🟡', desc: 'Your fertility is increasing as you approach your fertile window.' },
+          { level: 'moderate', label: 'Moderate Chance', icon: '🟡', desc: 'Your fertility is increasing as you approach your fertile window.' },
+          { level: 'high', label: 'High Chance', icon: '🟠', desc: 'You are currently within your estimated fertile window.' }
+        ];
+        const fertility = fertilityMap[index] || fertilityMap[1];
+        return { type: 'fertile', name: 'High Fertility Window', fertilityLevel: fertility.level, fertilityLabel: fertility.label, fertilityIcon: fertility.icon, fertilityDesc: fertility.desc };
+      }
+    }
+
+    // 5. Implantation Days
+    for (let i of cycleData.implantationWindow) {
+      if (i === formatted) return { type: 'implantation', name: 'Implantation Window', fertilityLevel: 'very-low', fertilityLabel: 'Very Low Chance', fertilityIcon: '🩶', fertilityDesc: 'Pregnancy is less likely based on your estimated cycle timing.' };
+    }
+
+    // 6. Pregnancy Test Days
+    for (let t of cycleData.testDates) {
+      if (t === formatted) return { type: 'test', name: 'Pregnancy Test Window', fertilityLevel: 'very-low', fertilityLabel: 'Very Low Chance', fertilityIcon: '🩶', fertilityDesc: 'Pregnancy is less likely based on your estimated cycle timing.' };
+    }
+
+    return { type: 'normal', name: 'Typical Day', fertilityLevel: 'very-low', fertilityLabel: 'Very Low Chance', fertilityIcon: '🩶', fertilityDesc: 'Pregnancy is less likely based on your estimated cycle timing.' };
+  }
+
+  function inspectDate(date: Date) {
+    if (!cycleData) return;
+
+    selectedDate = date;
+    const dayMeta = getDayType(date);
+    const formattedDate = format(date, 'yyyy-MM-dd');
+
+    if (sidebarDate) sidebarDate.textContent = format(date, 'MMM dd, yyyy');
+    if (sidebarTitle) sidebarTitle.textContent = dayMeta.name;
+    if (sidebarFertilityIcon) sidebarFertilityIcon.textContent = dayMeta.fertilityIcon;
+    if (sidebarFertilityLabel) sidebarFertilityLabel.textContent = dayMeta.fertilityLabel;
+    if (sidebarFertilityDesc) sidebarFertilityDesc.textContent = dayMeta.fertilityDesc;
+
+    let mucus = 'Dry or sticky paste, sensation of dryness. Low probability of sperm survival.';
+    let symptoms = 'Basal body temperature (BBT) is stable. Energy levels are moderate.';
+    let tips = 'Track your cycle length and record any baseline symptoms to build a pattern.';
+
+    if (dayMeta.type === 'period') {
+      mucus = 'Menstrual flow. Cervical mucus observations are obscured.';
+      symptoms = 'Uterine cramping, lower back discomfort, fatigue, or mild mood shifts due to low estrogen and progesterone.';
+      tips = 'Focus on rest, hydration, and gentle activity. Iron-rich foods can support your energy levels.';
+    } else if (dayMeta.type === 'fertile') {
+      mucus = 'Watery, slippery, or creamy discharge. Increasingly hospitable to sperm.';
+      symptoms = 'Slight increase in libido, mild pelvic twinges, or a feeling of dampness.';
+      tips = 'Having intercourse during this window maximizes the probability of conception, as sperm can live up to 5 days.';
+    } else if (dayMeta.type === 'ovulation') {
+      mucus = 'Stretchy, clear, and highly lubricative (resembling raw egg whites). Peak fertility.';
+      symptoms = 'Sharp rise in Luteinizing Hormone (LH) surge. Possible mild unilateral pelvic pain. Libido is peaked.';
+      tips = 'This is the absolute peak conception day. The egg survives for 12-24 hours after release, so prompt timing is essential.';
+    } else if (dayMeta.type === 'implantation') {
+      mucus = 'Sticky, thick, or dry under progesterone influence. Possibility of light spotting.';
+      symptoms = 'Sustained thermal shift (high BBT). Mild bloating, breast sensitivity, or light fatigue.';
+      tips = 'Avoid high-stress activities. Maintain a healthy, balanced diet and keep tracking your morning BBT for a sustained rise.';
+    } else if (dayMeta.type === 'test') {
+      mucus = 'Thick and sticky or dry. Estrogen and progesterone are high.';
+      symptoms = 'Mild early symptoms (fatigue, mild nausea, breast tenderness) may appear if conception occurred.';
+      tips = 'An early detection test may yield results now, but testing on the date of a missed period provides 99%+ accuracy.';
+    } else {
+      const isLuteal = isAfter(date, parseISO(cycleData.dates.ovulationDay));
+      if (isLuteal) {
+        mucus = 'Thick, sticky, white discharge due to rising Progesterone.';
+        symptoms = 'BBT remains elevated. Possible early PMS indicators (bloating, mood sensitivity).';
+        tips = 'Limit caffeine and alcohol. Continue logging symptoms for better future predictive cycles.';
+      } else {
+        mucus = 'Scant, sticky, or creamy. Low fertility.';
+        symptoms = 'Estrogen levels are starting to slowly rise. Energy levels are increasing.';
+        tips = 'Prepare for the follicular phase by engaging in active exercise and maintaining solid nutrition.';
+      }
+    }
+
+    if (sidebarMucus) sidebarMucus.textContent = mucus;
+    if (sidebarSymptoms) sidebarSymptoms.textContent = symptoms;
+    if (sidebarTips) sidebarTips.textContent = tips;
+
+    // Refresh active borders in both calendar grids
+    const cells = document.querySelectorAll('[data-date]');
+    cells.forEach((cell) => {
+      if (cell.getAttribute('data-date') === formattedDate) {
+        cell.classList.add('ring-2', 'ring-primary', 'ring-offset-1');
+      } else {
+        cell.classList.remove('ring-2', 'ring-primary', 'ring-offset-1');
+      }
+    });
+  }
+
+  function renderMonth(monthDate: Date, titleId: string, gridId: string) {
+    const titleLabel = document.getElementById(titleId);
+    const grid = document.getElementById(gridId);
+
+    if (!titleLabel || !grid) return;
+
+    grid.innerHTML = '';
+    titleLabel.textContent = format(monthDate, 'MMMM yyyy');
+
+    const monthStart = startOfMonth(monthDate);
+    const monthEnd = endOfMonth(monthStart);
+    const startDate = startOfWeek(monthStart);
+    const endDate = endOfWeek(monthEnd);
+
+    let day = startDate;
+
+    while (day <= endDate) {
+      const cellDate = day;
+      const formattedDate = format(cellDate, 'yyyy-MM-dd');
+      const isCurrentMonth = cellDate.getMonth() === monthDate.getMonth();
+      const dayMeta = getDayType(cellDate);
+
+      const cell = document.createElement('button');
+      cell.setAttribute('data-date', formattedDate);
+      cell.setAttribute('type', 'button');
+      cell.className = `h-10 md:h-12 w-full rounded-md flex flex-col items-center justify-center relative transition-all focus:outline-none `;
+
+      if (!isCurrentMonth) {
+        cell.className += ' text-gray-300 pointer-events-none';
+      } else {
+        cell.className += ' hover:bg-canvas-soft-2 cursor-pointer text-primary';
+      }
+
+      // Add highlights
+      if (isCurrentMonth) {
+        if (dayMeta.type === 'period' || dayMeta.type === 'period-prediction') {
+          cell.className += ' bg-brand-lavender border border-brand-lavender-border text-primary';
+        } else if (dayMeta.type === 'ovulation') {
+          cell.className += ' bg-brand-rose text-white shadow-sm';
+        } else if (dayMeta.type === 'fertile') {
+          cell.className += ' bg-brand-blush border border-brand-rose-border text-primary';
+        } else if (dayMeta.type === 'implantation') {
+          cell.className += ' bg-brand-sage-light border border-brand-sage text-primary';
+        } else if (dayMeta.type === 'test') {
+          cell.className += ' bg-brand-gold/10 border border-brand-gold text-primary';
+        }
+      }
+
+      if (selectedDate && isSameDay(cellDate, selectedDate)) {
+        cell.className += ' ring-2 ring-primary ring-offset-1';
+      }
+
+      const numLabel = document.createElement('span');
+      numLabel.textContent = format(cellDate, 'd');
+      numLabel.className = 'text-xs md:text-sm font-semibold z-10';
+      cell.appendChild(numLabel);
+
+      if (isCurrentMonth && dayMeta.type !== 'normal' && dayMeta.type !== 'period') {
+        const dot = document.createElement('span');
+        dot.className = `w-1.2 h-1.2 rounded-full absolute bottom-1.5 ${
+          dayMeta.type === 'ovulation' ? 'bg-white' : 'bg-brand-rose'
+        }`;
+        cell.appendChild(dot);
+      }
+
+      if (isCurrentMonth) {
+        cell.addEventListener('click', () => {
+          inspectDate(cellDate);
+        });
+      }
+
+      grid.appendChild(cell);
+      day = addDays(day, 1);
+    }
+  }
+
+  // Run on mount
+  initDashboard();
+</script>

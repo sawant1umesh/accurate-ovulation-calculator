@@ -1,0 +1,372 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const pageTitle = "Privacy Policy - Accurate Ovulation Calculator | Data Protection & Client-Side Processing";
+const pageDescription = "Read our privacy policy. Learn how we protect your fertility data with 100% client-side processing, zero server storage, no tracking cookies, and no third-party data sharing. Your health data never leaves your browser.";
+
+const privacySchema = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Privacy Policy - Accurate Ovulation Calculator",
+  "description": pageDescription,
+  "url": "https://accurateovulationcalculator.com/privacy",
+  "mainEntity": {
+    "@type": "Organization",
+    "name": "Accurate Ovulation Calculator",
+    "url": "https://accurateovulationcalculator.com"
+  }
+};
+
+const lastUpdated = "July 19, 2026";
+---
+
+<Layout title={pageTitle} description={pageDescription} schema={privacySchema}>
+
+  <!-- Page Header -->
+  <section class="relative overflow-hidden bg-canvas-soft">
+    <div class="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8 py-16 md:py-24 lg:py-28">
+      <div class="text-center max-w-3xl mx-auto">
+        <!-- Tagline Badge -->
+        <span class="inline-flex items-center gap-1.5 text-[11px] font-mono font-semibold tracking-widest text-brand-sage uppercase mb-7 px-4 py-2 rounded-full bg-brand-sage-light border border-brand-sage/30 backdrop-blur-sm">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-sage animate-pulse"></span>
+          Your Privacy Matters
+        </span>
+
+        <h1 class="text-[2.25rem] md:text-4xl lg:text-[2.75rem] font-semibold tracking-tight text-primary leading-[1.15]">
+          Privacy Policy
+        </h1>
+
+        <p class="mt-7 text-base md:text-lg text-secondary leading-[1.7] max-w-[38rem] mx-auto">
+          At Accurate Ovulation, your privacy is fundamental to everything we build. This policy explains what information we collect, how it is used, and how we protect your data.
+        </p>
+
+        <div class="mt-8 flex items-center justify-center gap-2 text-xs text-secondary/70">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <span>Last Updated: {lastUpdated}</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Privacy Content -->
+  <section class="bg-canvas py-16 md:py-24">
+    <div class="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
+      <div class="max-w-3xl mx-auto space-y-12 md:space-y-16">
+
+        <!-- Privacy-First Summary -->
+        <div class="card-container">
+          <div class="flex items-start gap-4">
+            <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand-sage-light text-brand-sage">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+              </svg>
+            </span>
+            <div>
+              <h2 class="text-base font-semibold text-primary mb-2">Privacy at a Glance</h2>
+              <p class="text-sm text-secondary leading-relaxed">
+                Accurate Ovulation Calculator is designed with a <strong class="text-primary font-medium">privacy-first architecture</strong>. All calculator inputs — including cycle dates, luteal phase lengths, and conception dates — are processed entirely within your browser. We do not transmit, store, or have access to your health data. No user accounts are required, and no personal health information is collected by our servers.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 1: Information We Collect -->
+        <div>
+          <div class="flex items-center gap-3 mb-5">
+            <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-brand-blush text-brand-rose">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+              </svg>
+            </span>
+            <h2 class="text-xl md:text-2xl font-semibold tracking-tight text-primary">Information We Collect</h2>
+          </div>
+
+          <div class="card-container space-y-5 text-[15px] text-secondary leading-[1.8]">
+            <div>
+              <h3 class="text-base font-semibold text-primary mb-2">Calculator Inputs</h3>
+              <p>
+                When you use any of our calculators — including the Ovulation Calculator, Fertility Calendar, Due Date Calculator, and Pregnancy Test Calculator — you enter personal health data such as your last menstrual period date, cycle length, and luteal phase duration. <strong class="text-primary font-medium">This data is processed entirely within your web browser using client-side JavaScript.</strong> It is never transmitted to our servers, stored in any database, or shared with any third party.
+              </p>
+            </div>
+
+            <div>
+              <h3 class="text-base font-semibold text-primary mb-2">Automatically Collected Information</h3>
+              <p>
+                Like most websites, our web servers may automatically collect certain non-personal technical information when you visit our site. This may include:
+              </p>
+              <ul class="mt-3 space-y-2 text-sm">
+                <li class="flex items-start gap-2">
+                  <span class="w-1.5 h-1.5 rounded-full bg-brand-rose mt-2 shrink-0"></span>
+                  <span>Your IP address (which may be anonymized or aggregated)</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="w-1.5 h-1.5 rounded-full bg-brand-rose mt-2 shrink-0"></span>
+                  <span>Browser type and version</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="w-1.5 h-1.5 rounded-full bg-brand-rose mt-2 shrink-0"></span>
+                  <span>Operating system</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="w-1.5 h-1.5 rounded-full bg-brand-rose mt-2 shrink-0"></span>
+                  <span>Referring website URL</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="w-1.5 h-1.5 rounded-full bg-brand-rose mt-2 shrink-0"></span>
+                  <span>Pages visited and time spent on each page</span>
+                </li>
+              </ul>
+              <p class="mt-3">
+                This information is used solely for maintaining and improving the website's performance and security. It does not include any health-related data you enter into our calculators.
+              </p>
+            </div>
+
+            <div>
+              <h3 class="text-base font-semibold text-primary mb-2">Information You Voluntarily Provide</h3>
+              <p>
+                If you contact us via email or other communication channels (once available), we may collect the information you choose to include in your message, such as your name and email address. This information is used exclusively to respond to your inquiry.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 2: How Information Is Used -->
+        <div>
+          <div class="flex items-center gap-3 mb-5">
+            <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-brand-sage-light text-brand-sage">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" />
+              </svg>
+            </span>
+            <h2 class="text-xl md:text-2xl font-semibold tracking-tight text-primary">How Information Is Used</h2>
+          </div>
+
+          <div class="card-container space-y-4 text-[15px] text-secondary leading-[1.8]">
+            <p>
+              Any non-personal information we collect is used for the following limited purposes:
+            </p>
+            <ul class="space-y-3 text-sm">
+              <li class="flex items-start gap-3">
+                <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-brand-sage-light text-brand-sage mt-0.5">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-3.5 h-3.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                  </svg>
+                </span>
+                <span><strong class="text-primary font-medium">Operating and maintaining the website</strong> — ensuring pages load correctly and features function as intended.</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-brand-sage-light text-brand-sage mt-0.5">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-3.5 h-3.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                  </svg>
+                </span>
+                <span><strong class="text-primary font-medium">Improving user experience</strong> — understanding which pages are most visited to prioritize content and feature improvements.</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-brand-sage-light text-brand-sage mt-0.5">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-3.5 h-3.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                  </svg>
+                </span>
+                <span><strong class="text-primary font-medium">Protecting website security</strong> — monitoring for and preventing unauthorized access, abuse, or technical vulnerabilities.</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-brand-sage-light text-brand-sage mt-0.5">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-3.5 h-3.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                  </svg>
+                </span>
+                <span><strong class="text-primary font-medium">Responding to inquiries</strong> — if you contact us, we use the information you provide solely to address your message.</span>
+              </li>
+            </ul>
+            <p>
+              We do not sell, rent, trade, or otherwise share your personal information with third parties for marketing or advertising purposes.
+            </p>
+          </div>
+        </div>
+
+        <!-- Section 3: Cookies -->
+        <div>
+          <div class="flex items-center gap-3 mb-5">
+            <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-brand-lavender text-primary">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125" />
+              </svg>
+            </span>
+            <h2 class="text-xl md:text-2xl font-semibold tracking-tight text-primary">Cookies</h2>
+          </div>
+
+          <div class="card-container space-y-5 text-[15px] text-secondary leading-[1.8]">
+            <p>
+              Cookies are small text files stored on your device by your web browser when you visit a website. Our website may use the following types of cookies:
+            </p>
+
+            <div>
+              <h3 class="text-base font-semibold text-primary mb-2">Essential Cookies</h3>
+              <p>
+                These cookies are necessary for the website to function properly. They enable basic features such as page navigation, secure area access, and remembering your preferences within a session. These cookies do not collect personal health information.
+              </p>
+            </div>
+
+            <div>
+              <h3 class="text-base font-semibold text-primary mb-2">Analytics Cookies</h3>
+              <p>
+                In the future, we may use analytics services to understand how visitors interact with our website — such as which pages are visited most frequently and how users navigate between pages. If and when analytics cookies are implemented, they will collect only aggregated, anonymized data. We will update this policy accordingly and provide clear information about any analytics tools used.
+              </p>
+            </div>
+
+            <div>
+              <h3 class="text-base font-semibold text-primary mb-2">Managing Cookies</h3>
+              <p>
+                You can control and manage cookies through your browser settings. Most browsers allow you to refuse cookies, delete existing cookies, or be notified when a cookie is set. Please note that disabling essential cookies may affect the functionality of certain website features.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 4: Data Security -->
+        <div>
+          <div class="flex items-center gap-3 mb-5">
+            <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-brand-sage-light text-brand-sage">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+              </svg>
+            </span>
+            <h2 class="text-xl md:text-2xl font-semibold tracking-tight text-primary">Data Security</h2>
+          </div>
+
+          <div class="card-container space-y-4 text-[15px] text-secondary leading-[1.8]">
+            <p>
+              We take the security of your information seriously and implement appropriate technical and organizational measures to protect it. Key security practices include:
+            </p>
+            <ul class="space-y-2 text-sm">
+              <li class="flex items-start gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-brand-sage mt-2 shrink-0"></span>
+                <span><strong class="text-primary font-medium">Client-side processing</strong> — All calculator computations occur locally in your browser, eliminating the risk of server-side health data breaches.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-brand-sage mt-2 shrink-0"></span>
+                <span><strong class="text-primary font-medium">HTTPS encryption</strong> — Our website uses SSL/TLS encryption to secure data transmitted between your browser and our servers.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-brand-sage mt-2 shrink-0"></span>
+                <span><strong class="text-primary font-medium">No health data storage</strong> — We do not maintain databases containing user health information, calculator inputs, or fertility-related data.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-brand-sage mt-2 shrink-0"></span>
+                <span><strong class="text-primary font-medium">Regular maintenance</strong> — We keep our website infrastructure and dependencies updated to address known security vulnerabilities.</span>
+              </li>
+            </ul>
+            <p>
+              While no method of electronic transmission or storage is 100% secure, our privacy-first architecture minimizes risk by ensuring that your most sensitive data — your health information — never leaves your device.
+            </p>
+          </div>
+        </div>
+
+        <!-- Section 5: Third-Party Services -->
+        <div>
+          <div class="flex items-center gap-3 mb-5">
+            <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-brand-blush text-brand-rose">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" />
+              </svg>
+            </span>
+            <h2 class="text-xl md:text-2xl font-semibold tracking-tight text-primary">Third-Party Services</h2>
+          </div>
+
+          <div class="card-container space-y-4 text-[15px] text-secondary leading-[1.8]">
+            <p>
+              Our website may utilize third-party services for hosting, content delivery, or analytics purposes. These services operate under their own privacy policies and may collect limited technical information (such as IP addresses) as part of their normal operations.
+            </p>
+            <p>
+              We select third-party providers that maintain appropriate privacy and security standards. However, we are not responsible for the privacy practices of external services. We encourage you to review their respective privacy policies.
+            </p>
+            <p>
+              Our website may contain links to external websites for educational or informational purposes. These external sites are governed by their own privacy policies, and we do not control or accept responsibility for their content or data practices.
+            </p>
+          </div>
+        </div>
+
+        <!-- Section 6: Children's Privacy -->
+        <div>
+          <div class="flex items-center gap-3 mb-5">
+            <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-brand-lavender text-primary">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.182 15.182a4.5 4.5 0 01-6.364 0M21 12a9 9 0 11-18 0 9 9 0 0118 0zM9.75 9.75c0 .414-.168.75-.375.75S9 10.164 9 9.75 9.168 9 9.375 9s.375.336.375.75zm-.375 0h.008v.015h-.008V9.75zm5.625 0c0 .414-.168.75-.375.75s-.375-.336-.375-.75.168-.75.375-.75.375.336.375.75zm-.375 0h.008v.015h-.008V9.75z" />
+              </svg>
+            </span>
+            <h2 class="text-xl md:text-2xl font-semibold tracking-tight text-primary">Children's Privacy</h2>
+          </div>
+
+          <div class="card-container text-[15px] text-secondary leading-[1.8]">
+            <p>
+              Accurate Ovulation Calculator is intended for use by adults and is designed for informational and educational purposes related to reproductive health. We do not knowingly collect personal information from children under the age of 13 (or the applicable age in your jurisdiction). If we become aware that we have inadvertently collected personal information from a child, we will take prompt steps to delete such information. If you believe a child has provided us with personal information, please contact us so that we can take appropriate action.
+            </p>
+          </div>
+        </div>
+
+        <!-- Section 7: Policy Updates -->
+        <div>
+          <div class="flex items-center gap-3 mb-5">
+            <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-brand-sage-light text-brand-sage">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182" />
+              </svg>
+            </span>
+            <h2 class="text-xl md:text-2xl font-semibold tracking-tight text-primary">Policy Updates</h2>
+          </div>
+
+          <div class="card-container text-[15px] text-secondary leading-[1.8]">
+            <p>
+              We may update this Privacy Policy from time to time to reflect changes in our practices, technology, legal requirements, or for other operational purposes. When we make material changes, we will update the "Last Updated" date at the top of this page. We encourage you to review this policy periodically to stay informed about how we protect your information. Your continued use of the website after any changes constitutes your acceptance of the updated policy.
+            </p>
+          </div>
+        </div>
+
+        <!-- Medical Disclaimer Notice -->
+        <div>
+          <div class="flex items-center gap-3 mb-5">
+            <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-brand-blush text-brand-rose">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+              </svg>
+            </span>
+            <h2 class="text-xl md:text-2xl font-semibold tracking-tight text-primary">Not Medical Advice</h2>
+          </div>
+
+          <div class="rounded-xl bg-canvas-soft-2 p-6 md:p-8 border border-hairline">
+            <p class="text-[15px] text-secondary leading-[1.8]">
+              Accurate Ovulation Calculator provides educational and informational tools only. Our calculators generate estimates based on statistical averages and standardized reproductive metrics. They are <strong class="text-primary font-medium">not intended as medical advice</strong>, clinical diagnosis, or a substitute for consultation with a qualified healthcare provider. Always consult a licensed medical professional regarding your reproductive health, fertility concerns, or pregnancy planning.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="bg-canvas-soft py-16 md:py-20">
+    <div class="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto">
+        <h2 class="text-xl md:text-2xl font-semibold tracking-tight text-primary mb-4">
+          Questions About Our Privacy Practices?
+        </h2>
+        <p class="text-sm text-secondary leading-relaxed mb-8 max-w-lg mx-auto">
+          If you have any questions or concerns about this Privacy Policy, please don't hesitate to reach out.
+        </p>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <a href="/contact" class="btn-primary h-11 px-8 text-sm font-semibold shadow-md hover:shadow-lg transition-all duration-300">
+            Contact Us
+          </a>
+          <a href="/terms" class="btn-secondary h-11 px-8 text-sm font-semibold shadow-sm hover:shadow-md transition-all duration-300">
+            View Terms of Use
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</Layout>

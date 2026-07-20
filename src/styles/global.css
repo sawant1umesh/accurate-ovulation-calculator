@@ -1,0 +1,141 @@
+@import "tailwindcss";
+
+@theme {
+  /* Color Palette for Women's Health & Premium SaaS Aesthetic */
+  --color-primary: #2d2426;           /* Deep Warm Charcoal/Plum - headings & text */
+  --color-secondary: #5a4e51;         /* Warm Taupe - secondary/body text */
+  --color-brand-rose: #ec8c88;        /* Peak Fertility Coral - ovulation day */
+  --color-brand-blush: #fcf0ee;       /* Fertile Window Soft Pink background */
+  --color-brand-rose-border: #f5c2c0;  /* Fertile Window Border */
+  --color-brand-sage: #8ea890;        /* Implantation Sage Green */
+  --color-brand-sage-light: #eff4f0;  /* Implantation Window background */
+  --color-brand-gold: #e4c38e;        /* Due Date / Milestones Gold */
+  --color-brand-lavender: #ece5eb;    /* Menstrual Flow Lavender background */
+  --color-brand-lavender-border: #d4c4d1; /* Menstrual Flow Border */
+  --color-canvas: #ffffff;            /* Pure white card backgrounds */
+  --color-canvas-soft: #fdfbfc;       /* Soft warm cream background */
+  --color-canvas-soft-2: #faf6f5;     /* Inset panels */
+  --color-hairline: #efebea;          /* Delicate borders and lines */
+  --color-hairline-strong: #c8bdbe;   /* Stronger dividers */
+
+  /* Typography */
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+
+  /* Custom Transitions & Spacing */
+  --animate-fade-in: fade-in 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+
+  /* Elevated Soft Stacked Shadows */
+  --shadow-sm: 0px 1px 1px #2d242605, 0px 2px 2px #2d242605;
+  --shadow-md: 0px 2px 4px -2px #2d24260a, 0px 6px 12px -4px #2d24260f, inset 0 0 0 1px #efebea;
+  --shadow-lg: 0px 4px 8px -4px #2d24260a, 0px 12px 24px -8px #2d24260f, inset 0 0 0 1px #efebea;
+
+  /* Radius Scale */
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-pill: 9999px;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Base Styles & Typography Tuning */
+@layer base {
+  html,
+  body {
+    background-color: var(--color-canvas-soft);
+    color: var(--color-secondary);
+    font-family: var(--font-sans);
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    color: var(--color-primary);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.25;
+  }
+
+  /* Custom Scrollbars */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-canvas-soft);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-brand-lavender-border);
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-hairline-strong);
+  }
+}
+
+/* Reusable Component Utility Shortcuts */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-primary);
+  color: #ffffff;
+  font-weight: 500;
+  font-size: 0.875rem;
+  height: 40px;
+  padding: 0 1.25rem;
+  border-radius: var(--radius-pill);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+}
+.btn-primary:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-canvas);
+  color: var(--color-primary);
+  font-weight: 500;
+  font-size: 0.875rem;
+  height: 40px;
+  padding: 0 1.25rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--color-hairline-strong);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+}
+.btn-secondary:hover {
+  background-color: var(--color-canvas-soft-2);
+  transform: translateY(-1px);
+}
+
+.card-container {
+  background-color: var(--color-canvas);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-hairline);
+  box-shadow: var(--shadow-md);
+  padding: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .card-container {
+    padding: 2rem;
+  }
+}

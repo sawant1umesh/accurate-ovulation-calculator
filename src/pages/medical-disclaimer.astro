@@ -1,0 +1,321 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const pageTitle = "Medical Disclaimer - Accurate Ovulation Calculator | Not Medical Advice";
+const pageDescription = "Read our medical disclaimer. Our calculators provide educational estimates only - not medical advice, diagnosis, or treatment. Always consult a qualified healthcare provider for reproductive health decisions. Never use as contraception.";
+
+const disclaimerSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Medical Disclaimer - Accurate Ovulation Calculator",
+  "description": pageDescription,
+  "url": "https://accurateovulationcalculator.com/medical-disclaimer",
+  "mainEntity": {
+    "@type": "Organization",
+    "name": "Accurate Ovulation Calculator",
+    "url": "https://accurateovulationcalculator.com"
+  }
+};
+
+const lastUpdated = "July 19, 2026";
+---
+
+<Layout title={pageTitle} description={pageDescription} schema={disclaimerSchema}>
+
+  <!-- Page Header -->
+  <section class="relative overflow-hidden bg-canvas-soft">
+    <div class="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8 py-16 md:py-24 lg:py-28">
+      <div class="text-center max-w-3xl mx-auto">
+        <!-- Tagline Badge -->
+        <span class="inline-flex items-center gap-1.5 text-[11px] font-mono font-semibold tracking-widest text-brand-gold uppercase mb-7 px-4 py-2 rounded-full bg-brand-gold/10 border border-brand-gold/30 backdrop-blur-sm">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-gold animate-pulse"></span>
+          Medical Disclaimer
+        </span>
+
+        <h1 class="text-[2.25rem] md:text-4xl lg:text-[2.75rem] font-semibold tracking-tight text-primary leading-[1.15]">
+          Medical Disclaimer
+        </h1>
+
+        <p class="mt-7 text-base md:text-lg text-secondary leading-[1.7] max-w-[38rem] mx-auto">
+          Please read this disclaimer carefully. It explains the limitations of our calculators and why you should always consult a qualified healthcare professional for medical decisions.
+        </p>
+
+        <div class="mt-8 flex items-center justify-center gap-2 text-xs text-secondary/70">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <span>Last Updated: {lastUpdated}</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Disclaimer Content -->
+  <section class="bg-canvas py-16 md:py-24">
+    <div class="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
+      <div class="max-w-3xl mx-auto space-y-12 md:space-y-16">
+
+        <!-- Section 1: Educational Purpose -->
+        <div>
+          <div class="flex items-center gap-3 mb-5">
+            <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-brand-sage-light text-brand-sage">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
+              </svg>
+            </span>
+            <h2 class="text-xl md:text-2xl font-semibold tracking-tight text-primary">Educational Purpose</h2>
+          </div>
+
+          <div class="card-container space-y-5 text-[15px] text-secondary leading-[1.8]">
+            <p>
+              The Accurate Ovulation Calculator website (<strong class="text-primary font-medium">"the Website"</strong>) and all its content — including the Ovulation Calculator, Fertility Calendar, Due Date Calculator, Pregnancy Test Calculator, blog articles, educational guides, and all other tools and resources — are provided solely for <strong class="text-primary font-medium">informational and educational purposes</strong>.
+            </p>
+            <p>
+              Our mission is to help you better understand your menstrual cycle, fertile window, and reproductive health through accessible, evidence-informed tools. The information presented is based on established reproductive science, standardized metrics (such as the Ogino-Knaus method), and documented clinical research on fertility patterns.
+            </p>
+            <p>
+              Nothing on this Website is intended to be, nor should it be construed as, a substitute for professional medical advice, clinical diagnosis, or medical treatment. The content is designed to complement — not replace — the relationship between you and your healthcare provider.
+            </p>
+          </div>
+        </div>
+
+        <!-- Section 2: No Medical Advice -->
+        <div>
+          <div class="flex items-center gap-3 mb-5">
+            <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-brand-blush text-brand-rose">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+              </svg>
+            </span>
+            <h2 class="text-xl md:text-2xl font-semibold tracking-tight text-primary">No Medical Advice</h2>
+          </div>
+
+          <div class="rounded-xl bg-canvas-soft-2 p-6 md:p-8 border border-hairline space-y-4 text-[15px] text-secondary leading-[1.8]">
+            <p class="font-medium text-primary">
+              <strong>This Website does not provide medical advice.</strong>
+            </p>
+            <p>
+              The calculators, estimates, predictions, and educational content on this Website <strong class="text-primary font-medium">do not constitute</strong>:
+            </p>
+            <ul class="space-y-2 text-sm pl-5 list-disc">
+              <li>Professional medical advice, diagnosis, or treatment</li>
+              <li>Clinical judgment or personalized healthcare recommendations</li>
+              <li>A substitute for consultation with a qualified healthcare provider</li>
+              <li>A method of contraception, birth control, or pregnancy prevention</li>
+              <li>A guarantee of pregnancy, conception, or any specific health outcome</li>
+            </ul>
+            <p class="pt-2">
+              You should <strong class="text-primary font-medium">never</strong> disregard professional medical advice or delay seeking it because of information you have read on this Website. If you have any concerns about your reproductive health, menstrual cycle, fertility, or pregnancy, please consult a licensed physician, gynecologist, fertility specialist, or other qualified healthcare professional.
+            </p>
+            <p>
+              <strong class="text-brand-rose font-medium">If you are experiencing a medical emergency, contact your local emergency services immediately.</strong>
+            </p>
+          </div>
+        </div>
+
+        <!-- Section 3: Calculator Accuracy & Limitations -->
+        <div>
+          <div class="flex items-center gap-3 mb-5">
+            <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-brand-lavender text-primary">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+              </svg>
+            </span>
+            <h2 class="text-xl md:text-2xl font-semibold tracking-tight text-primary">Calculator Accuracy & Limitations</h2>
+          </div>
+
+          <div class="card-container space-y-5 text-[15px] text-secondary leading-[1.8]">
+            <p>
+              All calculator results on this Website — including fertile window projections, ovulation day estimates, implantation windows, due dates, and pregnancy test timing — are <strong class="text-primary font-medium">statistical estimates only</strong>. They are derived from:
+            </p>
+            <ul class="space-y-2 text-sm pl-5 list-disc">
+              <li>Standardized reproductive metrics and population averages</li>
+              <li>The Ogino-Knaus method and related cycle estimation algorithms</li>
+              <li>Customizable luteal phase durations (defaulting to 14 days)</li>
+              <li>Clinically documented implantation windows (typically 6–12 days post-ovulation)</li>
+              <li>Published pregnancy test sensitivity data</li>
+            </ul>
+            <p>
+              <strong class="text-primary font-medium">Important limitations:</strong>
+            </p>
+            <ul class="space-y-2 text-sm pl-5 list-disc mt-2">
+              <li>Menstrual cycle length and ovulation timing vary significantly between individuals and even between cycles for the same person</li>
+              <li>Irregular cycles, hormonal conditions (e.g., PCOS, thyroid disorders), stress, illness, medication, and lifestyle factors can all affect cycle regularity and ovulation timing</li>
+              <li>Our calculators cannot account for individual biological variations, medical history, or clinical findings</li>
+              <li>Results should be treated as general guidance, not definitive predictions</li>
+            </ul>
+            <p class="pt-2">
+              We are transparent about these limitations because responsible use of fertility tools requires understanding that no algorithm can predict your unique biology with certainty.
+            </p>
+          </div>
+        </div>
+
+        <!-- Section 4: Individual Health Differences -->
+        <div>
+          <div class="flex items-center gap-3 mb-5">
+            <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-brand-sage-light text-brand-sage">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.182 15.182a4.5 4.5 0 01-6.364 0M21 12a9 9 0 11-18 0 9 9 0 0118 0zM9.75 9.75c0 .414-.168.75-.375.75S9 10.164 9 9.75 9.168 9 9.375 9s.375.336.375.75zm-.375 0h.008v.015h-.008V9.75zm5.625 0c0 .414-.168.75-.375.75s-.375-.336-.375-.75.168-.75.375-.75.375.336.375.75zm-.375 0h.008v.015h-.008V9.75z" />
+              </svg>
+            </span>
+            <h2 class="text-xl md:text-2xl font-semibold tracking-tight text-primary">Individual Health Differences</h2>
+          </div>
+
+          <div class="card-container space-y-5 text-[15px] text-secondary leading-[1.8]">
+            <p>
+              Every person's reproductive physiology is unique. Factors that can significantly affect the accuracy of any cycle estimation include, but are not limited to:
+            </p>
+            <ul class="space-y-3 text-sm pl-5 list-disc">
+              <li><strong class="text-primary">Cycle irregularity:</strong> Naturally irregular cycles, anovulatory cycles, or cycles that vary by more than 7–9 days from month to month</li>
+              <li><strong class="text-primary">Hormonal conditions:</strong> Polycystic ovary syndrome (PCOS), thyroid disorders, hyperprolactinemia, and other endocrine conditions</li>
+              <li><strong class="text-primary">Age-related changes:</strong> Cycle patterns shift during perimenopause and in the years following menarche</li>
+              <li><strong class="text-primary">Medications & treatments:</strong> Hormonal contraceptives, fertility medications, steroids, and certain psychiatric medications</li>
+              <li><strong class="text-primary">Lifestyle factors:</strong> Significant weight changes, excessive exercise, chronic stress, sleep disruption, and travel across time zones</li>
+              <li><strong class="text-primary">Medical history:</strong> Previous pregnancy loss, uterine surgery, or reproductive conditions such as endometriosis or fibroids</li>
+            </ul>
+            <p>
+              Because of this variability, <strong class="text-primary font-medium">no calculator can accurately predict your fertile window, ovulation day, or pregnancy outcomes with clinical certainty</strong>. Our tools provide population-based estimates that serve as educational starting points for discussion with your healthcare provider.
+            </p>
+          </div>
+        </div>
+
+        <!-- Section 5: Professional Medical Consultation -->
+        <div>
+          <div class="flex items-center gap-3 mb-5">
+            <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-brand-blush text-brand-rose">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.75c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+              </svg>
+            </span>
+            <h2 class="text-xl md:text-2xl font-semibold tracking-tight text-primary">Professional Medical Consultation</h2>
+          </div>
+
+          <div class="rounded-xl bg-canvas-soft-2 p-6 md:p-8 border border-hairline space-y-4 text-[15px] text-secondary leading-[1.8]">
+            <p>
+              We strongly encourage you to <strong class="text-primary font-medium">consult a qualified healthcare professional</strong> for:
+            </p>
+            <ul class="space-y-2 text-sm pl-5 list-disc">
+              <li>Personalized fertility assessment and family planning guidance</li>
+              <li>Evaluation of menstrual irregularities or cycle concerns</li>
+              <li>Preconception counseling and prenatal care planning</li>
+              <li>Interpretation of calculator results in the context of your medical history</li>
+              <li>Diagnosis and treatment of any reproductive health conditions</li>
+              <li>Contraception counseling and prescription birth control</li>
+              <li>Pregnancy confirmation and prenatal care</li>
+            </ul>
+            <p class="pt-2">
+              Qualified professionals may include: obstetrician-gynecologists (OB/GYNs), reproductive endocrinologists, fertility specialists, certified nurse-midwives, primary care physicians with women's health expertise, and other licensed healthcare providers.
+            </p>
+            <p>
+              Your healthcare provider can perform clinical assessments — such as hormone testing, ultrasound monitoring, and physical examinations — that provide information far beyond what any online calculator can estimate.
+            </p>
+          </div>
+        </div>
+
+        <!-- Section 6: Limitation of Liability -->
+        <div>
+          <div class="flex items-center gap-3 mb-5">
+            <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-brand-lavender text-primary">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m0-10.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.75c0 5.592 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.57-.598-3.75h-.152c-3.196 0-6.1-1.249-8.25-3.286zm0 13.036h.008v.008H12v-.008z" />
+              </svg>
+            </span>
+            <h2 class="text-xl md:text-2xl font-semibold tracking-tight text-primary">Limitation of Liability</h2>
+          </div>
+
+          <div class="card-container space-y-5 text-[15px] text-secondary leading-[1.8]">
+            <p>
+              The Website, its content, and all calculator tools are provided on an <strong class="text-primary font-medium">"as is" and "as available"</strong> basis, without warranties of any kind, either express or implied.
+            </p>
+            <p>
+              To the fullest extent permitted by applicable law, Accurate Ovulation Calculator and its owners, operators, contributors, and affiliates shall not be liable for any direct, indirect, incidental, special, consequential, or punitive damages arising out of or relating to:
+            </p>
+            <ul class="space-y-2 text-sm pl-5 list-disc">
+              <li>Your use of, or inability to use, the Website or any of its tools</li>
+              <li>Any errors, inaccuracies, or omissions in calculator results or educational content</li>
+              <li>Any decisions, actions, or omissions you make based on information provided by the Website</li>
+              <li>Any failure to conceive, unintended pregnancy, or pregnancy outcome</li>
+              <li>Any delay in seeking or failure to obtain professional medical care</li>
+              <li>Any third-party content accessed through external links on the Website</li>
+            </ul>
+            <p class="pt-2">
+              You acknowledge and agree that you use the Website and its tools entirely <strong class="text-primary font-medium">at your own risk</strong>. The calculators provide estimates based on statistical models and are not a guarantee of actual outcomes.
+            </p>
+          </div>
+        </div>
+
+        <!-- Section 7: External Resources -->
+        <div>
+          <div class="flex items-center gap-3 mb-5">
+            <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-brand-blush text-brand-rose">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" />
+              </svg>
+            </span>
+            <h2 class="text-xl md:text-2xl font-semibold tracking-tight text-primary">External Resources</h2>
+          </div>
+
+          <div class="card-container space-y-4 text-[15px] text-secondary leading-[1.8]">
+            <p>
+              The Website may contain links to third-party websites, medical organizations, research institutions, or educational resources for informational purposes. These links are provided as a convenience and do not constitute an endorsement, guarantee, or assumption of responsibility for the accuracy, relevance, timeliness, or completeness of any external content.
+            </p>
+            <p>
+              We have no control over the content, privacy policies, or practices of external sites. We strongly recommend that you review the terms and privacy policies of any third-party website you visit through links on our Website.
+            </p>
+            <p>
+              Medical information on external sites should also be discussed with your healthcare provider, as clinical guidelines and best practices evolve over time.
+            </p>
+          </div>
+        </div>
+
+        <!-- Section 8: Changes to This Disclaimer -->
+        <div>
+          <div class="flex items-center gap-3 mb-5">
+            <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-brand-gold/10 text-brand-gold">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182" />
+              </svg>
+            </span>
+            <h2 class="text-xl md:text-2xl font-semibold tracking-tight text-primary">Changes to This Disclaimer</h2>
+          </div>
+
+          <div class="card-container text-[15px] text-secondary leading-[1.8]">
+            <p>
+              We may update this Medical Disclaimer from time to time to reflect changes in our tools, content, legal requirements, or best practices. When we make material changes, we will update the "Last Updated" date at the top of this page.
+            </p>
+            <p class="mt-4">
+              We encourage you to review this disclaimer periodically to stay informed about the limitations of our tools and your responsibilities as a user. Your continued use of the Website after any changes constitutes your acceptance of the updated disclaimer.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="bg-canvas-soft py-16 md:py-20">
+    <div class="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto">
+        <h2 class="text-xl md:text-2xl font-semibold tracking-tight text-primary mb-4">
+          Have Questions About This Disclaimer?
+        </h2>
+        <p class="text-sm text-secondary leading-relaxed mb-8 max-w-lg mx-auto">
+          If anything in this Medical Disclaimer is unclear, or if you'd like to learn more about our calculators and privacy practices, we're here to help.
+        </p>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <a href="/contact" class="btn-primary h-11 px-8 text-sm font-semibold shadow-md hover:shadow-lg transition-all duration-300">
+            Contact Us
+          </a>
+          <a href="/privacy" class="btn-secondary h-11 px-8 text-sm font-semibold shadow-sm hover:shadow-md transition-all duration-300">
+            View Privacy Policy
+          </a>
+          <a href="/terms" class="btn-secondary h-11 px-8 text-sm font-semibold shadow-sm hover:shadow-md transition-all duration-300">
+            View Terms of Use
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</Layout>

@@ -1,0 +1,142 @@
+---
+const currentYear = new Date().getFullYear();
+
+const footerLinks = {
+  calculators: [
+    { name: 'Ovulation Calculator', href: '/ovulation-calculator' },
+    { name: 'Fertility Calendar', href: '/fertility-calendar' },
+    { name: 'Due Date Calculator', href: '/due-date-calculator' },
+    { name: 'Pregnancy Test Calculator', href: '/pregnancy-test-calculator' },
+  ],
+  resources: [
+    { name: 'Understanding Ovulation', href: '/blog/understanding-ovulation' },
+    { name: 'Finding Your Fertile Window', href: '/blog/finding-fertile-window' },
+    { name: 'Cervical Mucus Guide', href: '/blog/cervical-mucus-guide' },
+    { name: 'Basal Body Temperature', href: '/blog/basal-body-temperature-bbt' },
+    { name: 'Fertility Tips', href: '/blog/fertility-tips-to-conceive' },
+    { name: 'Early Pregnancy Symptoms', href: '/blog/early-pregnancy-symptoms' },
+  ],
+  company: [
+    { name: 'About Us', href: '/about' },
+    { name: 'Privacy Policy', href: '/privacy' },
+    { name: 'Terms of Use', href: '/terms' },
+    { name: 'Medical Disclaimer', href: '/medical-disclaimer' },
+    { name: 'Contact', href: '/contact' },
+  ],
+};
+---
+
+<footer class="bg-canvas border-t border-hairline pt-16 pb-10 md:pt-20 md:pb-14">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10 lg:gap-12">
+      <!-- Brand & Mission Column -->
+      <div class="flex flex-col space-y-5">
+        <a href="/" class="flex items-center gap-2 shrink-0">
+          <span class="flex h-8 w-8 items-center justify-center rounded-full bg-brand-rose text-white shadow-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="h-4 w-4">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v18m9-9H3" />
+            </svg>
+          </span>
+          <span class="text-lg font-semibold tracking-tight text-primary">
+            Accurate <span class="text-brand-rose">Ovulation</span>
+          </span>
+        </a>
+        <p class="text-sm text-secondary leading-relaxed max-w-xs">
+          Providing clinically-precise cycle projections and fertility metrics. Engineered for maximum accuracy and absolute user privacy.
+        </p>
+        <div class="flex items-center gap-2 pt-2 border-t border-hairline">
+          <span class="inline-flex h-2 w-2 rounded-full bg-brand-sage animate-pulse"></span>
+          <span class="text-xs font-mono text-secondary">
+            100% Privacy: Local Processing Only
+          </span>
+        </div>
+      </div>
+
+      <!-- Calculators Menu -->
+      <div>
+        <h3 class="text-xs font-mono font-semibold tracking-widest text-brand-rose uppercase mb-4">Calculators</h3>
+        <nav aria-label="Calculator links">
+          <ul class="space-y-3">
+            {footerLinks.calculators.map((link) => (
+              <li>
+                <a
+                  href={link.href}
+                  class="text-sm text-secondary hover:text-primary transition-colors duration-200 font-medium"
+                >
+                  {link.name}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </div>
+
+      <!-- Resources Menu -->
+      <div>
+        <h3 class="text-xs font-mono font-semibold tracking-widest text-brand-sage uppercase mb-4">Resources</h3>
+        <nav aria-label="Educational resources">
+          <ul class="space-y-3">
+            {footerLinks.resources.map((link) => (
+              <li>
+                <a
+                  href={link.href}
+                  class="text-sm text-secondary hover:text-primary transition-colors duration-200 font-medium"
+                >
+                  {link.name}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </div>
+
+      <!-- Company Menu -->
+      <div>
+        <h3 class="text-xs font-mono font-semibold tracking-widest text-brand-gold uppercase mb-4">Company</h3>
+        <nav aria-label="Company information">
+          <ul class="space-y-3">
+            {footerLinks.company.map((link) => (
+              <li>
+                <a
+                  href={link.href}
+                  class="text-sm text-secondary hover:text-primary transition-colors duration-200 font-medium"
+                >
+                  {link.name}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Medical Disclaimer Banner -->
+    <div class="mt-12 pt-8 border-t border-hairline">
+      <div class="rounded-lg bg-canvas-soft-2 p-5 md:p-6 border border-hairline">
+        <h4 class="text-xs font-semibold uppercase font-mono tracking-wider text-primary mb-2 flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="h-4 w-4 text-brand-rose">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+          </svg>
+          Medical Disclaimer
+        </h4>
+        <p class="text-xs text-secondary leading-relaxed">
+          The calculations, estimates, predictions, and educational content on this website (Accurate Ovulation Calculator) are for informational and educational purposes only. They are based on statistical averages and standardized reproductive metrics, which can vary widely for individual biological cycles. This tool is <strong>not intended</strong> as, and must not be used as, a substitute for professional medical advice, clinical diagnosis, or medical treatment. It must <strong>never</strong> be used as a method of contraception or birth control. Always consult with a qualified, licensed healthcare provider, gynecologist, or fertility specialist regarding any questions or concerns you may have about your cycle, pregnancy planning, or reproductive health.
+        </p>
+      </div>
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="mt-10 pt-8 border-t border-hairline">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+        <p class="text-xs text-secondary/70 text-center md:text-left">
+          &copy; {currentYear} Accurate Ovulation Calculator. All rights reserved.
+        </p>
+        <div class="flex items-center gap-6 text-xs text-secondary/70">
+          <a href="/privacy" class="hover:text-primary transition-colors">Privacy Policy</a>
+          <a href="/terms" class="hover:text-primary transition-colors">Terms of Use</a>
+          <a href="/medical-disclaimer" class="hover:text-primary transition-colors">Medical Disclaimer</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>

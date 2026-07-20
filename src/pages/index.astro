@@ -1,0 +1,402 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const pageTitle = "Accurate Ovulation Calculator - Free, Private Fertile Window Predictor";
+const pageDescription = "Calculate your fertile window, ovulation day, implantation date, and pregnancy test timing with our clinically-accurate ovulation calculator. Free, 100% private, no account needed. Evidence-based algorithms including Ogino-Knaus method for irregular cycles.";
+
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Accurate Ovulation Calculator",
+  "url": "https://accurateovulationcalculator.com",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://accurateovulationcalculator.com/blog?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+};
+
+const relatedTools = [
+  {
+    title: "Fertility Calendar",
+    description: "Visual 2-month calendar with daily fertility insights, symptom tips, and ICS export.",
+    href: "/fertility-calendar",
+    color: "brand-sage",
+    bgColor: "brand-sage-light",
+    borderColor: "brand-sage",
+    icon: "grid",
+  },
+  {
+    title: "Due Date Calculator",
+    description: "Calculate estimated due date from LMP, conception date, or IVF transfer with trimester milestones.",
+    href: "/due-date-calculator",
+    color: "brand-gold",
+    bgColor: "brand-gold/10",
+    borderColor: "brand-gold",
+    icon: "clock",
+  },
+  {
+    title: "Pregnancy Test Calculator",
+    description: "Find the earliest accurate test date for blood, early urine, and standard home pregnancy tests.",
+    href: "/pregnancy-test-calculator",
+    color: "brand-rose",
+    bgColor: "brand-blush",
+    borderColor: "brand-rose-border",
+    icon: "beaker",
+  },
+];
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is an ovulation calculator?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "An ovulation calculator is a digital tool that estimates your fertile window and predicted ovulation day based on your menstrual cycle information. It typically uses the Ogino-Knaus method, which calculates ovulation by subtracting the luteal phase (usually 14 days) from your cycle length. The calculator identifies the six days each cycle when conception is most likely — the five days before ovulation plus ovulation day itself."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How does an ovulation calculator work?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "An ovulation calculator works by using your last menstrual period (LMP) date and average cycle length to estimate when ovulation occurs. It subtracts the luteal phase length (typically 12–16 days) from your cycle length to pinpoint the estimated ovulation day. The fertile window is then calculated as the five days before that date plus the ovulation day itself, accounting for sperm survival time and egg viability."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How accurate is an ovulation calculator?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "An ovulation calculator provides estimates based on statistical averages and your reported cycle data. For women with regular cycles, these estimates can be reasonably helpful as a starting point. However, accuracy depends on cycle regularity, accurate data entry, and individual biological variation. For best results, combine calculator predictions with physical fertility signs like basal body temperature tracking, cervical mucus observation, and LH ovulation predictor kits."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I use an ovulation calculator for irregular periods?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, many ovulation calculators, including ours, offer a specific mode for irregular cycles. This method uses the Ogino-Knaus formula, which requires your shortest and longest cycle lengths from the past 6–12 months. It calculates a wider, more conservative fertile window to account for cycle variability. While helpful, irregular cycles may benefit from additional tracking methods and guidance from a healthcare professional."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is a fertile window and why is it important?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The fertile window is the six-day period each menstrual cycle when conception is most likely to occur. It includes the five days before ovulation and ovulation day itself. This window exists because sperm can survive up to five days in fertile cervical mucus, while the released egg remains viable for only 12–24 hours. Timing intercourse during this window gives you the best chance of conception each cycle."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "When am I most fertile during my menstrual cycle?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "You are most fertile in the two days leading up to ovulation and on ovulation day itself. During these peak fertility days, the probability of conception per cycle is highest — approximately 25–35% for healthy couples under 35. The day before ovulation and ovulation day carry the greatest likelihood, as the egg is fresh and available for fertilization."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I get pregnant outside my fertile window?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "While the probability is significantly lower, it is not impossible to conceive outside the calculated fertile window. Sperm can occasionally survive longer than five days under favorable conditions, and ovulation timing may shift unexpectedly due to stress, illness, or hormonal fluctuations. However, conception chances drop substantially outside the fertile window. An ovulation calculator identifies your highest-probability days, but biological variation means unexpected pregnancies can occur."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is this a free ovulation calculator?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, this ovulation calculator is completely free to use with no hidden fees, no account registration required, and no data collection. All calculations run locally in your browser, ensuring your personal health information stays private. You can use it as many times as you like without any cost or limitations."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is there a 100 percent accurate ovulation calculator?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No ovulation calculator can guarantee 100% accuracy. All ovulation calculators, including ours, provide estimates based on menstrual cycle data and statistical averages. They cannot guarantee ovulation timing, pregnancy, or fertility outcomes. Individual biology varies significantly — even women with regular cycles experience occasional shifts due to stress, illness, travel, or hormonal changes. Results are only estimates, not predictions. If you have irregular cycles, difficulty conceiving, or specific fertility concerns, please consult a qualified healthcare professional such as a reproductive endocrinologist or gynecologist for personalized evaluation and guidance."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What should I do after calculating my ovulation date?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "After calculating your ovulation date, you can plan intercourse during your fertile window for the best chances of conception. Consider combining the calculator results with physical fertility tracking — basal body temperature, cervical mucus observation, and LH predictor kits can help confirm ovulation. You may also want to save your dates to our fertility calendar for visual tracking, start or continue prenatal vitamins, and schedule a preconception appointment with your healthcare provider."
+      }
+    }
+  ]
+};
+
+const homepageSchema = [
+  websiteSchema,
+  faqSchema,
+];
+---
+
+<Layout title={pageTitle} description={pageDescription} schema={homepageSchema}>
+  <!-- Hero Section -->
+  <section class="relative overflow-hidden bg-canvas-soft">
+    <div class="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8 py-20 md:py-32 lg:py-40">
+      <div class="text-center max-w-3xl mx-auto">
+        <!-- Tagline Badge -->
+        <span class="inline-flex items-center gap-1.5 text-[11px] font-mono font-semibold tracking-widest text-brand-rose uppercase mb-7 px-4 py-2 rounded-full bg-brand-blush border border-brand-rose-border/50 backdrop-blur-sm">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-rose animate-pulse"></span>
+          Clinical-Grade Fertility Intelligence
+        </span>
+
+        <!-- Main Heading -->
+        <h1 class="text-[2.75rem] md:text-5xl lg:text-[3.75rem] font-semibold tracking-tight text-primary leading-[1.1] max-w-[900px] mx-auto">
+          Ovulation Calculator: Know Your Fertile Window<br class="hidden sm:inline"> with Clinical Precision
+        </h1>
+
+        <!-- Supporting Paragraph -->
+        <p class="mt-8 text-base md:text-lg lg:text-[1.125rem] text-secondary leading-[1.7] max-w-[38rem] mx-auto">
+          Our free ovulation calculator provides personalized ovulation predictions, implantation timelines, and pregnancy milestones — calculated locally in your browser for complete privacy.
+        </p>
+
+        <!-- Primary CTA - Ovulation Calculator -->
+        <div class="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4">
+          <a href="/ovulation-calculator" class="btn-primary h-12 px-8 md:px-10 text-[15px] font-semibold shadow-lg hover:shadow-xl transition-all duration-300 w-full sm:w-auto">
+            Start Your Fertility Assessment
+          </a>
+          <a href="/blog" class="btn-secondary h-12 px-8 md:px-10 text-[15px] font-semibold shadow-sm hover:shadow-md transition-all duration-300 w-full sm:w-auto">
+            Explore the Research
+          </a>
+        </div>
+
+        <!-- Trust Badges -->
+        <div class="mt-16 flex flex-wrap items-center justify-center gap-x-8 gap-y-4 text-xs text-secondary/80">
+          <div class="flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-brand-sage">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+            </svg>
+            <span class="font-medium text-secondary">100% Private</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-brand-sage">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5m.75-9l3-3 2.148 2.148A12.061 12.061 0 0116.5 7.605" />
+            </svg>
+            <span class="font-medium text-secondary">Evidence-Based Methods</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-brand-sage">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span class="font-medium text-secondary">Instant Results</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEO Content Section: What Is Ovulation & How Calculator Works -->
+  <section class="bg-canvas py-16 md:py-24" aria-labelledby="ovulation-explained-heading">
+    <div class="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
+      <div class="max-w-4xl mx-auto space-y-12 md:space-y-16">
+
+        <!-- What Is Ovulation -->
+        <article class="prose prose-slate max-w-none">
+          <h2 id="ovulation-explained-heading" class="text-2xl md:text-3xl font-semibold tracking-tight text-primary mb-6">What Is Ovulation?</h2>
+
+          <p class="text-base text-secondary leading-relaxed mb-6">
+            Ovulation is the release of a mature egg from the ovary into the fallopian tube, where it can be fertilized by sperm. This typically occurs once per cycle, approximately 14 days before the next menstrual period. The egg survives for only 12 to 24 hours, while sperm can survive up to five days in fertile cervical mucus — creating a <strong class="text-primary">fertile window of about six days</strong> each cycle.
+          </p>
+
+          <h3 class="text-xl font-semibold text-primary mt-8 mb-4">The Four Phases of Your Cycle</h3>
+          <ul class="list-disc list-inside space-y-3 text-base text-secondary leading-relaxed">
+            <li><strong class="text-primary">Menstrual (Days 1–5):</strong> Uterine lining sheds. Estrogen and progesterone are at their lowest.</li>
+            <li><strong class="text-primary">Follicular (Days 1–13):</strong> FSH stimulates follicles to mature. Rising estrogen thickens the uterine lining.</li>
+            <li><strong class="text-primary">Ovulation (~Day 14):</strong> An LH surge triggers egg release. This is peak fertility.</li>
+            <li><strong class="text-primary">Luteal (Days 15–28):</strong> The corpus luteum produces progesterone to prepare for potential implantation.</li>
+          </ul>
+        </article>
+
+        <!-- How an Ovulation Calculator Works -->
+        <article class="prose prose-slate max-w-none">
+          <h2 class="text-2xl md:text-3xl font-semibold tracking-tight text-primary mb-6">How the Ovulation Calculator Works</h2>
+
+          <p class="text-base text-secondary leading-relaxed mb-6">
+            Our calculator uses the <strong>Ogino-Knaus method</strong> to estimate your fertile window. It subtracts your luteal phase length (typically 14 days) from your cycle length to pinpoint ovulation, then identifies the five days before ovulation plus ovulation day itself as your fertile window. We support three calculation methods for maximum accuracy:
+          </p>
+
+          <ul class="list-disc list-inside space-y-4 text-base text-secondary leading-relaxed">
+            <li>
+              <strong class="text-primary">Last Menstrual Period (LMP):</strong> Enter your last period date and average cycle length. Best for regular 21–35 day cycles.
+            </li>
+            <li>
+              <strong class="text-primary">Custom Luteal Phase:</strong> If your luteal phase differs from 14 days, customize this value for more precise ovulation estimates.
+            </li>
+            <li>
+              <strong class="text-primary">Irregular Cycle (Ogino-Knaus):</strong> Provide your shortest and longest cycle lengths from the past 6–12 months for a wider, more conservative fertile window.
+            </li>
+          </ul>
+
+          <p class="text-base text-secondary leading-relaxed mt-6">
+            Our <a href="/ovulation-calculator" class="text-brand-rose font-medium hover:underline">free ovulation calculator</a> also calculates your implantation window (6–10 days post-ovulation) and recommended pregnancy test dates.
+          </p>
+        </article>
+
+        <!-- Important Disclaimer -->
+        <article class="prose prose-slate max-w-none">
+          <div class="rounded-xl bg-canvas-soft-2 p-6 md:p-8 border border-hairline">
+            <p class="text-base text-secondary leading-relaxed mb-4">
+              <strong class="text-primary">This calculator provides estimates for educational purposes only.</strong> It is based on statistical averages and cannot guarantee ovulation timing, pregnancy, or fertility outcomes. Always consult a qualified healthcare provider for personalized medical guidance.
+            </p>
+            <p class="text-base text-secondary leading-relaxed">
+              Our tools <strong class="text-primary">do not diagnose, treat, prevent, or cure any medical condition</strong> and must never be used as a method of contraception.
+            </p>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Related Tools Section -->
+  <section class="bg-canvas-soft py-12 md:py-16" aria-labelledby="related-tools-heading">
+    <div class="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto mb-8 md:mb-10">
+        <span class="text-[11px] font-mono font-semibold tracking-widest text-brand-rose uppercase">
+          Related Tools
+        </span>
+        <h2 id="related-tools-heading" class="text-xl md:text-2xl font-semibold tracking-tight text-primary mt-2 mb-3">
+          Other Fertility Calculators
+        </h2>
+        <p class="text-sm text-secondary leading-relaxed max-w-xl mx-auto">
+          Additional tools for your fertility journey. Each runs privately in your browser.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto">
+        {relatedTools.map((tool) => (
+          <a
+            href={tool.href}
+            class="card-container group hover:shadow-md transition-all duration-200 p-5"
+          >
+            <div class="flex items-start gap-3">
+              <span class={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-${tool.bgColor} border border-${tool.borderColor} text-${tool.color} transition-all duration-200 group-hover:scale-105`}>
+                {tool.icon === 'grid' && (
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" />
+                  </svg>
+                )}
+                {tool.icon === 'clock' && (
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                )}
+                {tool.icon === 'beaker' && (
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23.693L5 14.5m14.8.8l1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0112 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5" />
+                  </svg>
+                )}
+              </span>
+              <div class="flex-1 min-w-0">
+                <h3 class="text-sm font-semibold text-primary group-hover:text-brand-rose transition-colors duration-200">
+                  {tool.title}
+                </h3>
+                <p class="text-[12px] text-secondary mt-1 leading-relaxed">
+                  {tool.description}
+                </p>
+                <div class="mt-3 pt-3 border-t border-hairline">
+                  <span class="inline-flex items-center text-xs font-medium text-brand-rose hover:text-primary transition-colors">
+                    Open Tool
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-3 h-3 ml-1 transition-transform duration-200 group-hover:translate-x-1">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                    </svg>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="bg-canvas py-16 md:py-24" aria-labelledby="faq-heading">
+    <div class="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
+      <div class="max-w-3xl mx-auto">
+        <div class="text-center mb-10">
+          <span class="text-[11px] font-mono font-semibold tracking-widest text-brand-sage uppercase">
+            Common Questions
+          </span>
+          <h2 id="faq-heading" class="text-xl md:text-2xl font-semibold text-primary tracking-tight mt-2">Frequently Asked Questions</h2>
+        </div>
+
+        <div class="space-y-3" id="faq-accordion">
+          {faqSchema.mainEntity.map((item, index) => (
+            <div class="card-container bg-canvas-soft-2 overflow-hidden">
+              <button
+                type="button"
+                class="faq-toggle w-full flex items-center justify-between text-left gap-4 cursor-pointer"
+                data-index={index}
+              >
+                <span class="text-[13px] font-semibold text-primary">{item.name}</span>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4 shrink-0 text-secondary transition-transform duration-300 faq-icon">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                </svg>
+              </button>
+              <div class="faq-answer hidden overflow-hidden transition-all duration-300">
+                <p class="text-xs text-secondary leading-relaxed pt-3 pb-1 border-t border-hairline mt-3">
+                  {item.acceptedAnswer.text}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQPage JSON-LD -->
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+  <!-- Medical Disclaimer Banner -->
+  <section class="bg-canvas-soft-2 py-14 md:py-16">
+    <div class="mx-auto max-w-4xl px-5 sm:px-6 lg:px-8">
+      <div class="card-container bg-canvas border-0 shadow-lg">
+        <div class="flex items-start gap-4">
+          <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand-blush border border-brand-rose-border text-brand-rose mt-0.5 shadow-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+            </svg>
+          </span>
+          <div class="flex-1">
+            <h3 class="text-sm font-semibold text-primary mb-1.5">Medical Disclaimer</h3>
+            <p class="text-xs text-secondary leading-relaxed">
+              The calculations, estimates, predictions, and educational content on this website are for informational and educational purposes only. They are based on statistical averages and standardized reproductive metrics, which can vary widely for individual biological cycles. This tool is <strong>not intended</strong> as a substitute for professional medical advice, clinical diagnosis, or medical treatment. Always consult with a qualified healthcare provider regarding any questions about your reproductive health.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  // FAQ Accordion Toggle
+  document.querySelectorAll('.faq-toggle').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const answer = btn.nextElementSibling;
+      const icon = btn.querySelector('.faq-icon');
+      const isOpen = !answer.classList.contains('hidden');
+
+      // Close all other answers
+      document.querySelectorAll('.faq-answer').forEach((el) => el.classList.add('hidden'));
+      document.querySelectorAll('.faq-icon').forEach((el) => el.style.transform = 'rotate(0deg)');
+
+      if (!isOpen) {
+        answer.classList.remove('hidden');
+        if (icon) icon.style.transform = 'rotate(180deg)';
+      }
+    });
+  });
+</script>

@@ -1,0 +1,109 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  canonical?: string;
+  ogImage?: string;
+  schema?: any;
+}
+
+const SITE_NAME = 'Accurate Ovulation Calculator';
+const SITE_URL = 'https://accurateovulationcalculator.com';
+const DEFAULT_OG_IMAGE = `${SITE_URL}/og-default.jpg`;
+
+const {
+  title,
+  description,
+  canonical = Astro.url.href,
+  ogImage = DEFAULT_OG_IMAGE,
+  schema
+} = Astro.props;
+
+// Title template: "Page Title | Site Name"
+const fullTitle = `${title} | ${SITE_NAME}`;
+
+// Default site schema
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  'name': SITE_NAME,
+  'url': SITE_URL,
+  'potentialAction': {
+    '@type': 'SearchAction',
+    'target': `${SITE_URL}/blog?q={search_term_string}`,
+    'query-input': 'required name=search_term_string'
+  }
+};
+
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  'name': SITE_NAME,
+  'url': SITE_URL,
+  'logo': `${SITE_URL}/logo.png`,
+  'sameAs': []
+};
+
+// Breadcrumb Schema
+const pathSegments = Astro.url.pathname.split('/').filter(Boolean);
+const breadcrumbItems = [
+  {
+    '@type': 'ListItem',
+    'position': 1,
+    'name': 'Home',
+    'item': SITE_URL
+  },
+  ...pathSegments.map((segment, index) => {
+    const path = `${SITE_URL}/${pathSegments.slice(0, index + 1).join('/')}`;
+    const name = segment
+      .replace(/-/g, ' ')
+      .replace(/\b\w/g, (char) => char.toUpperCase());
+    return {
+      '@type': 'ListItem',
+      'position': index + 2,
+      'name': name,
+      'item': path
+    };
+  })
+];
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  'itemListElement': breadcrumbItems
+};
+---
+
+<!-- Standard Meta Tags -->
+<title>{fullTitle}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+<meta name="robots" content="index, follow" />
+<meta name="theme-color" content="#2d2426" />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content={Astro.url.pathname.startsWith('/blog/') ? 'article' : 'website'} />
+<meta property="og:url" content={Astro.url.href} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={ogImage} />
+<meta property="og:site_name" content={SITE_NAME} />
+<meta property="og:locale" content="en_US" />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:url" content={Astro.url.href} />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImage} />
+<meta name="twitter:site" content="@accurateovulation" />
+
+<!-- Structured Data (JSON-LD) -->
+<script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
+<script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
+<script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+
+<!-- Custom page schemas (Calculator, FAQ, Article, etc.) -->
+{schema && (
+  <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+)}

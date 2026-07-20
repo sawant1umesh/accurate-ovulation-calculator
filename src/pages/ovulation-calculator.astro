@@ -1,0 +1,606 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Calendar from '../components/Calendar.astro';
+import Timeline from '../components/Timeline.astro';
+
+// SEO Title & Description
+const pageTitle = "Ovulation Calculator - Free Fertile Window & Ovulation Day Predictor";
+const pageDescription = "Calculate your exact fertile window, ovulation day, implantation period, and optimal pregnancy test date. Supports custom luteal phase and irregular cycles. 100% private, no account needed. Evidence-based Ogino-Knaus method.";
+
+// Calculator JSON-LD Schema
+const calculatorSchema = {
+  "@context": "https://schema.org",
+  "@type": "Calculator",
+  "name": "Ovulation Calculator",
+  "description": "Calculates fertile window, peak ovulation day, implantation window, and pregnancy test timing based on LMP, cycle length, or irregular cycle parameters.",
+  "category": "Health Calculator",
+  "url": "https://accurateovulationcalculator.com/ovulation-calculator"
+};
+
+// FAQPage JSON-LD Schema
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How does the ovulation calculator work?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The calculator uses the Ogino-Knaus method to estimate your fertile window based on your last menstrual period (LMP) date and cycle length. It subtracts the luteal phase (typically 14 days) from your cycle length to pinpoint ovulation, then identifies the 5 days before ovulation plus ovulation day itself as your fertile window."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "When is the best time to conceive?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The best time to conceive is during your fertile window, which spans 5 days before ovulation and the day of ovulation itself. Peak fertility occurs on ovulation day and the day immediately before it, when the egg is most likely to be available for fertilization."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How accurate is the ovulation calculator?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The calculator provides estimates based on statistical averages and standardized reproductive metrics. While clinically informed, individual cycles can vary due to stress, illness, travel, and other factors. For the most accurate results, combine calculator predictions with tracking cervical mucus, basal body temperature, and LH test strips."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I use this calculator with irregular cycles?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. The Irregular Cycle mode uses the Ogino-Knaus method, which requires your shortest and longest cycle lengths from the past 6 to 12 months. It calculates a broader fertile window to account for cycle variability, giving you a more conservative estimate of your most fertile days."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the luteal phase and why does it matter?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The luteal phase is the time between ovulation and the start of your next period, typically lasting 12 to 16 days. It matters because ovulation is calculated by subtracting the luteal phase length from your total cycle length. If your luteal phase is shorter or longer than 14 days, using the Custom Luteal Phase tab provides more accurate predictions."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "When should I take a pregnancy test after ovulation?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "For the most reliable results, wait until the first day of your missed period to take a home pregnancy test. Testing too early may yield a false negative because hCG levels haven't risen sufficiently. Early detection tests can be used 4 to 5 days before your missed period, but accuracy increases closer to the expected period date."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What factors can affect my ovulation date?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Several factors can shift ovulation, including high stress, illness, significant weight changes, travel across time zones, polycystic ovary syndrome (PCOS), thyroid disorders, and certain medications. If you notice consistent irregularities, consult a healthcare provider for a personalized fertility assessment."
+      }
+    }
+  ]
+};
+
+const signsOfOvulation = [
+  {
+    title: "Egg-White Cervical Mucus",
+    description: "Clear, stretchy, and slippery discharge resembling raw egg whites indicates peak fertility and optimal sperm transport.",
+    icon: "droplet"
+  },
+  {
+    title: "Basal Body Temperature Rise",
+    description: "A sustained temperature increase of 0.5 to 1.0 degrees Fahrenheit confirms ovulation has occurred.",
+    icon: "thermometer"
+  },
+  {
+    title: "Positive LH Surge",
+    description: "A positive ovulation predictor kit (OPK) result means ovulation will occur within 24 to 36 hours.",
+    icon: "bolt"
+  },
+  {
+    title: "Increased Libido",
+    description: "A natural rise in sexual desire around mid-cycle is driven by peak estrogen and LH surge levels.",
+    icon: "heart"
+  },
+  {
+    title: "Mild Pelvic Pain",
+    description: "A brief, one-sided twinge called Mittelschmerz may occur as the follicle releases the egg.",
+    icon: "pulse"
+  }
+];
+---
+
+<Layout title={pageTitle} description={pageDescription} schema={calculatorSchema}>
+  <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-10 md:py-16">
+    <!-- Header -->
+    <div class="text-center max-w-2xl mx-auto mb-10 md:mb-16">
+      <span class="text-xs font-mono font-semibold tracking-wider text-brand-rose uppercase">
+        Advanced Fertility Projections
+      </span>
+      <h1 class="text-3xl md:text-4xl font-semibold tracking-tight text-primary mt-2 mb-4">
+        Calculate Your Fertile Window with Scientific Accuracy.
+      </h1>
+      <p class="text-sm md:text-base text-secondary leading-relaxed">
+        Understand your body's natural rhythms. Input your cycle data below to generate your personalized interactive calendar, implantation timeline, and milestone projections.
+      </p>
+    </div>
+
+    <!-- Main Grid: Form on Left/Center -->
+    <div class="card-container mb-12">
+      <!-- Tabs Header -->
+      <div class="flex border-b border-hairline mb-8 overflow-x-auto whitespace-nowrap scrollbar-none">
+        <button
+          type="button"
+          id="tab-lmp"
+          class="px-5 py-3 text-sm font-semibold border-b-2 border-brand-rose text-primary focus:outline-none transition-all cursor-pointer"
+        >
+          Last Period (LMP)
+        </button>
+        <button
+          type="button"
+          id="tab-luteal"
+          class="px-5 py-3 text-sm font-medium border-b-2 border-transparent text-secondary hover:text-primary focus:outline-none transition-all cursor-pointer"
+        >
+          Custom Luteal Phase
+        </button>
+        <button
+          type="button"
+          id="tab-irregular"
+          class="px-5 py-3 text-sm font-medium border-b-2 border-transparent text-secondary hover:text-primary focus:outline-none transition-all cursor-pointer"
+        >
+          Irregular Cycle
+        </button>
+      </div>
+
+      <!-- Calculator Form -->
+      <form id="ovulation-form" class="space-y-6">
+        <!-- Hidden input for method tracking -->
+        <input type="hidden" id="calculation-method" name="method" value="lmp" />
+
+        <!-- Date Input (Shared by all methods) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label for="lmp-date" class="block text-xs font-semibold text-primary uppercase font-mono tracking-wider mb-2">
+              First Day of Last Period (LMP)
+            </label>
+            <input
+              type="date"
+              id="lmp-date"
+              name="lmpDate"
+              required
+              class="w-full h-10 px-4 border border-hairline-strong rounded-sm text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary bg-canvas text-primary hover:border-primary transition-all"
+            />
+            <p class="text-[10px] text-secondary mt-1">The date when your last full bleeding flow started.</p>
+          </div>
+
+          <!-- Cycle Length (Method 1 & 2) -->
+          <div id="cycle-length-wrapper">
+            <label for="cycle-length" class="block text-xs font-semibold text-primary uppercase font-mono tracking-wider mb-2">
+              Average Cycle Length: <span id="cycle-length-val" class="font-bold text-brand-rose">28</span> Days
+            </label>
+            <div class="flex items-center space-x-4">
+              <input
+                type="range"
+                id="cycle-length"
+                name="cycleLength"
+                min="20"
+                max="45"
+                value="28"
+                class="w-full accent-brand-rose cursor-pointer h-2 bg-canvas-soft-2 rounded-lg appearance-none border border-hairline"
+              />
+            </div>
+            <p class="text-[10px] text-secondary mt-1">Number of days from the start of one period to the start of the next.</p>
+          </div>
+
+          <!-- Shortest Cycle (Method 3) -->
+          <div id="shortest-cycle-wrapper" class="hidden">
+            <label for="shortest-cycle" class="block text-xs font-semibold text-primary uppercase font-mono tracking-wider mb-2">
+              Shortest Cycle: <span id="shortest-cycle-val" class="font-bold text-brand-rose">26</span> Days
+            </label>
+            <input
+              type="range"
+              id="shortest-cycle"
+              name="shortestCycle"
+              min="20"
+              max="45"
+              value="26"
+              class="w-full accent-brand-rose cursor-pointer h-2 bg-canvas-soft-2 rounded-lg appearance-none border border-hairline"
+            />
+            <p class="text-[10px] text-secondary mt-1">Your shortest cycle length over the past 6-12 months.</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Custom Luteal Phase (Method 2) -->
+          <div id="luteal-phase-wrapper" class="hidden">
+            <label for="luteal-phase" class="block text-xs font-semibold text-primary uppercase font-mono tracking-wider mb-2">
+              Luteal Phase Length: <span id="luteal-phase-val" class="font-bold text-brand-rose">14</span> Days
+            </label>
+            <input
+              type="range"
+              id="luteal-phase"
+              name="lutealPhase"
+              min="10"
+              max="16"
+              value="14"
+              class="w-full accent-brand-rose cursor-pointer h-2 bg-canvas-soft-2 rounded-lg appearance-none border border-hairline"
+            />
+            <p class="text-[10px] text-secondary mt-1">The days between ovulation and your next period (typically 14).</p>
+          </div>
+
+          <!-- Longest Cycle (Method 3) -->
+          <div id="longest-cycle-wrapper" class="hidden">
+            <label for="longest-cycle" class="block text-xs font-semibold text-primary uppercase font-mono tracking-wider mb-2">
+              Longest Cycle: <span id="longest-cycle-val" class="font-bold text-brand-rose">32</span> Days
+            </label>
+            <input
+              type="range"
+              id="longest-cycle"
+              name="longestCycle"
+              min="20"
+              max="45"
+              value="32"
+              class="w-full accent-brand-rose cursor-pointer h-2 bg-canvas-soft-2 rounded-lg appearance-none border border-hairline"
+            />
+            <p class="text-[10px] text-secondary mt-1">Your longest cycle length over the past 6-12 months.</p>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="pt-4">
+          <button type="submit" class="btn-primary w-full md:w-auto px-8 md:text-sm font-semibold">
+            Calculate My Fertile Window
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Results Placement -->
+    <Calendar />
+    <Timeline />
+
+    <!-- Educational Content Section -->
+    <section class="mt-20 border-t border-hairline pt-12 space-y-16">
+
+      <!-- How the Calculator Works -->
+      <div class="max-w-3xl mx-auto">
+        <h2 class="text-xl md:text-2xl font-semibold text-primary tracking-tight mb-4">How the Ovulation Calculator Works</h2>
+        <p class="text-sm text-secondary leading-relaxed">
+          Our calculator estimates your fertile window using the Ogino-Knaus method, a clinically recognized approach for predicting ovulation. It subtracts your luteal phase length (typically 14 days) from your total cycle length to identify the most likely day of ovulation. The fertile window is then calculated as the 5 days leading up to ovulation plus ovulation day itself, since sperm can survive up to 5 days in fertile cervical mucus while an egg remains viable for only 12 to 24 hours after release.
+        </p>
+      </div>
+
+      <!-- Signs of Ovulation -->
+      <div>
+        <div class="text-center max-w-xl mx-auto mb-10">
+          <span class="text-[11px] font-mono font-semibold tracking-widest text-brand-rose uppercase">
+            Biological Indicators
+          </span>
+          <h2 class="text-xl md:text-2xl font-semibold text-primary tracking-tight mt-2">Signs of Ovulation</h2>
+          <p class="text-xs text-secondary mt-2">Your body provides several measurable signals as ovulation approaches.</p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {signsOfOvulation.map((sign) => (
+            <div class="card-container bg-canvas-soft-2 group">
+              <div class="flex items-start gap-3">
+                <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-brand-blush border border-brand-rose-border text-brand-rose transition-transform duration-300 group-hover:scale-105">
+                  {sign.icon === 'droplet' && (
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M12 2.25c0 0-7.5 6.75-7.5 11.25a7.5 7.5 0 0015 0c0-4.5-7.5-11.25-7.5-11.25z" />
+                    </svg>
+                  )}
+                  {sign.icon === 'thermometer' && (
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M15.362 5.214A8.252 8.252 0 0112 21 8.25 8.25 0 016.038 7.048 8.287 8.287 0 009 9.6a8.983 8.983 0 013.361-6.867 8.21 8.21 0 003 2.48z" />
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M12 18a3.75 3.75 0 00.495-7.467 5.99 5.99 0 00-1.925 3.546 5.974 5.974 0 01-2.133-1A3.75 3.75 0 0012 18z" />
+                    </svg>
+                  )}
+                  {sign.icon === 'bolt' && (
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
+                    </svg>
+                  )}
+                  {sign.icon === 'heart' && (
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+                    </svg>
+                  )}
+                  {sign.icon === 'pulse' && (
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 12h16.5m-16.5 3.75h16.5M3.75 19.5h16.5M5.625 4.5h12.75a1.875 1.875 0 010 3.75H5.625a1.875 1.875 0 010-3.75z" />
+                    </svg>
+                  )}
+                </span>
+                <div>
+                  <h3 class="text-[13px] font-semibold text-primary">{sign.title}</h3>
+                  <p class="text-xs text-secondary mt-1 leading-relaxed">{sign.description}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- FAQ Accordion -->
+      <div class="max-w-3xl mx-auto">
+        <div class="text-center mb-10">
+          <span class="text-[11px] font-mono font-semibold tracking-widest text-brand-sage uppercase">
+            Common Questions
+          </span>
+          <h2 class="text-xl md:text-2xl font-semibold text-primary tracking-tight mt-2">Frequently Asked Questions</h2>
+        </div>
+
+        <div class="space-y-3" id="faq-accordion">
+          {faqSchema.mainEntity.map((item, index) => (
+            <div class="card-container bg-canvas-soft-2 overflow-hidden">
+              <button
+                type="button"
+                class="faq-toggle w-full flex items-center justify-between text-left gap-4 cursor-pointer"
+                data-index={index}
+              >
+                <span class="text-[13px] font-semibold text-primary">{item.name}</span>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4 shrink-0 text-secondary transition-transform duration-300 faq-icon">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                </svg>
+              </button>
+              <div class="faq-answer hidden overflow-hidden transition-all duration-300">
+                <p class="text-xs text-secondary leading-relaxed pt-3 pb-1 border-t border-hairline mt-3">
+                  {item.acceptedAnswer.text}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+    </section>
+
+    <!-- FAQPage JSON-LD -->
+    <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  </div>
+</Layout>
+
+<script>
+  import { addDays, subDays, format, parseISO } from 'date-fns';
+
+  // Range Slider Value sync
+  const cycleInput = document.getElementById('cycle-length') as HTMLInputElement;
+  const cycleVal = document.getElementById('cycle-length-val');
+  if (cycleInput && cycleVal) {
+    cycleInput.addEventListener('input', () => {
+      cycleVal.textContent = cycleInput.value;
+    });
+  }
+
+  const shortestInput = document.getElementById('shortest-cycle') as HTMLInputElement;
+  const shortestVal = document.getElementById('shortest-cycle-val');
+  if (shortestInput && shortestVal) {
+    shortestInput.addEventListener('input', () => {
+      shortestVal.textContent = shortestInput.value;
+      // Guarantee shortest is not longer than longest
+      if (Number(shortestInput.value) > Number(longestInput.value)) {
+        longestInput.value = shortestInput.value;
+        if (longestVal) longestVal.textContent = shortestInput.value;
+      }
+    });
+  }
+
+  const longestInput = document.getElementById('longest-cycle') as HTMLInputElement;
+  const longestVal = document.getElementById('longest-cycle-val');
+  if (longestInput && longestVal) {
+    longestInput.addEventListener('input', () => {
+      longestVal.textContent = longestInput.value;
+      // Guarantee longest is not shorter than shortest
+      if (Number(longestInput.value) < Number(shortestInput.value)) {
+        shortestInput.value = longestInput.value;
+        if (shortestVal) shortestVal.textContent = longestInput.value;
+      }
+    });
+  }
+
+  const lutealInput = document.getElementById('luteal-phase') as HTMLInputElement;
+  const lutealVal = document.getElementById('luteal-phase-val');
+  if (lutealInput && lutealVal) {
+    lutealInput.addEventListener('input', () => {
+      lutealVal.textContent = lutealInput.value;
+    });
+  }
+
+  // Set today's date as default in LMP
+  const lmpDateInput = document.getElementById('lmp-date') as HTMLInputElement;
+  if (lmpDateInput) {
+    lmpDateInput.value = format(new Date(), 'yyyy-MM-dd');
+  }
+
+  // Tabs Toggle logic
+  const tabLmp = document.getElementById('tab-lmp');
+  const tabLuteal = document.getElementById('tab-luteal');
+  const tabIrregular = document.getElementById('tab-irregular');
+  const methodInput = document.getElementById('calculation-method') as HTMLInputElement;
+
+  const cycleWrapper = document.getElementById('cycle-length-wrapper');
+  const lutealWrapper = document.getElementById('luteal-phase-wrapper');
+  const shortestWrapper = document.getElementById('shortest-cycle-wrapper');
+  const longestWrapper = document.getElementById('longest-cycle-wrapper');
+
+  const activeTabClass = 'border-brand-rose text-primary';
+  const inactiveTabClass = 'border-transparent text-secondary hover:text-primary';
+
+  tabLmp?.addEventListener('click', () => {
+    methodInput.value = 'lmp';
+    
+    tabLmp.className = tabLmp.className.replace(inactiveTabClass, activeTabClass);
+    tabLuteal!.className = tabLuteal!.className.replace(activeTabClass, inactiveTabClass);
+    tabIrregular!.className = tabIrregular!.className.replace(activeTabClass, inactiveTabClass);
+
+    cycleWrapper?.classList.remove('hidden');
+    lutealWrapper?.classList.add('hidden');
+    shortestWrapper?.classList.add('hidden');
+    longestWrapper?.classList.add('hidden');
+  });
+
+  tabLuteal?.addEventListener('click', () => {
+    methodInput.value = 'luteal';
+
+    tabLuteal.className = tabLuteal.className.replace(inactiveTabClass, activeTabClass);
+    tabLmp!.className = tabLmp!.className.replace(activeTabClass, inactiveTabClass);
+    tabIrregular!.className = tabIrregular!.className.replace(activeTabClass, inactiveTabClass);
+
+    cycleWrapper?.classList.remove('hidden');
+    lutealWrapper?.classList.remove('hidden');
+    shortestWrapper?.classList.add('hidden');
+    longestWrapper?.classList.add('hidden');
+  });
+
+  tabIrregular?.addEventListener('click', () => {
+    methodInput.value = 'irregular';
+
+    tabIrregular.className = tabIrregular.className.replace(inactiveTabClass, activeTabClass);
+    tabLmp!.className = tabLmp!.className.replace(activeTabClass, inactiveTabClass);
+    tabLuteal!.className = tabLuteal!.className.replace(activeTabClass, inactiveTabClass);
+
+    cycleWrapper?.classList.add('hidden');
+    lutealWrapper?.classList.add('hidden');
+    shortestWrapper?.classList.remove('hidden');
+    longestWrapper?.classList.remove('hidden');
+  });
+
+  // Handle Form Submission
+  const form = document.getElementById('ovulation-form');
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const rawLmp = lmpDateInput.value;
+    const method = methodInput.value;
+    const lmpDate = parseISO(rawLmp);
+
+    let cycleLen = 28;
+    let lutealLen = 14;
+    let shortestLen = 26;
+    let longestLen = 32;
+
+    let fertileStart: Date;
+    let fertileEnd: Date;
+    let ovulation: Date;
+    let nextPeriod: Date;
+
+    if (method === 'lmp') {
+      cycleLen = Number(cycleInput.value);
+      lutealLen = 14;
+      nextPeriod = addDays(lmpDate, cycleLen);
+      ovulation = subDays(nextPeriod, lutealLen);
+      fertileStart = subDays(ovulation, 5);
+      fertileEnd = ovulation;
+    } else if (method === 'luteal') {
+      cycleLen = Number(cycleInput.value);
+      lutealLen = Number(lutealInput.value);
+      nextPeriod = addDays(lmpDate, cycleLen);
+      ovulation = subDays(nextPeriod, lutealLen);
+      fertileStart = subDays(ovulation, 5);
+      fertileEnd = ovulation;
+    } else {
+      shortestLen = Number(shortestInput.value);
+      longestLen = Number(longestInput.value);
+      cycleLen = Math.round((shortestLen + longestLen) / 2);
+      lutealLen = 14;
+
+      // Ogino-Knaus Method for irregular cycles
+      fertileStart = addDays(lmpDate, shortestLen - 18);
+      fertileEnd = addDays(lmpDate, longestLen - 11);
+      ovulation = addDays(lmpDate, cycleLen - 14);
+      nextPeriod = addDays(lmpDate, cycleLen);
+    }
+
+    // Secondary Dates
+    const implantationStart = addDays(ovulation, 6);
+    const implantationEnd = addDays(ovulation, 10);
+    const testDate = addDays(lmpDate, Math.min(cycleLen, shortestLen)); // day of missed period
+    const dueDate = addDays(lmpDate, 280);
+
+    // List out period days (5 days starting from LMP)
+    const periodDays: string[] = [];
+    for (let i = 0; i < 5; i++) {
+      periodDays.push(format(addDays(lmpDate, i), 'yyyy-MM-dd'));
+    }
+
+    // List out fertile days range
+    const fertileDays: string[] = [];
+    let curDay = fertileStart;
+    while (curDay <= fertileEnd) {
+      fertileDays.push(format(curDay, 'yyyy-MM-dd'));
+      curDay = addDays(curDay, 1);
+    }
+
+    // List out implantation days
+    const implantationWindow: string[] = [];
+    let curImp = implantationStart;
+    while (curImp <= implantationEnd) {
+      implantationWindow.push(format(curImp, 'yyyy-MM-dd'));
+      curImp = addDays(curImp, 1);
+    }
+
+    // List out test days (4 days before missed period to 2 days after)
+    const testDates: string[] = [];
+    for (let i = -4; i <= 2; i++) {
+      testDates.push(format(addDays(testDate, i), 'yyyy-MM-dd'));
+    }
+
+    const calculatedData = {
+      method,
+      inputs: {
+        lmpDate: rawLmp,
+        cycleLength: cycleLen,
+        lutealLength: lutealLen,
+        shortestLength: shortestLen,
+        longestLength: longestLen
+      },
+      dates: {
+        ovulationDay: format(ovulation, 'yyyy-MM-dd'),
+        nextPeriodDate: format(nextPeriod, 'yyyy-MM-dd'),
+        fertileWindowStart: format(fertileStart, 'yyyy-MM-dd'),
+        fertileWindowEnd: format(fertileEnd, 'yyyy-MM-dd'),
+        implantationStart: format(implantationStart, 'yyyy-MM-dd'),
+        implantationEnd: format(implantationEnd, 'yyyy-MM-dd'),
+        testDate: format(testDate, 'yyyy-MM-dd'),
+        dueDate: format(dueDate, 'yyyy-MM-dd')
+      },
+      periodDays,
+      fertileDays,
+      implantationWindow,
+      testDates
+    };
+
+    // Dispatch Custom Event
+    const event = new CustomEvent('ovulation-calculated', {
+      detail: calculatedData
+    });
+    window.dispatchEvent(event);
+
+    // Smooth scroll down to results
+    setTimeout(() => {
+      const calWidget = document.getElementById('calendar-widget');
+      if (calWidget) {
+        calWidget.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 100);
+  });
+
+  // FAQ Accordion Toggle
+  document.querySelectorAll('.faq-toggle').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const answer = btn.nextElementSibling;
+      const icon = btn.querySelector('.faq-icon');
+      const isOpen = !answer.classList.contains('hidden');
+
+      // Close all other answers
+      document.querySelectorAll('.faq-answer').forEach((el) => el.classList.add('hidden'));
+      document.querySelectorAll('.faq-icon').forEach((el) => el.style.transform = 'rotate(0deg)');
+
+      if (!isOpen) {
+        answer.classList.remove('hidden');
+        if (icon) icon.style.transform = 'rotate(180deg)';
+      }
+    });
+  });
+</script>

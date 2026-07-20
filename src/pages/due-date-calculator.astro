@@ -1,0 +1,394 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+// SEO Title & Description
+const pageTitle = "Due Date Calculator - Pregnancy Due Date by LMP, Conception, or IVF";
+const pageDescription = "Calculate your estimated due date using Last Menstrual Period (LMP), conception date, or IVF embryo transfer. View gestational age, trimester timeline, and pregnancy milestones. Free, private, no account needed.";
+
+// Calculator JSON-LD Schema
+const calculatorSchema = {
+  "@context": "https://schema.org",
+  "@type": "Calculator",
+  "name": "Due Date Calculator",
+  "description": "Calculates estimated pregnancy due date and milestone timelines using LMP, conception date, or IVF embryo transfer dates.",
+  "category": "Pregnancy Calculator",
+  "url": "https://accurateovulationcalculator.com/due-date-calculator"
+};
+---
+
+<Layout title={pageTitle} description={pageDescription} schema={calculatorSchema}>
+  <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-10 md:py-16">
+    <!-- Header -->
+    <div class="text-center max-w-2xl mx-auto mb-10 md:mb-16">
+      <span class="text-xs font-mono font-semibold tracking-wider text-brand-gold uppercase">
+        Pregnancy Milestones
+      </span>
+      <h1 class="text-3xl md:text-4xl font-semibold tracking-tight text-primary mt-2 mb-4">
+        Calculate Your Pregnancy Due Date.
+      </h1>
+      <p class="text-sm md:text-base text-secondary leading-relaxed">
+        Determine your baby's estimated arrival and plan for key developmental milestones. Choose between LMP, conception, or IVF calculation methods below.
+      </p>
+    </div>
+
+    <!-- Calculator Input Box -->
+    <div class="card-container mb-12">
+      <!-- Tabs -->
+      <div class="flex border-b border-hairline mb-8 overflow-x-auto whitespace-nowrap scrollbar-none">
+        <button
+          type="button"
+          id="due-tab-lmp"
+          class="px-5 py-3 text-sm font-semibold border-b-2 border-brand-gold text-primary focus:outline-none transition-all cursor-pointer"
+        >
+          Last Period (LMP)
+        </button>
+        <button
+          type="button"
+          id="due-tab-conception"
+          class="px-5 py-3 text-sm font-medium border-b-2 border-transparent text-secondary hover:text-primary focus:outline-none transition-all cursor-pointer"
+        >
+          Conception Date
+        </button>
+        <button
+          type="button"
+          id="due-tab-ivf"
+          class="px-5 py-3 text-sm font-medium border-b-2 border-transparent text-secondary hover:text-primary focus:outline-none transition-all cursor-pointer"
+        >
+          IVF Transfer
+        </button>
+      </div>
+
+      <form id="due-calculator-form" class="space-y-6">
+        <input type="hidden" id="due-method" name="method" value="lmp" />
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Main Date Selector -->
+          <div>
+            <label id="date-input-label" for="base-date" class="block text-xs font-semibold text-primary uppercase font-mono tracking-wider mb-2">
+              First Day of Last Period
+            </label>
+            <input
+              type="date"
+              id="base-date"
+              name="baseDate"
+              required
+              class="w-full h-10 px-4 border border-hairline-strong rounded-sm text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary bg-canvas text-primary hover:border-primary transition-all"
+            />
+          </div>
+
+          <!-- Cycle Length (LMP Method only) -->
+          <div id="due-cycle-wrapper">
+            <label for="due-cycle" class="block text-xs font-semibold text-primary uppercase font-mono tracking-wider mb-2">
+              Average Cycle Length: <span id="due-cycle-val" class="font-bold text-brand-gold">28</span> Days
+            </label>
+            <input
+              type="range"
+              id="due-cycle"
+              name="cycleLength"
+              min="20"
+              max="45"
+              value="28"
+              class="w-full accent-brand-gold cursor-pointer h-2 bg-canvas-soft-2 rounded-lg appearance-none border border-hairline"
+            />
+          </div>
+
+          <!-- IVF Options (IVF Method only) -->
+          <div id="due-ivf-wrapper" class="hidden">
+            <label for="ivf-type" class="block text-xs font-semibold text-primary uppercase font-mono tracking-wider mb-2">
+              Embryo Age
+            </label>
+            <select
+              id="ivf-type"
+              name="ivfType"
+              class="w-full h-10 px-4 border border-hairline-strong rounded-sm text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary bg-canvas text-primary hover:border-primary transition-all"
+            >
+              <option value="3day">3-Day Embryo Transfer</option>
+              <option value="5day" selected>5-Day Embryo Transfer (Blastocyst)</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <button type="submit" class="btn-primary bg-primary hover:bg-brand-gold border hover:border-brand-gold w-full md:w-auto px-8 font-semibold">
+            Calculate Due Date
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Results Panel -->
+    <div id="due-results" class="hidden space-y-8 animate-fade-in">
+      <!-- Main Stat Results -->
+      <div class="card-container bg-canvas flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
+        <div>
+          <span class="text-xs font-mono font-semibold text-brand-gold uppercase block">Estimated Delivery Date</span>
+          <h2 id="result-due-date" class="text-3xl md:text-4xl font-semibold text-primary mt-1 mb-2"></h2>
+          <p id="result-days-left" class="text-xs text-secondary"></p>
+        </div>
+
+        <div class="pt-4 md:pt-0 md:border-l md:border-hairline md:pl-8 flex-grow">
+          <span class="text-xs font-mono text-secondary uppercase block">Gestational Age</span>
+          <h3 id="result-gestational-age" class="text-xl font-semibold text-primary mt-1"></h3>
+          <p id="result-trimester" class="text-xs text-brand-gold font-medium mt-1"></p>
+        </div>
+      </div>
+
+      <!-- Trimester Progress Bar -->
+      <div class="card-container">
+        <h3 class="text-sm font-semibold text-primary mb-4">Pregnancy Trimester Timeline</h3>
+        
+        <div class="relative w-full bg-canvas-soft-2 border border-hairline h-6 rounded-full flex overflow-hidden mb-2">
+          <div id="bar-tri-1" class="h-full bg-brand-blush/60 border-r border-hairline flex items-center justify-center text-[10px] font-semibold text-primary transition-all" style="width: 0%">Tri 1</div>
+          <div id="bar-tri-2" class="h-full bg-brand-gold/20 border-r border-hairline flex items-center justify-center text-[10px] font-semibold text-primary transition-all" style="width: 0%">Tri 2</div>
+          <div id="bar-tri-3" class="h-full bg-brand-sage-light flex items-center justify-center text-[10px] font-semibold text-primary transition-all" style="width: 0%">Tri 3</div>
+        </div>
+        
+        <div class="flex justify-between text-[10px] text-secondary font-mono px-1">
+          <span>Week 0</span>
+          <span>Week 14 (Trimester 2)</span>
+          <span>Week 28 (Trimester 3)</span>
+          <span>Week 40 (Due Date)</span>
+        </div>
+      </div>
+
+      <!-- Developmental Milestones -->
+      <div class="card-container">
+        <h3 class="text-sm font-semibold text-primary mb-6">Pregnancy Milestones & Developmental Timeline</h3>
+        
+        <div class="space-y-6 relative before:absolute before:left-3 before:top-2 before:bottom-2 before:w-0.5 before:bg-hairline">
+          <!-- Conception -->
+          <div class="flex gap-4 relative">
+            <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand-blush border border-brand-rose-border text-[10px] text-primary font-bold z-10 shadow-sm">1</span>
+            <div>
+              <h4 class="text-xs font-semibold text-primary">Conception Date (Est.)</h4>
+              <span id="milestone-conception" class="text-[10px] font-mono text-secondary"></span>
+              <p class="text-xs text-secondary mt-1">Egg and sperm fuse, beginning cell division and journey to the uterus.</p>
+            </div>
+          </div>
+
+          <!-- Heartbeat -->
+          <div class="flex gap-4 relative">
+            <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand-blush border border-brand-rose-border text-[10px] text-primary font-bold z-10 shadow-sm">2</span>
+            <div>
+              <h4 class="text-xs font-semibold text-primary">First Fetal Heartbeat (Week 6)</h4>
+              <span id="milestone-heartbeat" class="text-[10px] font-mono text-secondary"></span>
+              <p class="text-xs text-secondary mt-1">The cardiac cells begin rhythmically pulsing, detectable via ultrasound.</p>
+            </div>
+          </div>
+
+          <!-- First Kick -->
+          <div class="flex gap-4 relative">
+            <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand-gold/20 border border-brand-gold text-[10px] text-primary font-bold z-10 shadow-sm">3</span>
+            <div>
+              <h4 class="text-xs font-semibold text-primary">First Kicks / Quickening (Week 18)</h4>
+              <span id="milestone-kick" class="text-[10px] font-mono text-secondary"></span>
+              <p class="text-xs text-secondary mt-1">The mother typically begins to feel the baby's voluntary movements.</p>
+            </div>
+          </div>
+
+          <!-- Viability -->
+          <div class="flex gap-4 relative">
+            <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand-sage-light border border-brand-sage text-[10px] text-primary font-bold z-10 shadow-sm">4</span>
+            <div>
+              <h4 class="text-xs font-semibold text-primary">Fetal Viability (Week 24)</h4>
+              <span id="milestone-viability" class="text-[10px] font-mono text-secondary"></span>
+              <p class="text-xs text-secondary mt-1">Baby has built structures viable for life outside the womb with intensive care.</p>
+            </div>
+          </div>
+
+          <!-- Full Term -->
+          <div class="flex gap-4 relative">
+            <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand-sage-light border border-brand-sage text-[10px] text-primary font-bold z-10 shadow-sm">5</span>
+            <div>
+              <h4 class="text-xs font-semibold text-primary">Reached Full Term (Week 37)</h4>
+              <span id="milestone-term" class="text-[10px] font-mono text-secondary"></span>
+              <p class="text-xs text-secondary mt-1">Baby's lungs and organs are fully mature and prepared for birth.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<script>
+  import { addDays, subDays, format, differenceInDays, parseISO, isAfter } from 'date-fns';
+
+  // Value sync
+  const cycleInput = document.getElementById('due-cycle') as HTMLInputElement;
+  const cycleVal = document.getElementById('due-cycle-val');
+  if (cycleInput && cycleVal) {
+    cycleInput.addEventListener('input', () => {
+      cycleVal.textContent = cycleInput.value;
+    });
+  }
+
+  // Set today's date in base date input
+  const baseDateInput = document.getElementById('base-date') as HTMLInputElement;
+  if (baseDateInput) {
+    baseDateInput.value = format(new Date(), 'yyyy-MM-dd');
+  }
+
+  // Tabs toggle
+  const tabLmp = document.getElementById('due-tab-lmp');
+  const tabConception = document.getElementById('due-tab-conception');
+  const tabIvf = document.getElementById('due-tab-ivf');
+  
+  const methodInput = document.getElementById('due-method') as HTMLInputElement;
+  const cycleWrapper = document.getElementById('due-cycle-wrapper');
+  const ivfWrapper = document.getElementById('due-ivf-wrapper');
+  const dateLabel = document.getElementById('date-input-label');
+
+  const activeClass = 'border-brand-gold text-primary';
+  const inactiveClass = 'border-transparent text-secondary hover:text-primary';
+
+  tabLmp?.addEventListener('click', () => {
+    methodInput.value = 'lmp';
+    tabLmp.className = tabLmp.className.replace(inactiveClass, activeClass);
+    tabConception!.className = tabConception!.className.replace(activeClass, inactiveClass);
+    tabIvf!.className = tabIvf!.className.replace(activeClass, inactiveClass);
+
+    cycleWrapper?.classList.remove('hidden');
+    ivfWrapper?.classList.add('hidden');
+    if (dateLabel) dateLabel.textContent = 'First Day of Last Period';
+  });
+
+  tabConception?.addEventListener('click', () => {
+    methodInput.value = 'conception';
+    tabConception.className = tabConception.className.replace(inactiveClass, activeClass);
+    tabLmp!.className = tabLmp!.className.replace(activeClass, inactiveClass);
+    tabIvf!.className = tabIvf!.className.replace(activeClass, inactiveClass);
+
+    cycleWrapper?.classList.add('hidden');
+    ivfWrapper?.classList.add('hidden');
+    if (dateLabel) dateLabel.textContent = 'Estimated Conception Date';
+  });
+
+  tabIvf?.addEventListener('click', () => {
+    methodInput.value = 'ivf';
+    tabIvf.className = tabIvf.className.replace(inactiveClass, activeClass);
+    tabLmp!.className = tabLmp!.className.replace(activeClass, inactiveClass);
+    tabConception!.className = tabConception!.className.replace(activeClass, inactiveClass);
+
+    cycleWrapper?.classList.add('hidden');
+    ivfWrapper?.classList.remove('hidden');
+    if (dateLabel) dateLabel.textContent = 'IVF Embryo Transfer Date';
+  });
+
+  // Calculate Form
+  const form = document.getElementById('due-calculator-form');
+  const resultsDiv = document.getElementById('due-results');
+  
+  const resultDue = document.getElementById('result-due-date');
+  const resultLeft = document.getElementById('result-days-left');
+  const resultAge = document.getElementById('result-gestational-age');
+  const resultTrimester = document.getElementById('result-trimester');
+
+  const progressTri1 = document.getElementById('bar-tri-1');
+  const progressTri2 = document.getElementById('bar-tri-2');
+  const progressTri3 = document.getElementById('bar-tri-3');
+
+  const msConception = document.getElementById('milestone-conception');
+  const msHeartbeat = document.getElementById('milestone-heartbeat');
+  const msKick = document.getElementById('milestone-kick');
+  const msViability = document.getElementById('milestone-viability');
+  const msTerm = document.getElementById('milestone-term');
+
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const rawDate = baseDateInput.value;
+    const dateParsed = parseISO(rawDate);
+    const method = methodInput.value;
+
+    let dueDate: Date;
+    let lmpEquivalent: Date;
+
+    if (method === 'lmp') {
+      const cycle = Number(cycleInput.value);
+      // Adjustment for cycle lengths differing from standard 28
+      dueDate = addDays(dateParsed, 280 + (cycle - 28));
+      lmpEquivalent = dateParsed;
+    } else if (method === 'conception') {
+      dueDate = addDays(dateParsed, 266);
+      lmpEquivalent = subDays(dateParsed, 14);
+    } else {
+      const ivfType = (document.getElementById('ivf-type') as HTMLSelectElement).value;
+      if (ivfType === '3day') {
+        dueDate = addDays(dateParsed, 263);
+        lmpEquivalent = subDays(dateParsed, 17);
+      } else {
+        dueDate = addDays(dateParsed, 261);
+        lmpEquivalent = subDays(dateParsed, 19);
+      }
+    }
+
+    const today = new Date();
+    
+    // Gestational age in days
+    let ageInDays = differenceInDays(today, lmpEquivalent);
+    if (ageInDays < 0) ageInDays = 0;
+    if (ageInDays > 280) ageInDays = 280;
+
+    const weeks = Math.floor(ageInDays / 7);
+    const days = ageInDays % 7;
+
+    const daysLeft = differenceInDays(dueDate, today);
+
+    // Milestones
+    const conceptionDate = addDays(lmpEquivalent, 14);
+    const heartbeatDate = addDays(lmpEquivalent, 42); // 6 weeks
+    const kickDate = addDays(lmpEquivalent, 126);      // 18 weeks
+    const viabilityDate = addDays(lmpEquivalent, 168); // 24 weeks
+    const termDate = addDays(lmpEquivalent, 259);      // 37 weeks
+
+    // Display values
+    if (resultDue) resultDue.textContent = format(dueDate, 'MMMM dd, yyyy');
+    if (resultLeft) {
+      resultLeft.textContent = daysLeft > 0 
+        ? `${daysLeft} days until your estimated delivery date.`
+        : 'Your estimated delivery date is in the past.';
+    }
+    if (resultAge) resultAge.textContent = `${weeks} Weeks, ${days} Days`;
+    
+    // Trimester
+    let trimesterName = 'First Trimester';
+    if (weeks >= 14 && weeks < 28) {
+      trimesterName = 'Second Trimester';
+    } else if (weeks >= 28) {
+      trimesterName = 'Third Trimester';
+    }
+    if (resultTrimester) resultTrimester.textContent = trimesterName;
+
+    // Progress Bars width
+    const totalPercentage = (ageInDays / 280) * 100;
+    
+    // Tri 1 caps at 98 days (14 weeks / 40%)
+    const tri1Days = Math.min(ageInDays, 98);
+    const tri1Percent = (tri1Days / 98) * 35; // 35% of total scale
+    if (progressTri1) progressTri1.style.width = `${tri1Percent || 5}%`;
+
+    // Tri 2 caps at 98 days (from 14 to 28 weeks / 40%)
+    const tri2Days = Math.min(Math.max(ageInDays - 98, 0), 98);
+    const tri2Percent = (tri2Days / 98) * 35; // 35% of total scale
+    if (progressTri2) progressTri2.style.width = `${tri2Percent || 5}%`;
+
+    // Tri 3 caps at 84 days (from 28 to 40 weeks / 30%)
+    const tri3Days = Math.min(Math.max(ageInDays - 196, 0), 84);
+    const tri3Percent = (tri3Days / 84) * 30; // 30% of total scale
+    if (progressTri3) progressTri3.style.width = `${tri3Percent || 5}%`;
+
+    // Milestones Dates
+    if (msConception) msConception.textContent = format(conceptionDate, 'MMMM dd, yyyy');
+    if (msHeartbeat) msHeartbeat.textContent = format(heartbeatDate, 'MMMM dd, yyyy');
+    if (msKick) msKick.textContent = format(kickDate, 'MMMM dd, yyyy');
+    if (msViability) msViability.textContent = format(viabilityDate, 'MMMM dd, yyyy');
+    if (msTerm) msTerm.textContent = format(termDate, 'MMMM dd, yyyy');
+
+    resultsDiv?.classList.remove('hidden');
+
+    setTimeout(() => {
+      resultsDiv?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  });
+</script>

@@ -1,0 +1,118 @@
+---
+---
+<div id="timeline-widget" class="hidden mt-8 animate-fade-in card-container">
+  <h3 class="text-base font-semibold text-primary mb-6">Your Menstrual Cycle Timeline</h3>
+  
+  <div class="relative">
+    <!-- Progress Line -->
+    <div class="absolute top-5 left-4 right-4 h-0.5 bg-hairline -z-10 hidden md:block"></div>
+    
+    <!-- Timeline Stages Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 relative">
+      
+      <!-- Stage 1: Menstrual -->
+      <div class="flex flex-row md:flex-col items-start gap-4 md:gap-3 bg-canvas-soft-2 md:bg-transparent p-4 md:p-0 rounded-lg border border-hairline md:border-none">
+        <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand-lavender border border-brand-lavender-border text-xs font-semibold text-primary md:shadow-sm">
+          1-5
+        </span>
+        <div>
+          <h4 class="text-sm font-semibold text-primary">Menstrual Phase</h4>
+          <span class="text-[10px] font-mono uppercase tracking-wider text-secondary">Days 1 - 5</span>
+          <p class="text-xs text-secondary mt-1 leading-relaxed">
+            The uterine lining sheds. Estrogen and progesterone are at their lowest baseline levels, which triggers menstruation. Focus on rest.
+          </p>
+        </div>
+      </div>
+
+      <!-- Stage 2: Follicular -->
+      <div class="flex flex-row md:flex-col items-start gap-4 md:gap-3 bg-canvas-soft-2 md:bg-transparent p-4 md:p-0 rounded-lg border border-hairline md:border-none">
+        <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand-blush border border-brand-rose-border text-xs font-semibold text-primary md:shadow-sm">
+          6-13
+        </span>
+        <div>
+          <h4 class="text-sm font-semibold text-primary">Follicular Phase</h4>
+          <span class="text-[10px] font-mono uppercase tracking-wider text-secondary">Days 6 - 13</span>
+          <p class="text-xs text-secondary mt-1 leading-relaxed">
+            Estrogen rises, causing the uterine lining to thicken. Ovarian follicles develop, preparing a dominant egg for release.
+          </p>
+        </div>
+      </div>
+
+      <!-- Stage 3: Ovulatory -->
+      <div class="flex flex-row md:flex-col items-start gap-4 md:gap-3 bg-canvas-soft-2 md:bg-transparent p-4 md:p-0 rounded-lg border border-hairline md:border-none">
+        <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand-rose text-white text-xs font-semibold md:shadow-sm">
+          14
+        </span>
+        <div>
+          <h4 class="text-sm font-semibold text-primary">Ovulation Day</h4>
+          <span class="text-[10px] font-mono uppercase tracking-wider text-brand-rose font-semibold">Day 14 (Peak)</span>
+          <p class="text-xs text-secondary mt-1 leading-relaxed">
+            A surge in Luteinizing Hormone (LH) triggers the release of the mature egg. The egg survives 12-24 hours for conception.
+          </p>
+        </div>
+      </div>
+
+      <!-- Stage 4: Luteal -->
+      <div class="flex flex-row md:flex-col items-start gap-4 md:gap-3 bg-canvas-soft-2 md:bg-transparent p-4 md:p-0 rounded-lg border border-hairline md:border-none">
+        <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand-sage-light border border-brand-sage text-xs font-semibold text-primary md:shadow-sm">
+          15+
+        </span>
+        <div>
+          <h4 class="text-sm font-semibold text-primary">Luteal Phase</h4>
+          <span class="text-[10px] font-mono uppercase tracking-wider text-secondary">Days 15 - Next Period</span>
+          <p class="text-xs text-secondary mt-1 leading-relaxed">
+            Progesterone becomes the dominant hormone to prepare the uterus for potential implantation. If fertilisation doesn't occur, hormones drop.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  
+  <!-- Stats Summary Row -->
+  <div class="mt-8 pt-6 border-t border-hairline grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+    <div class="p-3 bg-canvas-soft-2 rounded-lg border border-hairline">
+      <span class="text-[10px] font-mono uppercase tracking-wider text-secondary block">Estimated Ovulation</span>
+      <span id="stat-ovulation" class="text-sm font-semibold text-primary mt-1 block">-</span>
+    </div>
+    <div class="p-3 bg-canvas-soft-2 rounded-lg border border-hairline">
+      <span class="text-[10px] font-mono uppercase tracking-wider text-secondary block">Fertile Window Range</span>
+      <span id="stat-fertile" class="text-sm font-semibold text-primary mt-1 block">-</span>
+    </div>
+    <div class="p-3 bg-canvas-soft-2 rounded-lg border border-hairline">
+      <span class="text-[10px] font-mono uppercase tracking-wider text-secondary block">Next Period Date</span>
+      <span id="stat-period" class="text-sm font-semibold text-primary mt-1 block">-</span>
+    </div>
+    <div class="p-3 bg-canvas-soft-2 rounded-lg border border-hairline">
+      <span class="text-[10px] font-mono uppercase tracking-wider text-secondary block">Estimated Due Date</span>
+      <span id="stat-due" class="text-sm font-semibold text-primary mt-1 block">-</span>
+    </div>
+  </div>
+</div>
+
+<script>
+  import { format, parseISO } from 'date-fns';
+
+  const timelineWidget = document.getElementById('timeline-widget');
+  const statOvulation = document.getElementById('stat-ovulation');
+  const statFertile = document.getElementById('stat-fertile');
+  const statPeriod = document.getElementById('stat-period');
+  const statDue = document.getElementById('stat-due');
+
+  window.addEventListener('ovulation-calculated', (e: any) => {
+    const cycleData = e.detail;
+
+    if (timelineWidget) timelineWidget.classList.remove('hidden');
+
+    const ov = parseISO(cycleData.dates.ovulationDay);
+    const startF = parseISO(cycleData.fertileDays[0]);
+    const endF = parseISO(cycleData.fertileDays[cycleData.fertileDays.length - 1]);
+    const period = parseISO(cycleData.dates.nextPeriodDate);
+    const due = parseISO(cycleData.dates.dueDate);
+
+    if (statOvulation) statOvulation.textContent = format(ov, 'MMM dd, yyyy');
+    if (statFertile) statFertile.textContent = `${format(startF, 'MMM dd')} - ${format(endF, 'MMM dd')}`;
+    if (statPeriod) statPeriod.textContent = format(period, 'MMM dd, yyyy');
+    if (statDue) statDue.textContent = format(due, 'MMM dd, yyyy');
+  });
+</script>

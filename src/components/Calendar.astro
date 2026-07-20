@@ -1,0 +1,370 @@
+---
+---
+<div id="calendar-widget" class="hidden animate-fade-in">
+  <div class="flex flex-col md:flex-row gap-6">
+    <!-- Calendar Grid Card -->
+    <div class="flex-grow card-container">
+      <div class="flex items-center justify-between mb-6">
+        <h3 id="calendar-month-year" class="text-base font-semibold text-primary"></h3>
+        <div class="flex space-x-2">
+          <button id="cal-prev-btn" class="p-2 rounded-full hover:bg-canvas-soft-2 text-secondary hover:text-primary transition-all">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+            </svg>
+          </button>
+          <button id="cal-next-btn" class="p-2 rounded-full hover:bg-canvas-soft-2 text-secondary hover:text-primary transition-all">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Days of Week -->
+      <div class="grid grid-cols-7 gap-1 text-center text-xs font-mono font-medium text-secondary mb-2">
+        <div>Su</div>
+        <div>Mo</div>
+        <div>Tu</div>
+        <div>We</div>
+        <div>Th</div>
+        <div>Fr</div>
+        <div>Sa</div>
+      </div>
+
+      <!-- Days Grid -->
+      <div id="calendar-days-grid" class="grid grid-cols-7 gap-1 text-center text-sm font-medium"></div>
+
+      <!-- Calendar Legends -->
+      <div class="mt-6 flex flex-wrap gap-3 pt-6 border-t border-hairline text-xs font-medium text-secondary justify-center">
+        <div class="flex items-center gap-1.5">
+          <span class="w-3.5 h-3.5 rounded bg-brand-lavender border border-brand-lavender-border inline-block"></span>
+          <span>Period</span>
+        </div>
+        <div class="flex items-center gap-1.5">
+          <span class="w-3.5 h-3.5 rounded bg-brand-blush border border-brand-rose-border inline-block animate-pulse"></span>
+          <span>Fertile Window</span>
+        </div>
+        <div class="flex items-center gap-1.5">
+          <span class="w-3.5 h-3.5 rounded bg-brand-rose inline-block"></span>
+          <span>Ovulation (Peak)</span>
+        </div>
+        <div class="flex items-center gap-1.5">
+          <span class="w-3.5 h-3.5 rounded bg-brand-sage-light border border-brand-sage inline-block"></span>
+          <span>Implantation</span>
+        </div>
+        <div class="flex items-center gap-1.5">
+          <span class="w-3.5 h-3.5 rounded bg-brand-gold/20 border border-brand-gold inline-block"></span>
+          <span>Pregnancy Test</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Day Inspector Card -->
+    <div class="w-full md:w-80 shrink-0 card-container flex flex-col justify-between">
+      <div>
+        <h4 id="inspector-date" class="text-sm font-mono text-brand-rose font-semibold uppercase mb-1"></h4>
+        <h3 id="inspector-title" class="text-lg font-semibold text-primary mb-3"></h3>
+        
+        <div class="space-y-4">
+          <div>
+            <span class="text-[10px] font-mono uppercase tracking-wider text-secondary">Fertility Status</span>
+            <div id="inspector-fertility-level" class="flex items-center gap-2 mt-1">
+              <span id="inspector-fertility-icon" class="text-lg"></span>
+              <div class="flex-1">
+                <span id="inspector-fertility-label" class="text-sm font-semibold text-primary block"></span>
+                <span id="inspector-fertility-desc" class="text-[11px] text-secondary leading-snug block mt-0.5"></span>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <span class="text-[10px] font-mono uppercase tracking-wider text-secondary">Cervical Mucus</span>
+            <p id="inspector-mucus" class="text-xs text-secondary mt-0.5 font-sans leading-relaxed"></p>
+          </div>
+
+          <div>
+            <span class="text-[10px] font-mono uppercase tracking-wider text-secondary">Physical Signs</span>
+            <p id="inspector-symptoms" class="text-xs text-secondary mt-0.5 font-sans leading-relaxed"></p>
+          </div>
+          
+          <div>
+            <span class="text-[10px] font-mono uppercase tracking-wider text-secondary">Proactive Fertility Tips</span>
+            <p id="inspector-tips" class="text-xs text-secondary mt-0.5 font-sans leading-relaxed"></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-6 pt-4 border-t border-hairline flex flex-col gap-2">
+        <button id="save-calendar-btn" class="btn-primary w-full text-xs h-9">
+          Save to Fertility Calendar
+        </button>
+        <p id="save-feedback" class="text-[10px] text-center text-brand-sage font-medium hidden">Saved successfully!</p>
+        <p class="text-[9px] text-secondary/60 text-center leading-snug mt-2">Disclaimer: Results are estimates based on the menstrual cycle information you provide. They are intended for educational purposes only and should not be interpreted as an exact probability or guarantee of pregnancy. Individual cycles and fertility can vary.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  import { addDays, subDays, startOfMonth, endOfMonth, startOfWeek, endOfWeek, isSameDay, format, parseISO, isAfter, isBefore } from 'date-fns';
+
+  // State Management
+  let currentMonthDate = new Date();
+  let cycleData: any = null;
+  let selectedDate: Date | null = null;
+
+  // DOM Elements
+  const widget = document.getElementById('calendar-widget');
+  const monthYearLabel = document.getElementById('calendar-month-year');
+  const daysGrid = document.getElementById('calendar-days-grid');
+  const prevBtn = document.getElementById('cal-prev-btn');
+  const nextBtn = document.getElementById('cal-next-btn');
+
+  // Inspector Elements
+  const insDate = document.getElementById('inspector-date');
+  const insTitle = document.getElementById('inspector-title');
+  const insFertilityIcon = document.getElementById('inspector-fertility-icon');
+  const insFertilityLabel = document.getElementById('inspector-fertility-label');
+  const insFertilityDesc = document.getElementById('inspector-fertility-desc');
+  const insMucus = document.getElementById('inspector-mucus');
+  const insSymptoms = document.getElementById('inspector-symptoms');
+  const insTips = document.getElementById('inspector-tips');
+  
+  // Action Elements
+  const saveBtn = document.getElementById('save-calendar-btn');
+  const saveFeedback = document.getElementById('save-feedback');
+
+  // Listen for Calculation Dispatch
+  window.addEventListener('ovulation-calculated', (e: any) => {
+    cycleData = e.detail;
+    currentMonthDate = parseISO(cycleData.dates.ovulationDay);
+    selectedDate = parseISO(cycleData.dates.ovulationDay);
+    if (widget) widget.classList.remove('hidden');
+    renderCalendar();
+    inspectDate(selectedDate);
+  });
+
+  if (prevBtn && nextBtn) {
+    prevBtn.addEventListener('click', () => {
+      currentMonthDate = subDays(startOfMonth(currentMonthDate), 1);
+      renderCalendar();
+    });
+
+    nextBtn.addEventListener('click', () => {
+      currentMonthDate = addDays(endOfMonth(currentMonthDate), 1);
+      renderCalendar();
+    });
+  }
+
+  if (saveBtn) {
+    saveBtn.addEventListener('click', () => {
+      if (cycleData) {
+        localStorage.setItem('saved_cycle_data', JSON.stringify(cycleData));
+        if (saveFeedback) {
+          saveFeedback.classList.remove('hidden');
+          setTimeout(() => {
+            saveFeedback.classList.add('hidden');
+          }, 3000);
+        }
+      }
+    });
+  }
+
+  function getDayType(date: Date) {
+    if (!cycleData) return { type: 'normal', name: 'Regular Day', fertilityLevel: 'very-low', fertilityLabel: 'Very Low Chance', fertilityIcon: '🩶', fertilityDesc: 'Pregnancy is less likely based on your estimated cycle timing.' };
+
+    const formatted = format(date, 'yyyy-MM-dd');
+
+    // 1. Check Period Days
+    for (let p of cycleData.periodDays) {
+      if (p === formatted) {
+        return { type: 'period', name: 'Menstrual Period', fertilityLevel: 'very-low', fertilityLabel: 'Very Low Chance', fertilityIcon: '🩶', fertilityDesc: 'Pregnancy is less likely based on your estimated cycle timing.' };
+      }
+    }
+
+    // 2. Check Ovulation Day
+    if (formatted === cycleData.dates.ovulationDay) {
+      return { type: 'ovulation', name: 'Ovulation Day (Peak)', fertilityLevel: 'peak', fertilityLabel: 'Peak Fertility', fertilityIcon: '🔴', fertilityDesc: 'This is your estimated ovulation period and generally the most fertile time of your cycle.' };
+    }
+
+    // 3. Check Fertile Days
+    for (let index = 0; index < cycleData.fertileDays.length; index++) {
+      const f = cycleData.fertileDays[index];
+      if (f === formatted) {
+        // Map days before ovulation to fertility levels
+        // index 0 -> 5 days before (Low), index 4 -> 1 day before (High)
+        const fertilityMap = [
+          { level: 'low', label: 'Low Chance', icon: '🟢', desc: 'A small possibility exists based on your estimated cycle.' },
+          { level: 'low', label: 'Low Chance', icon: '🟢', desc: 'A small possibility exists based on your estimated cycle.' },
+          { level: 'moderate', label: 'Moderate Chance', icon: '🟡', desc: 'Your fertility is increasing as you approach your fertile window.' },
+          { level: 'moderate', label: 'Moderate Chance', icon: '🟡', desc: 'Your fertility is increasing as you approach your fertile window.' },
+          { level: 'high', label: 'High Chance', icon: '🟠', desc: 'You are currently within your estimated fertile window.' }
+        ];
+        const fertility = fertilityMap[index] || fertilityMap[1];
+        return { type: 'fertile', name: 'High Fertility Window', fertilityLevel: fertility.level, fertilityLabel: fertility.label, fertilityIcon: fertility.icon, fertilityDesc: fertility.desc };
+      }
+    }
+
+    // 4. Check Implantation Days
+    for (let i of cycleData.implantationWindow) {
+      if (i === formatted) {
+        return { type: 'implantation', name: 'Implantation Window', fertilityLevel: 'very-low', fertilityLabel: 'Very Low Chance', fertilityIcon: '🩶', fertilityDesc: 'Pregnancy is less likely based on your estimated cycle timing.' };
+      }
+    }
+
+    // 5. Check Pregnancy Test Days
+    for (let t of cycleData.testDates) {
+      if (t === formatted) {
+        return { type: 'test', name: 'Pregnancy Test Window', fertilityLevel: 'very-low', fertilityLabel: 'Very Low Chance', fertilityIcon: '🩶', fertilityDesc: 'Pregnancy is less likely based on your estimated cycle timing.' };
+      }
+    }
+
+    return { type: 'normal', name: 'Typical Non-Fertile Day', fertilityLevel: 'very-low', fertilityLabel: 'Very Low Chance', fertilityIcon: '🩶', fertilityDesc: 'Pregnancy is less likely based on your estimated cycle timing.' };
+  }
+
+  function inspectDate(date: Date) {
+    if (!cycleData) return;
+
+    selectedDate = date;
+    const dayMeta = getDayType(date);
+    const formattedDate = format(date, 'yyyy-MM-dd');
+
+    if (insDate) insDate.textContent = format(date, 'MMM dd, yyyy');
+    if (insTitle) insTitle.textContent = dayMeta.name;
+    if (insFertilityIcon) insFertilityIcon.textContent = dayMeta.fertilityIcon;
+    if (insFertilityLabel) insFertilityLabel.textContent = dayMeta.fertilityLabel;
+    if (insFertilityDesc) insFertilityDesc.textContent = dayMeta.fertilityDesc;
+
+    // Physical signs and Tips based on day types
+    let mucus = 'Dry or sticky paste, sensation of dryness. Low probability of sperm survival.';
+    let symptoms = 'Basal body temperature (BBT) is stable. Energy levels are moderate.';
+    let tips = 'Track your cycle length and record any baseline symptoms to build a pattern.';
+
+    if (dayMeta.type === 'period') {
+      mucus = 'Menstrual flow. Cervical mucus observations are obscured.';
+      symptoms = 'Uterine cramping, lower back discomfort, fatigue, or mild mood shifts due to low estrogen and progesterone.';
+      tips = 'Focus on rest, hydration, and gentle activity. Iron-rich foods can support your energy levels.';
+    } else if (dayMeta.type === 'fertile') {
+      mucus = 'Watery, slippery, or creamy discharge. Increasingly hospitable to sperm.';
+      symptoms = 'Slight increase in libido, mild pelvic twinges, or a feeling of dampness.';
+      tips = 'Having intercourse during this window maximizes the probability of conception, as sperm can live up to 5 days.';
+    } else if (dayMeta.type === 'ovulation') {
+      mucus = 'Stretchy, clear, and highly lubricative (resembling raw egg whites). Peak fertility.';
+      symptoms = 'Sharp rise in Luteinizing Hormone (LH) surge. Possible mild unilateral pelvic pain (Mittelschmerz). Libido is peaked.';
+      tips = 'This is the absolute peak conception day. The egg survives for 12-24 hours after release, so prompt timing is essential.';
+    } else if (dayMeta.type === 'implantation') {
+      mucus = 'Sticky, thick, or dry under progesterone influence. Possibility of light spotting (implantation spotting).';
+      symptoms = 'Sustained thermal shift (high BBT). Mild bloating, breast sensitivity, or light fatigue.';
+      tips = 'Avoid high-stress activities. Maintain a healthy, balanced diet and keep tracking your morning BBT for a sustained rise.';
+    } else if (dayMeta.type === 'test') {
+      mucus = 'Thick and sticky or dry. Estrogen and progesterone are high.';
+      symptoms = 'Mild early symptoms (fatigue, mild nausea, breast tenderness) may appear if conception occurred.';
+      tips = 'An early detection test may yield results now, but testing on the date of a missed period provides 99%+ accuracy.';
+    } else {
+      // Normal luteal phase or follicular
+      const isLuteal = isAfter(date, parseISO(cycleData.dates.ovulationDay));
+      if (isLuteal) {
+        mucus = 'Thick, sticky, white discharge due to rising Progesterone. Creating a plug to block bacteria.';
+        symptoms = 'BBT remains elevated. Possible early PMS indicators (bloating, mood sensitivity).';
+        tips = 'Limit caffeine and alcohol. Continue logging symptoms for better future predictive cycles.';
+      } else {
+        mucus = 'Scant, sticky, or creamy. Low fertility.';
+        symptoms = 'Estrogen levels are starting to slowly rise. Energy levels are increasing.';
+        tips = 'Prepare for the follicular phase by engaging in active exercise and maintaining solid nutrition.';
+      }
+    }
+
+    if (insMucus) insMucus.textContent = mucus;
+    if (insSymptoms) insSymptoms.textContent = symptoms;
+    if (insTips) insTips.textContent = tips;
+
+    // Refresh calendar rendering to show selection ring
+    const dayCells = daysGrid?.querySelectorAll('[data-date]');
+    dayCells?.forEach((cell) => {
+      if (cell.getAttribute('data-date') === formattedDate) {
+        cell.classList.add('ring-2', 'ring-primary', 'ring-offset-1');
+      } else {
+        cell.classList.remove('ring-2', 'ring-primary', 'ring-offset-1');
+      }
+    });
+  }
+
+  function renderCalendar() {
+    if (!daysGrid || !monthYearLabel) return;
+
+    daysGrid.innerHTML = '';
+    monthYearLabel.textContent = format(currentMonthDate, 'MMMM yyyy');
+
+    const monthStart = startOfMonth(currentMonthDate);
+    const monthEnd = endOfMonth(monthStart);
+    const startDate = startOfWeek(monthStart);
+    const endDate = endOfWeek(monthEnd);
+
+    let day = startDate;
+
+    while (day <= endDate) {
+      const cellDate = day;
+      const formattedDate = format(cellDate, 'yyyy-MM-dd');
+      const isCurrentMonth = cellDate.getMonth() === currentMonthDate.getMonth();
+      const dayMeta = getDayType(cellDate);
+
+      // Create cell wrapper
+      const cell = document.createElement('button');
+      cell.setAttribute('data-date', formattedDate);
+      cell.setAttribute('type', 'button');
+      cell.className = `h-10 md:h-12 w-full rounded-md flex flex-col items-center justify-center relative transition-all focus:outline-none `;
+
+      // Styling based on cycle context
+      if (!isCurrentMonth) {
+        cell.className += ' text-gray-300 pointer-events-none';
+      } else {
+        cell.className += ' hover:bg-canvas-soft-2 cursor-pointer text-primary';
+      }
+
+      // Specific Colors based on Type
+      if (isCurrentMonth) {
+        if (dayMeta.type === 'period') {
+          cell.className += ' bg-brand-lavender border border-brand-lavender-border text-primary';
+        } else if (dayMeta.type === 'ovulation') {
+          cell.className += ' bg-brand-rose text-white shadow-sm';
+        } else if (dayMeta.type === 'fertile') {
+          cell.className += ' bg-brand-blush border border-brand-rose-border text-primary';
+        } else if (dayMeta.type === 'implantation') {
+          cell.className += ' bg-brand-sage-light border border-brand-sage text-primary';
+        } else if (dayMeta.type === 'test') {
+          cell.className += ' bg-brand-gold/10 border border-brand-gold text-primary';
+        }
+      }
+
+      // Active Selection Ring
+      if (selectedDate && isSameDay(cellDate, selectedDate)) {
+        cell.className += ' ring-2 ring-primary ring-offset-1';
+      }
+
+      // Day Number Label
+      const numLabel = document.createElement('span');
+      numLabel.textContent = format(cellDate, 'd');
+      numLabel.className = 'text-xs md:text-sm font-semibold z-10';
+      cell.appendChild(numLabel);
+
+      // Add miniature dot indicator
+      if (isCurrentMonth && dayMeta.type !== 'normal' && dayMeta.type !== 'period') {
+        const dot = document.createElement('span');
+        dot.className = `w-1.5 h-1.5 rounded-full absolute bottom-1.5 ${
+          dayMeta.type === 'ovulation' ? 'bg-white' : 'bg-brand-rose'
+        }`;
+        cell.appendChild(dot);
+      }
+
+      // Add click handler
+      if (isCurrentMonth) {
+        cell.addEventListener('click', () => {
+          inspectDate(cellDate);
+        });
+      }
+
+      daysGrid.appendChild(cell);
+      day = addDays(day, 1);
+    }
+  }
+</script>

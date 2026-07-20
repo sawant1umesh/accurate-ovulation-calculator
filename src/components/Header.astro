@@ -1,0 +1,128 @@
+---
+const navLinks = [
+  { name: 'Ovulation Calculator', href: '/ovulation-calculator' },
+  { name: 'Fertility Calendar', href: '/fertility-calendar' },
+  { name: 'Due Date Calculator', href: '/due-date-calculator' },
+  { name: 'Pregnancy Test Calculator', href: '/pregnancy-test-calculator' },
+  { name: 'Blog', href: '/blog' },
+  { name: 'About', href: '/about' },
+];
+---
+
+<header class="sticky top-0 z-50 w-full border-b border-hairline bg-canvas/80 backdrop-blur-md">
+  <div class="mx-auto flex max-w-7xl h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
+    <!-- Logo -->
+    <a href="/" class="flex items-center gap-2 group shrink-0">
+      <span class="flex h-8 w-8 items-center justify-center rounded-full bg-brand-rose text-white shadow-sm transition-transform group-hover:scale-105">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="h-4 w-4">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v18m9-9H3" />
+        </svg>
+      </span>
+      <span class="text-lg font-semibold tracking-tight text-primary font-sans">
+        Accurate <span class="text-brand-rose">Ovulation</span>
+      </span>
+    </a>
+
+    <!-- Desktop Navigation -->
+    <nav class="hidden lg:flex items-center space-x-1" aria-label="Main navigation">
+      {navLinks.map((link) => (
+        <a
+          href={link.href}
+          class="px-4 py-2 rounded-pill text-sm font-medium text-secondary hover:text-primary hover:bg-canvas-soft-2 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-rose focus-visible:ring-offset-2"
+        >
+          {link.name}
+        </a>
+      ))}
+    </nav>
+
+    <!-- Desktop Action -->
+    <div class="hidden lg:flex items-center space-x-4">
+      <a href="/ovulation-calculator" class="btn-primary flex items-center justify-center text-xs h-9 px-4 shadow-sm hover:shadow-md transition-all duration-200">
+        Calculate Now
+      </a>
+    </div>
+
+    <!-- Mobile menu button -->
+    <button
+      type="button"
+      id="mobile-menu-btn"
+      class="inline-flex items-center justify-center rounded-md p-2 text-secondary hover:bg-canvas-soft-2 hover:text-primary lg:hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-rose focus-visible:ring-offset-2"
+      aria-controls="mobile-menu"
+      aria-expanded="false"
+      aria-label="Open main menu"
+    >
+      <span class="sr-only">Open main menu</span>
+      <svg id="menu-icon-open" class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+      </svg>
+      <svg id="menu-icon-close" class="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+  </div>
+
+  <!-- Mobile Menu Panel -->
+  <div id="mobile-menu" class="hidden lg:hidden border-b border-hairline bg-canvas absolute top-16 left-0 w-full shadow-xl transition-all duration-300">
+    <div class="space-y-1 px-4 py-4 sm:px-6">
+      {navLinks.map((link) => (
+        <a
+          href={link.href}
+          class="block rounded-md px-3 py-3 text-base font-medium text-secondary hover:bg-canvas-soft-2 hover:text-primary transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-rose"
+        >
+          {link.name}
+        </a>
+      ))}
+      <div class="pt-4 border-t border-hairline mt-4 flex flex-col space-y-2">
+        <a href="/ovulation-calculator" class="btn-primary w-full text-center shadow-sm hover:shadow-md transition-all duration-200">
+          Calculate Now
+        </a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<script>
+  const menuBtn = document.getElementById('mobile-menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const openIcon = document.getElementById('menu-icon-open');
+  const closeIcon = document.getElementById('menu-icon-close');
+
+  if (menuBtn && mobileMenu && openIcon && closeIcon) {
+    menuBtn.addEventListener('click', () => {
+      const isExpanded = menuBtn.getAttribute('aria-expanded') === 'true';
+      menuBtn.setAttribute('aria-expanded', (!isExpanded).toString());
+      
+      if (isExpanded) {
+        mobileMenu.classList.add('hidden');
+        openIcon.classList.remove('hidden');
+        closeIcon.classList.add('hidden');
+      } else {
+        mobileMenu.classList.remove('hidden');
+        openIcon.classList.add('hidden');
+        closeIcon.classList.remove('hidden');
+      }
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+      const target = e.target as HTMLElement;
+      if (!menuBtn.contains(target) && !mobileMenu.contains(target)) {
+        mobileMenu.classList.add('hidden');
+        openIcon.classList.remove('hidden');
+        closeIcon.classList.add('hidden');
+        menuBtn.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    // Close menu when pressing Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !mobileMenu.classList.contains('hidden')) {
+        mobileMenu.classList.add('hidden');
+        openIcon.classList.remove('hidden');
+        closeIcon.classList.add('hidden');
+        menuBtn.setAttribute('aria-expanded', 'false');
+        menuBtn.focus();
+      }
+    });
+  }
+</script>

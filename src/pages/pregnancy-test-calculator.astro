@@ -1,0 +1,197 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+// SEO Title & Description
+const pageTitle = "Pregnancy Test Calculator - When to Test for Accurate Results";
+const pageDescription = "Find the earliest accurate date to take a pregnancy test based on your cycle. Compare quantitative blood test, early detection urine test, and standard OTC test timing. Avoid false negatives with personalized hCG threshold dates. Free & private.";
+
+// Calculator JSON-LD Schema
+const calculatorSchema = {
+  "@context": "https://schema.org",
+  "@type": "Calculator",
+  "name": "Pregnancy Test Calculator",
+  "description": "Calculates the most accurate dates to take a blood test, early urine test, or standard urine pregnancy test based on cycle length and last menstrual period.",
+  "category": "Health Calculator",
+  "url": "https://accurateovulationcalculator.com/pregnancy-test-calculator"
+};
+---
+
+<Layout title={pageTitle} description={pageDescription} schema={calculatorSchema}>
+  <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-10 md:py-16">
+    <!-- Header -->
+    <div class="text-center max-w-2xl mx-auto mb-10 md:mb-16">
+      <span class="text-xs font-mono font-semibold tracking-wider text-brand-rose uppercase">
+        Hormonal Milestones
+      </span>
+      <h1 class="text-3xl md:text-4xl font-semibold tracking-tight text-primary mt-2 mb-4">
+        Pregnancy Test Date Calculator.
+      </h1>
+      <p class="text-sm md:text-base text-secondary leading-relaxed">
+        Understand when your body produces enough Human Chorionic Gonadotropin (hCG) for accurate detection. Calculate the optimal dates to test and avoid stressful false negatives.
+      </p>
+    </div>
+
+    <!-- Form container -->
+    <div class="card-container mb-12">
+      <form id="test-calculator-form" class="space-y-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label for="lmp-date" class="block text-xs font-semibold text-primary uppercase font-mono tracking-wider mb-2">
+              First Day of Last Period (LMP)
+            </label>
+            <input
+              type="date"
+              id="lmp-date"
+              name="lmpDate"
+              required
+              class="w-full h-10 px-4 border border-hairline-strong rounded-sm text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary bg-canvas text-primary hover:border-primary transition-all"
+            />
+          </div>
+
+          <div>
+            <label for="cycle-length" class="block text-xs font-semibold text-primary uppercase font-mono tracking-wider mb-2">
+              Average Cycle Length: <span id="cycle-length-val" class="font-bold text-brand-rose">28</span> Days
+            </label>
+            <input
+              type="range"
+              id="cycle-length"
+              name="cycleLength"
+              min="20"
+              max="45"
+              value="28"
+              class="w-full accent-brand-rose cursor-pointer h-2 bg-canvas-soft-2 rounded-lg appearance-none border border-hairline"
+            />
+          </div>
+        </div>
+
+        <div>
+          <button type="submit" class="btn-primary w-full md:w-auto px-8 font-semibold">
+            Calculate Testing Window
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Results section -->
+    <div id="test-results" class="hidden space-y-8 animate-fade-in">
+      <div class="card-container">
+        <h3 class="text-sm font-semibold text-primary mb-6">Your Personal Pregnancy Testing Timeline</h3>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse text-xs md:text-sm">
+            <thead>
+              <tr class="border-b border-hairline bg-canvas-soft-2 font-mono text-[10px] text-secondary uppercase">
+                <th class="py-3 px-4">Test Type</th>
+                <th class="py-3 px-4">Earliest Recommended Date</th>
+                <th class="py-3 px-4">HCG Sensitivity</th>
+                <th class="py-3 px-4">Accuracy (Est.)</th>
+                <th class="py-3 px-4">Status</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-hairline">
+              <!-- Blood Test -->
+              <tr>
+                <td class="py-4 px-4 font-semibold text-primary">Quantitative Blood Test</td>
+                <td id="res-blood-date" class="py-4 px-4 font-semibold text-primary">-</td>
+                <td class="py-4 px-4 text-secondary">2-5 mIU/mL</td>
+                <td class="py-4 px-4 text-brand-sage font-medium">&gt; 99%</td>
+                <td class="py-4 px-4 text-secondary">Clinical Setting</td>
+              </tr>
+              <!-- Early Urine Test -->
+              <tr>
+                <td class="py-4 px-4 font-semibold text-primary">Early Detection Urine Test</td>
+                <td id="res-early-date" class="py-4 px-4 font-semibold text-primary">-</td>
+                <td class="py-4 px-4 text-secondary">10 mIU/mL</td>
+                <td class="py-4 px-4 text-secondary">75% - 90%</td>
+                <td class="py-4 px-4 text-brand-rose font-medium">Early Option</td>
+              </tr>
+              <!-- Standard Urine Test -->
+              <tr class="bg-brand-blush/20">
+                <td class="py-4 px-4 font-semibold text-primary">Standard OTC Urine Test</td>
+                <td id="res-standard-date" class="py-4 px-4 font-semibold text-primary">-</td>
+                <td class="py-4 px-4 text-secondary">20-25 mIU/mL</td>
+                <td class="py-4 px-4 text-brand-sage font-medium">&gt; 99%</td>
+                <td class="py-4 px-4 font-semibold text-brand-rose">Highly Recommended</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Educational details -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="card-container bg-canvas-soft-2 p-5 border border-hairline">
+          <h4 class="text-xs font-semibold text-primary uppercase font-mono tracking-wider mb-2">What is hCG?</h4>
+          <p class="text-xs text-secondary leading-relaxed">
+            Human Chorionic Gonadotropin (hCG) is the hormone produced by cells that surround a growing embryo. Once implantation occurs (typically 6-10 days post ovulation), hCG levels double roughly every 48 hours.
+          </p>
+        </div>
+
+        <div class="card-container bg-canvas-soft-2 p-5 border border-hairline">
+          <h4 class="text-xs font-semibold text-primary uppercase font-mono tracking-wider mb-2">False Negatives</h4>
+          <p class="text-xs text-secondary leading-relaxed">
+            Testing too early is the most common cause of false negatives. If your urine has a concentration of hCG below the test's detection limit, the test will display negative even if conception occurred.
+          </p>
+        </div>
+
+        <div class="card-container bg-canvas-soft-2 p-5 border border-hairline">
+          <h4 class="text-xs font-semibold text-primary uppercase font-mono tracking-wider mb-2">Test Protocol</h4>
+          <p class="text-xs text-secondary leading-relaxed">
+            For maximum accuracy, test using your <strong>first morning urine</strong>, which is when hCG is most concentrated. Avoid drinking large volumes of water before testing to prevent dilution.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<script>
+  import { addDays, format, parseISO } from 'date-fns';
+
+  const cycleInput = document.getElementById('cycle-length') as HTMLInputElement;
+  const cycleVal = document.getElementById('cycle-length-val');
+  if (cycleInput && cycleVal) {
+    cycleInput.addEventListener('input', () => {
+      cycleVal.textContent = cycleInput.value;
+    });
+  }
+
+  // Set default date in LMP
+  const lmpDateInput = document.getElementById('lmp-date') as HTMLInputElement;
+  if (lmpDateInput) {
+    lmpDateInput.value = format(new Date(), 'yyyy-MM-dd');
+  }
+
+  const form = document.getElementById('test-calculator-form');
+  const resultsDiv = document.getElementById('test-results');
+
+  const resBlood = document.getElementById('res-blood-date');
+  const resEarly = document.getElementById('res-early-date');
+  const resStandard = document.getElementById('res-standard-date');
+
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const rawLmp = lmpDateInput.value;
+    const cycle = Number(cycleInput.value);
+    const lmpDate = parseISO(rawLmp);
+
+    // Calculations
+    const expectedPeriod = addDays(lmpDate, cycle);
+    const ovulation = addDays(lmpDate, cycle - 14);
+
+    const bloodTestDate = addDays(ovulation, 9);         // 9 Days Post Ovulation
+    const earlyUrineDate = addDays(ovulation, 11);       // 11 Days Post Ovulation (3 days before expected period)
+    const standardUrineDate = expectedPeriod;            // Day of expected period (14 Days Post Ovulation)
+
+    if (resBlood) resBlood.textContent = format(bloodTestDate, 'MMMM dd, yyyy');
+    if (resEarly) resEarly.textContent = format(earlyUrineDate, 'MMMM dd, yyyy');
+    if (resStandard) resStandard.textContent = format(standardUrineDate, 'MMMM dd, yyyy');
+
+    resultsDiv?.classList.remove('hidden');
+
+    setTimeout(() => {
+      resultsDiv?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  });
+</script>

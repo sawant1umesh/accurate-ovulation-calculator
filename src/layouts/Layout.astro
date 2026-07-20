@@ -1,0 +1,64 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import SEO from '../components/SEO.astro';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  canonical?: string;
+  ogImage?: string;
+  schema?: any;
+}
+
+const {
+  title = 'Accurate Ovulation Calculator',
+  description = 'Calculate your fertile window, ovulation day, implantation date, and pregnancy test timing with our clinically-accurate ovulation calculator. 100% private.',
+  canonical,
+  ogImage,
+  schema
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Google Fonts for premium typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono&display=swap" rel="stylesheet" />
+
+    <!-- Reusable SEO Component -->
+    <SEO
+      title={title}
+      description={description}
+      canonical={canonical}
+      ogImage={ogImage}
+      schema={schema}
+    />
+  </head>
+  <body class="flex flex-col min-h-screen bg-canvas-soft selection:bg-primary selection:text-white antialiased">
+    <!-- Skip to main content link for accessibility -->
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:bg-canvas focus:px-4 focus:py-2 focus:border focus:border-brand-rose focus:rounded-md focus:shadow-md">
+      Skip to main content
+    </a>
+
+    <!-- Sticky Header -->
+    <Header />
+
+    <!-- Main Content Slot -->
+    <main id="main-content" class="flex-grow">
+      <slot />
+    </main>
+
+    <!-- Footer -->
+    <Footer />
+  </body>
+</html>
