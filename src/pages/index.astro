@@ -4,18 +4,6 @@ import Layout from '../layouts/Layout.astro';
 const pageTitle = "Accurate Ovulation Calculator - Free, Private Fertile Window Predictor";
 const pageDescription = "Calculate your fertile window, ovulation day, implantation date, and pregnancy test timing with our clinically-accurate ovulation calculator. Free, 100% private, no account needed. Evidence-based algorithms including Ogino-Knaus method for irregular cycles.";
 
-const websiteSchema = {
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  "name": "Accurate Ovulation Calculator",
-  "url": "https://accurateovulationcalculator.com",
-  "potentialAction": {
-    "@type": "SearchAction",
-    "target": "https://accurateovulationcalculator.com/blog?q={search_term_string}",
-    "query-input": "required name=search_term_string"
-  }
-};
-
 const relatedTools = [
   {
     title: "Fertility Calendar",
@@ -133,10 +121,7 @@ const faqSchema = {
   ]
 };
 
-const homepageSchema = [
-  websiteSchema,
-  faqSchema,
-];
+const homepageSchema = faqSchema;
 ---
 
 <Layout title={pageTitle} description={pageDescription} schema={homepageSchema}>
@@ -338,9 +323,10 @@ const homepageSchema = [
                 type="button"
                 class="faq-toggle w-full flex items-center justify-between text-left gap-4 cursor-pointer"
                 data-index={index}
+                aria-expanded="false"
               >
                 <span class="text-[13px] font-semibold text-primary">{item.name}</span>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4 shrink-0 text-secondary transition-transform duration-300 faq-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4 shrink-0 text-secondary transition-transform duration-300 faq-icon" aria-hidden="true">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
                 </svg>
               </button>
@@ -355,9 +341,6 @@ const homepageSchema = [
       </div>
     </div>
   </section>
-
-  <!-- FAQPage JSON-LD -->
-  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
 
   <!-- Medical Disclaimer Banner -->
   <section class="bg-canvas-soft-2 py-14 md:py-16">
@@ -392,10 +375,12 @@ const homepageSchema = [
       // Close all other answers
       document.querySelectorAll('.faq-answer').forEach((el) => el.classList.add('hidden'));
       document.querySelectorAll('.faq-icon').forEach((el) => el.style.transform = 'rotate(0deg)');
+      document.querySelectorAll('.faq-toggle').forEach((el) => el.setAttribute('aria-expanded', 'false'));
 
       if (!isOpen) {
         answer.classList.remove('hidden');
         if (icon) icon.style.transform = 'rotate(180deg)';
+        btn.setAttribute('aria-expanded', 'true');
       }
     });
   });

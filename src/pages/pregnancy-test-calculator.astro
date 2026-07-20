@@ -1,22 +1,116 @@
 ---
 import Layout from '../layouts/Layout.astro';
 
-// SEO Title & Description
-const pageTitle = "Pregnancy Test Calculator - When to Test for Accurate Results";
-const pageDescription = "Find the earliest accurate date to take a pregnancy test based on your cycle. Compare quantitative blood test, early detection urine test, and standard OTC test timing. Avoid false negatives with personalized hCG threshold dates. Free & private.";
+// SEO Title & Description (50-60 chars, 150-160 chars)
+const pageTitle = "Pregnancy Test Calculator – When to Test for Accurate Results";
+const pageDescription = "Calculate the earliest day to test based on LMP and cycle length. Get blood test, early urine, and standard home test dates. Free, private, no account.";
+
+// Canonical URL
+const canonicalUrl = "https://accurateovulationcalculator.com/pregnancy-test-calculator";
+
+// Open Graph Image (page-specific if available)
+const ogImage = "https://accurateovulationcalculator.com/og-pregnancy-test-calculator.jpg";
 
 // Calculator JSON-LD Schema
 const calculatorSchema = {
   "@context": "https://schema.org",
   "@type": "Calculator",
   "name": "Pregnancy Test Calculator",
-  "description": "Calculates the most accurate dates to take a blood test, early urine test, or standard urine pregnancy test based on cycle length and last menstrual period.",
+  "description": "Calculates earliest accurate pregnancy testing dates for blood test, early urine test, and standard urine test based on cycle length and last menstrual period.",
   "category": "Health Calculator",
   "url": "https://accurateovulationcalculator.com/pregnancy-test-calculator"
 };
+
+// FAQ Schema for Pregnancy Test Calculator
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "When is the earliest I can take a pregnancy test after ovulation?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Quantitative blood tests can detect pregnancy as early as 9–10 days after ovulation (DPO) because they measure hCG levels as low as 2–5 mIU/mL. Early-detection urine tests (10 mIU/mL sensitivity) may work around 11–12 DPO, but accuracy is only 75–90%. For the most reliable result with a standard urine test (20–25 mIU/mL), wait until the day of your expected period (approximately 14 DPO)."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do hCG levels affect pregnancy test accuracy?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "After implantation (typically 6–10 days post-ovulation), hCG levels start very low and double roughly every 48 hours. Test accuracy depends entirely on whether hCG has risen above the test's sensitivity threshold. Testing too early means hCG may be below the detection limit, causing false negatives. A negative result before your missed period does not rule out pregnancy; retest in 48 hours if your period hasn't started."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the difference between blood tests and urine pregnancy tests?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Quantitative blood tests (beta-hCG) performed in a clinical setting can detect hCG at 2–5 mIU/mL, providing the earliest detection (9–10 DPO) and exact hormone levels to monitor pregnancy progression. Urine tests are convenient for home use but have higher thresholds: early-detection tests at 10 mIU/mL (11–12 DPO, 75–90% accuracy) and standard tests at 20–25 mIU/mL (day of expected period, >99% accuracy)."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why did I get a negative test but still no period?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A negative result before your missed period is often a false negative caused by testing too early — hCG may not yet exceed the test's detection threshold. Other causes include diluted urine from excessive hydration, testing later in the day, or an irregular cycle shifting ovulation later than expected. Retest using first-morning urine in 48 hours. If your period is more than a week late with repeated negatives, consult your healthcare provider for a blood test."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How does my cycle length affect when I should test?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Cycle length shifts ovulation timing, which changes when implantation occurs and when hCG becomes detectable. A 28-day cycle typically ovulates around day 14, so the expected period is day 28. A 32-day cycle ovulates around day 18, pushing the testing window later by 4 days. Our pregnancy test calculator adjusts the recommended test dates based on your specific cycle length and LMP to account for this variation."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can medications or medical conditions affect pregnancy test results?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Most medications (including antibiotics, birth control, and pain relievers) do not affect hCG-based pregnancy tests. However, fertility drugs containing hCG (such as certain IVF trigger shots) can cause false positives if tested too soon after administration. Rare conditions like ovarian cysts, pituitary hCG production, or certain cancers may also elevate hCG. If results are unclear or inconsistent, a quantitative blood test provides definitive confirmation."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is first-morning urine really necessary for accurate results?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "First-morning urine is recommended because hCG concentration is highest after overnight bladder accumulation. However, if you are testing on or after the day of your expected period with a standard test (>99% accuracy), any time of day is generally reliable. For early testing (before a missed period), first-morning urine significantly improves detection rates. Avoid drinking large amounts of fluid before testing, as dilution can lower hCG concentration below the test threshold."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How soon after a positive test should I see a doctor?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Schedule a prenatal appointment as soon as you get a positive home test. Most providers see patients between 8–10 weeks gestation for the first visit, but they may want to confirm the pregnancy earlier with a blood test, especially if you have a history of ectopic pregnancy, miscarriage, or fertility treatment. Start taking a prenatal vitamin with folic acid (400–800 mcg) immediately if you aren't already."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What should I do if I get a positive test then a negative one?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A positive followed by a negative could indicate a very early pregnancy loss (chemical pregnancy), testing with different sensitivity tests, or diluted urine on the second test. It may also be a false positive from an evaporation line or expired test. Contact your healthcare provider for a quantitative blood test to confirm hCG levels and trend — rising levels confirm a viable pregnancy."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Are these calculator results a substitute for medical advice?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. This pregnancy test calculator provides educational estimates based on population averages and standard hCG doubling times. Individual hormone production, implantation timing, and cycle variations mean actual test dates can differ. A negative result before a missed period does not rule out pregnancy. Always confirm with a healthcare provider via quantitative blood test or ultrasound for medical diagnosis and prenatal care."
+      }
+    }
+  ]
+};
 ---
 
-<Layout title={pageTitle} description={pageDescription} schema={calculatorSchema}>
+<Layout title={pageTitle} description={pageDescription} canonical={canonicalUrl} ogImage={ogImage} schema={calculatorSchema}>
   <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-10 md:py-16">
     <!-- Header -->
     <div class="text-center max-w-2xl mx-auto mb-10 md:mb-16">
@@ -141,10 +235,101 @@ const calculatorSchema = {
           </p>
         </div>
       </div>
-    </div>
+</div>
+
+    <!-- Educational Content Section -->
+    <section class="mt-16 md:mt-24 max-w-3xl mx-auto space-y-10" aria-labelledby="education-heading">
+      <h2 id="education-heading" class="text-2xl md:text-3xl font-semibold text-primary text-center">
+        Understanding Pregnancy Testing
+      </h2>
+
+      <article class="prose prose-sm text-secondary max-w-none">
+        <h3 class="text-lg font-semibold text-primary mt-8 mb-3">When to Take a Pregnancy Test</h3>
+        <p class="leading-relaxed">
+          The most reliable time to take a <strong>pregnancy test</strong> is on or after the first day of your missed period. At this point, hCG levels are typically high enough for standard over-the-counter tests to detect. If you know your ovulation date (from <a href="/ovulation-calculator" class="text-brand-rose underline hover:no-underline">ovulation tracking</a> or basal body temperature), you can test earlier — quantitative blood tests can detect pregnancy as early as 9–10 days post-ovulation, while early-detection urine tests work around 11–12 days post-ovulation.
+        </p>
+
+        <h3 class="text-lg font-semibold text-primary mt-8 mb-3">How hCG Levels Affect Test Accuracy</h3>
+        <p class="leading-relaxed">
+          Human Chorionic Gonadotropin (hCG) is the hormone pregnancy tests measure. After implantation (typically 6–10 days after ovulation), hCG levels start low and double approximately every 48 hours. Different tests have different sensitivity thresholds:
+        </p>
+        <ul class="list-disc list-inside space-y-2 text-sm leading-relaxed mt-3">
+          <li><strong>Quantitative blood tests</strong> (2–5 mIU/mL): Detect pregnancy earliest, often 9–10 days post-ovulation.</li>
+          <li><strong>Early-detection urine tests</strong> (10 mIU/mL): Can show positive 3–4 days before a missed period, but accuracy ranges 75–90%.</li>
+          <li><strong>Standard urine tests</strong> (20–25 mIU/mL): Most reliable on the day of the expected period or after (>99% accuracy).</li>
+        </ul>
+        <p class="leading-relaxed mt-3">
+          Testing too early — before hCG has risen above the test's detection limit — is the most common cause of false negatives. Our <a href="/pregnancy-test-calculator" class="text-brand-rose underline hover:no-underline">pregnancy test calculator</a> personalizes these dates based on your cycle length and LMP.
+        </p>
+
+        <h3 class="text-lg font-semibold text-primary mt-8 mb-3">Factors That Influence Results</h3>
+        <ul class="list-disc list-inside space-y-2 text-sm leading-relaxed">
+          <li><strong>Time of day:</strong> First-morning urine has the highest hCG concentration.</li>
+          <li><strong>Hydration:</strong> Excessive fluid intake dilutes urine, potentially causing false negatives.</li>
+          <li><strong>Test sensitivity:</strong> Check the package insert for the specific mIU/mL threshold.</li>
+          <li><strong>Irregular cycles:</strong> If your cycle varies, ovulation timing shifts, making it harder to estimate the best test date. Consider using our <a href="/fertility-calendar" class="text-brand-rose underline hover:no-underline">fertility calendar</a> to track patterns over multiple cycles.</li>
+        </ul>
+
+        <h3 class="text-lg font-semibold text-primary mt-8 mb-3">Accuracy & Limitations</h3>
+        <p class="leading-relaxed">
+          All dates provided by this calculator are <strong>estimates based on population averages</strong>. Individual hCG production rates vary, and no home test can guarantee 100% accuracy on a given day. A negative result before your missed period does not rule out pregnancy; retest in 48 hours if your period hasn't started. For medical confirmation, consult your healthcare provider for a quantitative blood test or ultrasound.
+        </p>
+
+        <h3 class="text-lg font-semibold text-primary mt-8 mb-3">Next Steps</h3>
+        <ol class="list-decimal list-inside space-y-2 text-sm leading-relaxed">
+          <li>If your test is positive, schedule a prenatal appointment with your provider.</li>
+          <li>If negative but your period is late, retest in 2–3 days or contact your doctor for a blood test.</li>
+          <li>Use our <a href="/due-date-calculator" class="text-brand-rose underline hover:no-underline">due date calculator</a> to estimate your baby's arrival once pregnancy is confirmed.</li>
+          <li>Track your cycle and symptoms with the <a href="/fertility-calendar" class="text-brand-rose underline hover:no-underline">fertility calendar</a> for future planning.</li>
+        </ol>
+
+        <p class="text-xs text-secondary/70 mt-6 text-center">
+          <em>Disclaimer: This tool provides educational estimates only. It is not a substitute for professional medical advice, diagnosis, or treatment. Always consult a qualified healthcare provider with questions about your reproductive health.</em>
+        </p>
+      </article>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="bg-canvas py-16 md:py-24" aria-labelledby="faq-heading">
+      <div class="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
+        <div class="max-w-3xl mx-auto">
+          <div class="text-center mb-10">
+            <span class="text-[11px] font-mono font-semibold tracking-widest text-brand-sage uppercase">
+              Common Questions
+            </span>
+            <h2 id="faq-heading" class="text-xl md:text-2xl font-semibold text-primary tracking-tight mt-2">Frequently Asked Questions</h2>
+          </div>
+
+          <div class="space-y-3" id="faq-accordion">
+            {faqSchema.mainEntity.map((item, index) => (
+              <div class="card-container bg-canvas-soft-2 overflow-hidden">
+            <button
+              type="button"
+              class="faq-toggle w-full flex items-center justify-between text-left gap-4 cursor-pointer"
+              data-index={index}
+              aria-expanded="false"
+            >
+              <span class="text-[13px] font-semibold text-primary">{item.name}</span>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4 shrink-0 text-secondary transition-transform duration-300 faq-icon" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+              </svg>
+            </button>
+                <div class="faq-answer hidden overflow-hidden transition-all duration-300">
+                  <p class="text-xs text-secondary leading-relaxed pt-3 pb-1 border-t border-hairline mt-3">
+                    {item.acceptedAnswer.text}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
   </div>
 </Layout>
 
+<!-- FAQPage JSON-LD -->
 <script>
   import { addDays, format, parseISO } from 'date-fns';
 
@@ -193,5 +378,25 @@ const calculatorSchema = {
     setTimeout(() => {
       resultsDiv?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, 100);
+  });
+
+  // FAQ Accordion Toggle
+  document.querySelectorAll('.faq-toggle').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const answer = btn.nextElementSibling;
+      const icon = btn.querySelector('.faq-icon');
+      const isOpen = !answer.classList.contains('hidden');
+
+      // Close all other answers
+      document.querySelectorAll('.faq-answer').forEach((el) => el.classList.add('hidden'));
+      document.querySelectorAll('.faq-icon').forEach((el) => el.style.transform = 'rotate(0deg)');
+      document.querySelectorAll('.faq-toggle').forEach((el) => el.setAttribute('aria-expanded', 'false'));
+
+      if (!isOpen) {
+        answer.classList.remove('hidden');
+        if (icon) icon.style.transform = 'rotate(180deg)';
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    });
   });
 </script>

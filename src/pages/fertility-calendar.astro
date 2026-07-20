@@ -14,6 +14,101 @@ const calendarSchema = {
   "category": "Health Calculator",
   "url": "https://accurateovulationcalculator.com/fertility-calendar"
 };
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How accurate is a fertility calendar for predicting ovulation?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A fertility calendar using the Ogino-Knaus method is approximately 80-90% accurate for women with regular cycles (26-32 days). Accuracy decreases with irregular cycles. The calculator uses your cycle length and luteal phase to estimate ovulation day, then adds a 5-day sperm survival window plus ovulation day. For medical-grade accuracy, combine calendar tracking with basal body temperature (BBT) charting and ovulation predictor kits (OPKs)."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the fertile window and how long does it last?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The fertile window spans 6 days: the 5 days before ovulation plus ovulation day itself. Sperm can survive up to 5 days in fertile cervical mucus, while the egg survives only 12-24 hours after release. Peak fertility occurs on the 2 days before and the day of ovulation. Our calendar highlights low, moderate, high, and peak fertility days with color-coded indicators so you can prioritize the highest-chance days."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I use a fertility calendar if I have irregular cycles?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Our fertility calendar supports irregular cycles by using your shortest and longest cycles from the past 6-12 months. It calculates a conservative fertile window spanning from the earliest possible ovulation (based on your shortest cycle) to the latest possible ovulation (based on your longest cycle). This wider window increases coverage for irregular cycles. For highly irregular cycles (variation > 8 days), we recommend combining calendar tracking with BBT and OPKs for better precision."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "When is the best time to take a pregnancy test after ovulation?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The earliest reliable time to test is 10-12 days after ovulation (DPO), when hCG levels may be detectable by sensitive early-result tests. However, testing on the first day of a missed period (approximately 14 DPO) provides 99%+ accuracy. Our calendar marks \"Pregnancy Test Window\" days starting at 10 DPO through the expected period date. Testing too early can yield false negatives; if negative but period hasn't started, retest in 2-3 days."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I track cervical mucus to confirm my fertile window?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Check cervical mucus daily by observing toilet paper after wiping or inserting a clean finger. During the fertile window, mucus progresses from sticky/creamy to watery to clear, stretchy \"egg-white\" consistency (EWCM) at peak fertility. Our fertility calendar displays the expected mucus type for each day: dry/sticky (low fertility), creamy (moderate), watery (high), and egg-white (peak). EWCM indicates ovulation is imminent — the ideal time for conception attempts."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the luteal phase and why does it matter for ovulation timing?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The luteal phase is the period between ovulation and the start of your next period, typically 12-16 days (average 14). It's relatively constant for each woman. Our calculator subtracts your luteal phase length from your cycle length to estimate ovulation day (e.g., 28-day cycle minus 14-day luteal phase = day 14 ovulation). If you know your luteal phase from BBT tracking, you can customize it in the calculator for more accurate predictions."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the implantation window and when does it occur?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Implantation typically occurs 6-12 days after ovulation (DPO), with 8-10 DPO being most common. During this window, the fertilized egg attaches to the uterine lining. Some women experience light spotting (implantation bleeding) or mild cramping. Our fertility calendar highlights the implantation window with a distinct color. A sustained BBT rise beyond 16-18 days post-ovulation is a strong early pregnancy indicator."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How does basal body temperature (BBT) confirm ovulation?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "BBT rises 0.5-1.0°F (0.3-0.6°C) after ovulation due to progesterone and stays elevated through the luteal phase. Take your temperature immediately upon waking, before any activity. A sustained rise for 3+ consecutive days confirms ovulation occurred. Our fertility calendar provides BBT guidance for each phase: low/flat in follicular phase, slight dip at ovulation, sustained high in luteal phase. BBT confirms ovulation retrospectively; combine with forward-looking methods (cervical mucus, OPKs) for planning."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can stress or illness delay ovulation and shift my fertile window?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Stress, illness, travel, significant weight changes, and intense exercise can delay ovulation by suppressing the LH surge. This shifts the fertile window later but does not typically shorten the luteal phase. If ovulation is delayed, your period will also arrive later — cycle length varies primarily due to follicular phase changes. Our irregular cycle mode accounts for this variability by using your cycle range. Track BBT to confirm when ovulation actually occurs each cycle."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I export my fertility calendar to Google Calendar or Apple Calendar?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Click the \"Export to Calendar (ICS)\" button on your dashboard. This downloads a .ics file containing your ovulation day, fertile window, next period, and predicted period dates. Open the file to add events to Google Calendar, Apple Calendar, Outlook, or any ICS-compatible calendar. Events include descriptions with fertility level and tips. Re-export after each cycle update to keep your calendar current."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is my fertility data private and secure in this calculator?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. All calculations run locally in your browser. Your cycle data (period dates, cycle lengths) is stored only in your browser's localStorage — never sent to our servers, never shared, and no account is required. You can clear all data anytime with the \"Clear Data\" button. We do not use cookies, tracking pixels, or analytics on the calculator pages. Your reproductive health data stays completely private."
+      }
+    }
+  ]
+};
 ---
 
 <Layout title={pageTitle} description={pageDescription} schema={calendarSchema}>
@@ -203,8 +298,129 @@ const calendarSchema = {
       </div>
     </section>
 
+    <!-- FAQ Section -->
+    <section class="mt-16 md:mt-24 max-w-3xl mx-auto" aria-labelledby="faq-heading">
+      <h2 id="faq-heading" class="text-2xl md:text-3xl font-semibold text-primary text-center mb-10">
+        Frequently Asked Questions
+      </h2>
+
+      <div class="space-y-4" itemscope itemtype="https://schema.org/FAQPage">
+        <details class="group bg-canvas border border-hairline rounded-lg overflow-hidden" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <summary class="flex items-center justify-between p-5 cursor-pointer list-none group-open:rotate-90 transition-transform duration-200" itemprop="name">
+            <h3 class="font-medium text-primary text-base pr-4">How accurate is a fertility calendar for predicting ovulation?</h3>
+            <svg class="w-5 h-5 text-secondary flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </summary>
+          <div class="px-5 pb-5 text-sm text-secondary leading-relaxed" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+            <p itemprop="text">A fertility calendar using the Ogino-Knaus method is approximately 80-90% accurate for women with regular cycles (26-32 days). Accuracy decreases with irregular cycles. The calculator uses your cycle length and luteal phase to estimate ovulation day, then adds a 5-day sperm survival window plus ovulation day. For medical-grade accuracy, combine calendar tracking with basal body temperature (BBT) charting and ovulation predictor kits (OPKs).</p>
+          </div>
+        </details>
+
+        <details class="group bg-canvas border border-hairline rounded-lg overflow-hidden" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <summary class="flex items-center justify-between p-5 cursor-pointer list-none group-open:rotate-90 transition-transform duration-200" itemprop="name">
+            <h3 class="font-medium text-primary text-base pr-4">What is the fertile window and how long does it last?</h3>
+            <svg class="w-5 h-5 text-secondary flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </summary>
+          <div class="px-5 pb-5 text-sm text-secondary leading-relaxed" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+            <p itemprop="text">The fertile window spans 6 days: the 5 days before ovulation plus ovulation day itself. Sperm can survive up to 5 days in fertile cervical mucus, while the egg survives only 12-24 hours after release. Peak fertility occurs on the 2 days before and the day of ovulation. Our calendar highlights low, moderate, high, and peak fertility days with color-coded indicators so you can prioritize the highest-chance days.</p>
+          </div>
+        </details>
+
+        <details class="group bg-canvas border border-hairline rounded-lg overflow-hidden" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <summary class="flex items-center justify-between p-5 cursor-pointer list-none group-open:rotate-90 transition-transform duration-200" itemprop="name">
+            <h3 class="font-medium text-primary text-base pr-4">Can I use a fertility calendar if I have irregular cycles?</h3>
+            <svg class="w-5 h-5 text-secondary flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </summary>
+          <div class="px-5 pb-5 text-sm text-secondary leading-relaxed" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+            <p itemprop="text">Yes. Our fertility calendar supports irregular cycles by using your shortest and longest cycles from the past 6-12 months. It calculates a conservative fertile window spanning from the earliest possible ovulation (based on your shortest cycle) to the latest possible ovulation (based on your longest cycle). This wider window increases coverage for irregular cycles. For highly irregular cycles (variation > 8 days), we recommend combining calendar tracking with BBT and OPKs for better precision.</p>
+          </div>
+        </details>
+
+        <details class="group bg-canvas border border-hairline rounded-lg overflow-hidden" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <summary class="flex items-center justify-between p-5 cursor-pointer list-none group-open:rotate-90 transition-transform duration-200" itemprop="name">
+            <h3 class="font-medium text-primary text-base pr-4">When is the best time to take a pregnancy test after ovulation?</h3>
+            <svg class="w-5 h-5 text-secondary flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </summary>
+          <div class="px-5 pb-5 text-sm text-secondary leading-relaxed" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+            <p itemprop="text">The earliest reliable time to test is 10-12 days after ovulation (DPO), when hCG levels may be detectable by sensitive early-result tests. However, testing on the first day of a missed period (approximately 14 DPO) provides 99%+ accuracy. Our calendar marks "Pregnancy Test Window" days starting at 10 DPO through the expected period date. Testing too early can yield false negatives; if negative but period hasn't started, retest in 2-3 days.</p>
+          </div>
+        </details>
+
+        <details class="group bg-canvas border border-hairline rounded-lg overflow-hidden" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <summary class="flex items-center justify-between p-5 cursor-pointer list-none group-open:rotate-90 transition-transform duration-200" itemprop="name">
+            <h3 class="font-medium text-primary text-base pr-4">How do I track cervical mucus to confirm my fertile window?</h3>
+            <svg class="w-5 h-5 text-secondary flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </summary>
+          <div class="px-5 pb-5 text-sm text-secondary leading-relaxed" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+            <p itemprop="text">Check cervical mucus daily by observing toilet paper after wiping or inserting a clean finger. During the fertile window, mucus progresses from sticky/creamy → watery → clear, stretchy "egg-white" consistency (EWCM) at peak fertility. Our calendar displays the expected mucus type for each day: dry/sticky (low fertility), creamy (moderate), watery (high), and egg-white (peak). EWCM indicates ovulation is imminent — the ideal time for conception attempts.</p>
+          </div>
+        </details>
+
+        <details class="group bg-canvas border border-hairline rounded-lg overflow-hidden" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <summary class="flex items-center justify-between p-5 cursor-pointer list-none group-open:rotate-90 transition-transform duration-200" itemprop="name">
+            <h3 class="font-medium text-primary text-base pr-4">What is the luteal phase and why does it matter for ovulation timing?</h3>
+            <svg class="w-5 h-5 text-secondary flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </summary>
+          <div class="px-5 pb-5 text-sm text-secondary leading-relaxed" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+            <p itemprop="text">The luteal phase is the period between ovulation and the start of your next period, typically 12-16 days (average 14). It's relatively constant for each woman. Our calculator subtracts your luteal phase length from your cycle length to estimate ovulation day (e.g., 28-day cycle minus 14-day luteal phase = day 14 ovulation). If you know your luteal phase from BBT tracking, you can customize it in the calculator for more accurate predictions.</p>
+          </div>
+        </details>
+
+        <details class="group bg-canvas border border-hairline rounded-lg overflow-hidden" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <summary class="flex items-center justify-between p-5 cursor-pointer list-none group-open:rotate-90 transition-transform duration-200" itemprop="name">
+            <h3 class="font-medium text-primary text-base pr-4">What is the implantation window and when does it occur?</h3>
+            <svg class="w-5 h-5 text-secondary flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </summary>
+          <div class="px-5 pb-5 text-sm text-secondary leading-relaxed" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+            <p itemprop="text">Implantation typically occurs 6-12 days after ovulation (DPO), with 8-10 DPO being most common. During this window, the fertilized egg attaches to the uterine lining. Some women experience light spotting (implantation bleeding) or mild cramping. Our calendar highlights the implantation window with a distinct color. A sustained BBT rise beyond 16-18 days post-ovulation is a strong early pregnancy indicator.</p>
+          </div>
+        </details>
+
+        <details class="group bg-canvas border border-hairline rounded-lg overflow-hidden" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <summary class="flex items-center justify-between p-5 cursor-pointer list-none group-open:rotate-90 transition-transform duration-200" itemprop="name">
+            <h3 class="font-medium text-primary text-base pr-4">How does basal body temperature (BBT) confirm ovulation?</h3>
+            <svg class="w-5 h-5 text-secondary flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </summary>
+          <div class="px-5 pb-5 text-sm text-secondary leading-relaxed" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+            <p itemprop="text">BBT rises 0.5-1.0°F (0.3-0.6°C) after ovulation due to progesterone and stays elevated through the luteal phase. Take your temperature immediately upon waking, before any activity. A sustained rise for 3+ consecutive days confirms ovulation occurred. Our calendar provides BBT guidance for each phase: low/flat in follicular phase, slight dip at ovulation, sustained high in luteal phase. BBT confirms ovulation retrospectively; combine with forward-looking methods (cervical mucus, OPKs) for planning.</p>
+          </div>
+        </details>
+
+        <details class="group bg-canvas border border-hairline rounded-lg overflow-hidden" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <summary class="flex items-center justify-between p-5 cursor-pointer list-none group-open:rotate-90 transition-transform duration-200" itemprop="name">
+            <h3 class="font-medium text-primary text-base pr-4">Can stress or illness delay ovulation and shift my fertile window?</h3>
+            <svg class="w-5 h-5 text-secondary flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </summary>
+          <div class="px-5 pb-5 text-sm text-secondary leading-relaxed" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+            <p itemprop="text">Yes. Stress, illness, travel, significant weight changes, and intense exercise can delay ovulation by suppressing the LH surge. This shifts the fertile window later but does not typically shorten the luteal phase. If ovulation is delayed, your period will also arrive later — cycle length varies primarily due to follicular phase changes. Our irregular cycle mode accounts for this variability by using your cycle range. Track BBT to confirm when ovulation actually occurs each cycle.</p>
+          </div>
+        </details>
+
+        <details class="group bg-canvas border border-hairline rounded-lg overflow-hidden" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <summary class="flex items-center justify-between p-5 cursor-pointer list-none group-open:rotate-90 transition-transform duration-200" itemprop="name">
+            <h3 class="font-medium text-primary text-base pr-4">How do I export my fertility calendar to Google Calendar or Apple Calendar?</h3>
+            <svg class="w-5 h-5 text-secondary flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </summary>
+          <div class="px-5 pb-5 text-sm text-secondary leading-relaxed" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+            <p itemprop="text">Click the "Export to Calendar (ICS)" button on your dashboard. This downloads a .ics file containing your ovulation day, fertile window, next period, and predicted period dates. Open the file to add events to Google Calendar, Apple Calendar, Outlook, or any ICS-compatible calendar. Events include descriptions with fertility level and tips. Re-export after each cycle update to keep your calendar current.</p>
+          </div>
+        </details>
+
+        <details class="group bg-canvas border border-hairline rounded-lg overflow-hidden" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <summary class="flex items-center justify-between p-5 cursor-pointer list-none group-open:rotate-90 transition-transform duration-200" itemprop="name">
+            <h3 class="font-medium text-primary text-base pr-4">Is my fertility data private and secure in this calculator?</h3>
+            <svg class="w-5 h-5 text-secondary flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </summary>
+          <div class="px-5 pb-5 text-sm text-secondary leading-relaxed" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+            <p itemprop="text">Yes. All calculations run locally in your browser. Your cycle data (period dates, cycle lengths) is stored only in your browser's localStorage — never sent to our servers, never shared, and no account is required. You can clear all data anytime with the "Clear Data" button. We do not use cookies, tracking pixels, or analytics on the calculator pages. Your reproductive health data stays completely private.</p>
+          </div>
+        </details>
+      </div>
+    </section>
+
   </div>
 </Layout>
+
+<script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
 
 <script>
   import { addDays, subDays, startOfMonth, endOfMonth, startOfWeek, endOfWeek, isSameDay, format, parseISO, isAfter } from 'date-fns';

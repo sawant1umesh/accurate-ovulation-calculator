@@ -1,9 +1,15 @@
 ---
 import Layout from '../layouts/Layout.astro';
 
-// SEO Title & Description
-const pageTitle = "Due Date Calculator - Pregnancy Due Date by LMP, Conception, or IVF";
-const pageDescription = "Calculate your estimated due date using Last Menstrual Period (LMP), conception date, or IVF embryo transfer. View gestational age, trimester timeline, and pregnancy milestones. Free, private, no account needed.";
+// SEO Title & Description (50-60 chars, 150-160 chars)
+const pageTitle = "Due Date Calculator – Pregnancy Due Date by LMP, Conception, or IVF";
+const pageDescription = "Calculate your estimated due date using LMP, conception date, or IVF transfer. Get gestational age, trimester timeline, and pregnancy milestones. Free, private, no account.";
+
+// Canonical URL
+const canonicalUrl = "https://accurateovulationcalculator.com/due-date-calculator";
+
+// Open Graph Image (page-specific if available)
+const ogImage = "https://accurateovulationcalculator.com/og-due-date-calculator.jpg";
 
 // Calculator JSON-LD Schema
 const calculatorSchema = {
@@ -14,9 +20,97 @@ const calculatorSchema = {
   "category": "Pregnancy Calculator",
   "url": "https://accurateovulationcalculator.com/due-date-calculator"
 };
+
+// FAQ Schema for Due Date Calculator
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How is my due date calculated from my last menstrual period (LMP)?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Your due date is calculated using Naegele's rule: add 280 days (40 weeks) to the first day of your last menstrual period. This assumes a 28-day cycle with ovulation on day 14. Our calculator adjusts for your actual cycle length — if your cycle is 32 days, 4 days are added; if 24 days, 4 days are subtracted."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is Naegele's rule and how accurate is it?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Naegele's rule is the standard method for estimating due dates: LMP + 7 days − 3 months + 1 year = due date (equivalent to LMP + 280 days). It's a population-level estimate; only about 4–5% of babies arrive on their exact due date. Accuracy improves with early ultrasound confirmation (±3–5 days at 7–13 weeks)."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How does my cycle length affect my due date calculation?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Cycle length shifts ovulation timing, which changes the conception date. The standard 280-day formula assumes ovulation on day 14. For a 32-day cycle (ovulation ~day 18), add 4 days to the due date. For a 24-day cycle (ovulation ~day 10), subtract 4 days. Our calculator automatically applies this adjustment when you enter your average cycle length."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How is the due date calculated if I know my conception date?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "When conception date is known (via ovulation tracking, BBT, or OPKs), the due date is calculated by adding 266 days (38 weeks) from conception. This is more precise than LMP-based dating because it removes the variability of cycle length and ovulation timing. Our conception date method uses this 266-day formula."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How are IVF due dates calculated for embryo transfers?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "IVF due dates are calculated from the embryo transfer date based on embryo age at transfer. For a 5-day blastocyst transfer, add 261 days (37 weeks + 2 days). For a 3-day cleavage-stage transfer, add 263 days (37 weeks + 4 days). These intervals align with ASRM and SART guidelines and account for the embryo's developmental age before transfer."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the difference between gestational age and fetal age?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Gestational age counts from the first day of your LMP (approximately 2 weeks before conception) and is the standard used by healthcare providers. Fetal age (embryonic age) counts from the actual conception date. Our calculator displays gestational age — this is why you may be '4 weeks pregnant' before implantation occurs."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How accurate are due date calculators compared to ultrasound?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Due date calculators provide estimates based on population averages. Early ultrasound (crown-rump length at 7–13 weeks) is the gold standard with ±3–5 day accuracy. LMP-based calculators can be off by 1–2 weeks, especially with irregular cycles, recent hormonal birth control, or uncertain LMP recall. Always confirm dating with your provider via ultrasound."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can my due date change after an ultrasound?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. If early ultrasound dating differs from your LMP-based due date by more than 5–7 days (first trimester) or 10–14 days (second trimester), your provider will typically update your due date to match the ultrasound. First-trimester ultrasound is most reliable for dating; later ultrasounds assess growth rather than establish dates."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What do the pregnancy trimesters mean for my due date timeline?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Trimesters divide the 40-week gestational period: First trimester (weeks 0–13) covers organogenesis; second trimester (weeks 14–27) includes anatomy scan and quickening; third trimester (weeks 28–40) covers lung maturation and weight gain. Full term is 39–40 weeks; early term 37–38 weeks; late term 41 weeks; post-term ≥42 weeks. Our calculator shows your current trimester and progress bar."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What happens if my due date passes and I haven't delivered?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Only ~4–5% of babies arrive on their exact due date. Most deliver between 39–41 weeks. If you reach 41 weeks (late term), your provider will discuss monitoring (non-stress tests, biophysical profile) and may recommend induction. At ≥42 weeks (post-term), induction is typically advised due to increased risks. Always follow your provider's guidance for post-dates management."
+      }
+    }
+  ]
+};
 ---
 
-<Layout title={pageTitle} description={pageDescription} schema={calculatorSchema}>
+<Layout title={pageTitle} description={pageDescription} canonical={canonicalUrl} ogImage={ogImage} schema={calculatorSchema}>
   <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-10 md:py-16">
     <!-- Header -->
     <div class="text-center max-w-2xl mx-auto mb-10 md:mb-16">
@@ -34,10 +128,13 @@ const calculatorSchema = {
     <!-- Calculator Input Box -->
     <div class="card-container mb-12">
       <!-- Tabs -->
-      <div class="flex border-b border-hairline mb-8 overflow-x-auto whitespace-nowrap scrollbar-none">
+      <div role="tablist" class="flex border-b border-hairline mb-8 overflow-x-auto whitespace-nowrap scrollbar-none" aria-label="Calculation method">
         <button
           type="button"
           id="due-tab-lmp"
+          role="tab"
+          aria-selected="true"
+          aria-controls="panel-lmp"
           class="px-5 py-3 text-sm font-semibold border-b-2 border-brand-gold text-primary focus:outline-none transition-all cursor-pointer"
         >
           Last Period (LMP)
@@ -45,6 +142,10 @@ const calculatorSchema = {
         <button
           type="button"
           id="due-tab-conception"
+          role="tab"
+          aria-selected="false"
+          aria-controls="panel-conception"
+          tabindex="-1"
           class="px-5 py-3 text-sm font-medium border-b-2 border-transparent text-secondary hover:text-primary focus:outline-none transition-all cursor-pointer"
         >
           Conception Date
@@ -52,6 +153,10 @@ const calculatorSchema = {
         <button
           type="button"
           id="due-tab-ivf"
+          role="tab"
+          aria-selected="false"
+          aria-controls="panel-ivf"
+          tabindex="-1"
           class="px-5 py-3 text-sm font-medium border-b-2 border-transparent text-secondary hover:text-primary focus:outline-none transition-all cursor-pointer"
         >
           IVF Transfer
@@ -208,6 +313,89 @@ const calculatorSchema = {
         </div>
       </div>
     </div>
+
+    <!-- Educational Content Section -->
+    <section class="mt-16 md:mt-24 max-w-3xl mx-auto space-y-10" aria-labelledby="education-heading">
+      <h2 id="education-heading" class="text-2xl md:text-3xl font-semibold text-primary text-center">
+        Understanding Your Due Date Calculation
+      </h2>
+
+      <article class="prose prose-sm text-secondary max-w-none">
+        <p class="leading-relaxed">
+          A <strong>due date calculator</strong> estimates when your baby will arrive based on the first day of your last menstrual period (LMP), conception date, or IVF embryo transfer date. The standard calculation uses Naegele's rule — adding 280 days (40 weeks) to the first day of your LMP — which assumes a 28-day cycle with ovulation on day 14.
+        </p>
+
+        <h3 class="text-lg font-semibold text-primary mt-8 mb-3">Calculation Methods Explained</h3>
+        <ul class="list-disc list-inside space-y-3 text-sm leading-relaxed">
+          <li>
+            <strong>LMP Method:</strong> Most common approach. Enter the first day of your last period and your average cycle length. Our calculator adjusts the standard 280-day formula for cycles shorter or longer than 28 days (e.g., a 32-day cycle adds 4 days to the due date).
+          </li>
+          <li>
+            <strong>Conception Date Method:</strong> If you know your ovulation or conception date (from <a href="/ovulation-calculator" class="text-brand-rose underline hover:no-underline">ovulation tracking</a>, basal body temperature, or OPKs), this method adds 266 days (38 weeks) from conception — more precise when ovulation timing is confirmed.
+          </li>
+          <li>
+            <strong>IVF Transfer Method:</strong> For fertility treatment pregnancies, the due date is calculated from the embryo transfer date. A 5-day blastocyst transfer adds 261 days; a 3-day cleavage-stage transfer adds 263 days. This aligns with ASRM and SART guidelines.
+          </li>
+        </ul>
+
+        <h3 class="text-lg font-semibold text-primary mt-8 mb-3">Gestational Age vs. Fetal Age</h3>
+        <p class="leading-relaxed mt-3">
+          <strong>Gestational age</strong> (what doctors use) counts from the first day of your LMP — approximately two weeks before conception occurs. <strong>Fetal age</strong> (embryonic age) counts from conception. Our calculator displays gestational age, which is why you may be "4 weeks pregnant" before implantation even occurs. This standardization allows consistent tracking across ultrasounds, lab tests, and clinical milestones.
+        </p>
+
+        <h3 class="text-lg font-semibold text-primary mt-8 mb-3">Trimester Breakdown</h3>
+        <ul class="list-disc list-inside space-y-2 text-sm leading-relaxed">
+          <li><strong>First Trimester (Weeks 0–13):</strong> Organogenesis — major organs and structures form. Highest risk period for miscarriage and teratogen exposure.</li>
+          <li><strong>Second Trimester (Weeks 14–27):</strong> Rapid growth, fetal movement begins (quickening ~18–22 weeks), anatomy scan typically at 18–22 weeks.</li>
+          <li><strong>Third Trimester (Weeks 28–40):</strong> Lung maturation, fat accumulation, brain development. <strong>Early term:</strong> 37–38 weeks; <strong>Full term:</strong> 39–40 weeks; <strong>Late term:</strong> 41 weeks; <strong>Post-term:</strong> ≥42 weeks.</li>
+        </ul>
+
+        <h3 class="text-lg font-semibold text-primary mt-8 mb-3">Accuracy & Limitations</h3>
+        <p class="leading-relaxed mt-3">
+          Due dates are estimates — only about 4–5% of babies arrive on their exact due date. Early ultrasound dating (crown-rump length at 7–13 weeks) is the gold standard for accuracy (±3–5 days). LMP-based calculations can be off by 1–2 weeks, especially with irregular cycles, recent hormonal contraception, or uncertain LMP recall. Always confirm dating with your healthcare provider via ultrasound.
+        </p>
+
+        <h3 class="text-lg font-semibold text-primary mt-8 mb-3">Next Steps After Your Due Date</h3>
+        <ol class="list-decimal list-inside space-y-2 text-sm leading-relaxed">
+          <li>Schedule your first prenatal appointment (typically 8–10 weeks gestation).</li>
+          <li>Start a prenatal vitamin with folic acid (400–800 mcg) if not already taking one.</li>
+          <li>Track your pregnancy week-by-week using our <a href="/fertility-calendar" class="text-brand-rose underline hover:no-underline">fertility calendar</a> for symptom insights and appointment reminders.</li>
+          <li>Use the <a href="/pregnancy-test-calculator" class="text-brand-rose underline hover:no-underline">pregnancy test calculator</a> to know the earliest reliable testing window if you're still confirming pregnancy.</li>
+          <li>Discuss screening options (NIPT, quad screen, anatomy scan) with your provider based on your dates.</li>
+        </ol>
+      </article>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="mt-16 md:mt-24 max-w-3xl mx-auto space-y-10" aria-labelledby="faq-heading">
+      <h2 id="faq-heading" class="text-2xl md:text-3xl font-semibold text-primary text-center mb-10">
+        Frequently Asked Questions
+      </h2>
+
+      <div class="space-y-3" id="faq-accordion">
+        {faqSchema.mainEntity.map((item, index) => (
+          <div class="card-container bg-canvas-soft-2 overflow-hidden">
+            <button
+              type="button"
+              class="faq-toggle w-full flex items-center justify-between text-left gap-4 cursor-pointer"
+              data-index={index}
+              aria-expanded="false"
+            >
+              <span class="text-[13px] font-semibold text-primary">{item.name}</span>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4 shrink-0 text-secondary transition-transform duration-300 faq-icon" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+              </svg>
+            </button>
+            <div class="faq-answer hidden overflow-hidden transition-all duration-300">
+              <p class="text-xs text-secondary leading-relaxed pt-3 pb-1 border-t border-hairline mt-3">
+                {item.acceptedAnswer.text}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
   </div>
 </Layout>
 
@@ -242,11 +430,25 @@ const calculatorSchema = {
   const activeClass = 'border-brand-gold text-primary';
   const inactiveClass = 'border-transparent text-secondary hover:text-primary';
 
+  function deactivateTab(tab: HTMLElement | null) {
+    if (!tab) return;
+    tab.className = tab.className.replace(activeClass, inactiveClass);
+    tab.setAttribute('aria-selected', 'false');
+    tab.setAttribute('tabindex', '-1');
+  }
+
+  function activateTab(tab: HTMLElement | null) {
+    if (!tab) return;
+    tab.className = tab.className.replace(inactiveClass, activeClass);
+    tab.setAttribute('aria-selected', 'true');
+    tab.removeAttribute('tabindex');
+  }
+
   tabLmp?.addEventListener('click', () => {
     methodInput.value = 'lmp';
-    tabLmp.className = tabLmp.className.replace(inactiveClass, activeClass);
-    tabConception!.className = tabConception!.className.replace(activeClass, inactiveClass);
-    tabIvf!.className = tabIvf!.className.replace(activeClass, inactiveClass);
+    activateTab(tabLmp);
+    deactivateTab(tabConception);
+    deactivateTab(tabIvf);
 
     cycleWrapper?.classList.remove('hidden');
     ivfWrapper?.classList.add('hidden');
@@ -255,9 +457,9 @@ const calculatorSchema = {
 
   tabConception?.addEventListener('click', () => {
     methodInput.value = 'conception';
-    tabConception.className = tabConception.className.replace(inactiveClass, activeClass);
-    tabLmp!.className = tabLmp!.className.replace(activeClass, inactiveClass);
-    tabIvf!.className = tabIvf!.className.replace(activeClass, inactiveClass);
+    activateTab(tabConception);
+    deactivateTab(tabLmp);
+    deactivateTab(tabIvf);
 
     cycleWrapper?.classList.add('hidden');
     ivfWrapper?.classList.add('hidden');
@@ -266,9 +468,9 @@ const calculatorSchema = {
 
   tabIvf?.addEventListener('click', () => {
     methodInput.value = 'ivf';
-    tabIvf.className = tabIvf.className.replace(inactiveClass, activeClass);
-    tabLmp!.className = tabLmp!.className.replace(activeClass, inactiveClass);
-    tabConception!.className = tabConception!.className.replace(activeClass, inactiveClass);
+    activateTab(tabIvf);
+    deactivateTab(tabLmp);
+    deactivateTab(tabConception);
 
     cycleWrapper?.classList.add('hidden');
     ivfWrapper?.classList.remove('hidden');
@@ -390,5 +592,25 @@ const calculatorSchema = {
     setTimeout(() => {
       resultsDiv?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, 100);
+  });
+
+  // FAQ Accordion Toggle
+  document.querySelectorAll('.faq-toggle').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const answer = btn.nextElementSibling;
+      const icon = btn.querySelector('.faq-icon');
+      const isOpen = !answer.classList.contains('hidden');
+
+      // Close all other answers
+      document.querySelectorAll('.faq-answer').forEach((el) => el.classList.add('hidden'));
+      document.querySelectorAll('.faq-icon').forEach((el) => el.style.transform = 'rotate(0deg)');
+      document.querySelectorAll('.faq-toggle').forEach((el) => el.setAttribute('aria-expanded', 'false'));
+
+      if (!isOpen) {
+        answer.classList.remove('hidden');
+        if (icon) icon.style.transform = 'rotate(180deg)';
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    });
   });
 </script>
