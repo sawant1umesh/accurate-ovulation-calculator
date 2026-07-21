@@ -374,259 +374,232 @@ const signsOfOvulation = [
 <script>
   import { addDays, subDays, format, parseISO } from 'date-fns';
 
-  // Range Slider Value sync
-  const cycleInput = document.getElementById('cycle-length') as HTMLInputElement;
-  const cycleVal = document.getElementById('cycle-length-val');
-  if (cycleInput && cycleVal) {
-    cycleInput.addEventListener('input', () => {
-      cycleVal.textContent = cycleInput.value;
-    });
-  }
+  function initCalculator() {
+    // Range Slider Value sync
+    const cycleInput = document.getElementById('cycle-length') as HTMLInputElement;
+    const cycleVal = document.getElementById('cycle-length-val');
+    if (cycleInput && cycleVal) {
+      cycleInput.addEventListener('input', () => {
+        cycleVal.textContent = cycleInput.value;
+      });
+    }
 
-  const shortestInput = document.getElementById('shortest-cycle') as HTMLInputElement;
-  const shortestVal = document.getElementById('shortest-cycle-val');
-  if (shortestInput && shortestVal) {
-    shortestInput.addEventListener('input', () => {
-      shortestVal.textContent = shortestInput.value;
-      // Guarantee shortest is not longer than longest
-      if (Number(shortestInput.value) > Number(longestInput.value)) {
-        longestInput.value = shortestInput.value;
-        if (longestVal) longestVal.textContent = shortestInput.value;
+    const shortestInput = document.getElementById('shortest-cycle') as HTMLInputElement;
+    const shortestVal = document.getElementById('shortest-cycle-val');
+    if (shortestInput && shortestVal) {
+      shortestInput.addEventListener('input', () => {
+        shortestVal.textContent = shortestInput.value;
+        if (Number(shortestInput.value) > Number(longestInput.value)) {
+          longestInput.value = shortestInput.value;
+          if (longestVal) longestVal.textContent = shortestInput.value;
+        }
+      });
+    }
+
+    const longestInput = document.getElementById('longest-cycle') as HTMLInputElement;
+    const longestVal = document.getElementById('longest-cycle-val');
+    if (longestInput && longestVal) {
+      longestInput.addEventListener('input', () => {
+        longestVal.textContent = longestInput.value;
+        if (Number(longestInput.value) < Number(shortestInput.value)) {
+          shortestInput.value = longestInput.value;
+          if (shortestVal) shortestVal.textContent = longestInput.value;
+        }
+      });
+    }
+
+    const lutealInput = document.getElementById('luteal-phase') as HTMLInputElement;
+    const lutealVal = document.getElementById('luteal-phase-val');
+    if (lutealInput && lutealVal) {
+      lutealInput.addEventListener('input', () => {
+        lutealVal.textContent = lutealInput.value;
+      });
+    }
+
+    const lmpDateInput = document.getElementById('lmp-date') as HTMLInputElement;
+    if (lmpDateInput) {
+      lmpDateInput.value = format(new Date(), 'yyyy-MM-dd');
+    }
+
+    // Tabs Toggle logic
+    const tabLmp = document.getElementById('tab-lmp');
+    const tabLuteal = document.getElementById('tab-luteal');
+    const tabIrregular = document.getElementById('tab-irregular');
+    const methodInput = document.getElementById('calculation-method') as HTMLInputElement;
+
+    const cycleWrapper = document.getElementById('cycle-length-wrapper');
+    const lutealWrapper = document.getElementById('luteal-phase-wrapper');
+    const shortestWrapper = document.getElementById('shortest-cycle-wrapper');
+    const longestWrapper = document.getElementById('longest-cycle-wrapper');
+
+    const activeTabClass = 'border-brand-rose text-primary';
+    const inactiveTabClass = 'border-transparent text-secondary hover:text-primary';
+
+    function deactivateTab(tab: HTMLElement | null) {
+      if (!tab) return;
+      tab.className = tab.className.replace(activeTabClass, inactiveTabClass);
+      tab.setAttribute('aria-selected', 'false');
+      tab.setAttribute('tabindex', '-1');
+    }
+
+    function activateTab(tab: HTMLElement | null) {
+      if (!tab) return;
+      tab.className = tab.className.replace(inactiveTabClass, activeTabClass);
+      tab.setAttribute('aria-selected', 'true');
+      tab.removeAttribute('tabindex');
+    }
+
+    tabLmp?.addEventListener('click', () => {
+      methodInput.value = 'lmp';
+      activateTab(tabLmp);
+      deactivateTab(tabLuteal);
+      deactivateTab(tabIrregular);
+      cycleWrapper?.classList.remove('hidden');
+      lutealWrapper?.classList.add('hidden');
+      shortestWrapper?.classList.add('hidden');
+      longestWrapper?.classList.add('hidden');
+    });
+
+    tabLuteal?.addEventListener('click', () => {
+      methodInput.value = 'luteal';
+      activateTab(tabLuteal);
+      deactivateTab(tabLmp);
+      deactivateTab(tabIrregular);
+      cycleWrapper?.classList.remove('hidden');
+      lutealWrapper?.classList.remove('hidden');
+      shortestWrapper?.classList.add('hidden');
+      longestWrapper?.classList.add('hidden');
+    });
+
+    tabIrregular?.addEventListener('click', () => {
+      methodInput.value = 'irregular';
+      activateTab(tabIrregular);
+      deactivateTab(tabLmp);
+      deactivateTab(tabLuteal);
+      cycleWrapper?.classList.add('hidden');
+      lutealWrapper?.classList.add('hidden');
+      shortestWrapper?.classList.remove('hidden');
+      longestWrapper?.classList.remove('hidden');
+    });
+
+    // Handle Form Submission
+    const form = document.getElementById('ovulation-form');
+    form?.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const rawLmp = lmpDateInput.value;
+      const method = methodInput.value;
+      const lmpDate = parseISO(rawLmp);
+
+      let cycleLen = 28;
+      let lutealLen = 14;
+      let shortestLen = 26;
+      let longestLen = 32;
+
+      let fertileStart: Date;
+      let fertileEnd: Date;
+      let ovulation: Date;
+      let nextPeriod: Date;
+
+      if (method === 'lmp') {
+        cycleLen = Number(cycleInput.value);
+        lutealLen = 14;
+        nextPeriod = addDays(lmpDate, cycleLen);
+        ovulation = subDays(nextPeriod, lutealLen);
+        fertileStart = subDays(ovulation, 5);
+        fertileEnd = ovulation;
+      } else if (method === 'luteal') {
+        cycleLen = Number(cycleInput.value);
+        lutealLen = Number(lutealInput.value);
+        nextPeriod = addDays(lmpDate, cycleLen);
+        ovulation = subDays(nextPeriod, lutealLen);
+        fertileStart = subDays(ovulation, 5);
+        fertileEnd = ovulation;
+      } else {
+        shortestLen = Number(shortestInput.value);
+        longestLen = Number(longestInput.value);
+        cycleLen = Math.round((shortestLen + longestLen) / 2);
+        lutealLen = 14;
+        fertileStart = addDays(lmpDate, shortestLen - 18);
+        fertileEnd = addDays(lmpDate, longestLen - 11);
+        ovulation = addDays(lmpDate, cycleLen - 14);
+        nextPeriod = addDays(lmpDate, cycleLen);
       }
-    });
-  }
 
-  const longestInput = document.getElementById('longest-cycle') as HTMLInputElement;
-  const longestVal = document.getElementById('longest-cycle-val');
-  if (longestInput && longestVal) {
-    longestInput.addEventListener('input', () => {
-      longestVal.textContent = longestInput.value;
-      // Guarantee longest is not shorter than shortest
-      if (Number(longestInput.value) < Number(shortestInput.value)) {
-        shortestInput.value = longestInput.value;
-        if (shortestVal) shortestVal.textContent = longestInput.value;
+      const implantationStart = addDays(ovulation, 6);
+      const implantationEnd = addDays(ovulation, 10);
+      const testDate = addDays(lmpDate, Math.min(cycleLen, shortestLen));
+      const dueDate = addDays(lmpDate, 280);
+
+      const periodDays: string[] = [];
+      for (let i = 0; i < 5; i++) {
+        periodDays.push(format(addDays(lmpDate, i), 'yyyy-MM-dd'));
       }
-    });
-  }
 
-  const lutealInput = document.getElementById('luteal-phase') as HTMLInputElement;
-  const lutealVal = document.getElementById('luteal-phase-val');
-  if (lutealInput && lutealVal) {
-    lutealInput.addEventListener('input', () => {
-      lutealVal.textContent = lutealInput.value;
-    });
-  }
-
-  // Set today's date as default in LMP
-  const lmpDateInput = document.getElementById('lmp-date') as HTMLInputElement;
-  if (lmpDateInput) {
-    lmpDateInput.value = format(new Date(), 'yyyy-MM-dd');
-  }
-
-  // Tabs Toggle logic
-  const tabLmp = document.getElementById('tab-lmp');
-  const tabLuteal = document.getElementById('tab-luteal');
-  const tabIrregular = document.getElementById('tab-irregular');
-  const methodInput = document.getElementById('calculation-method') as HTMLInputElement;
-
-  const cycleWrapper = document.getElementById('cycle-length-wrapper');
-  const lutealWrapper = document.getElementById('luteal-phase-wrapper');
-  const shortestWrapper = document.getElementById('shortest-cycle-wrapper');
-  const longestWrapper = document.getElementById('longest-cycle-wrapper');
-
-  const activeTabClass = 'border-brand-rose text-primary';
-  const inactiveTabClass = 'border-transparent text-secondary hover:text-primary';
-
-  function deactivateTab(tab: HTMLElement | null) {
-    if (!tab) return;
-    tab.className = tab.className.replace(activeTabClass, inactiveTabClass);
-    tab.setAttribute('aria-selected', 'false');
-    tab.setAttribute('tabindex', '-1');
-  }
-
-  function activateTab(tab: HTMLElement | null) {
-    if (!tab) return;
-    tab.className = tab.className.replace(inactiveTabClass, activeTabClass);
-    tab.setAttribute('aria-selected', 'true');
-    tab.removeAttribute('tabindex');
-  }
-
-  tabLmp?.addEventListener('click', () => {
-    methodInput.value = 'lmp';
-    
-    activateTab(tabLmp);
-    deactivateTab(tabLuteal);
-    deactivateTab(tabIrregular);
-
-    cycleWrapper?.classList.remove('hidden');
-    lutealWrapper?.classList.add('hidden');
-    shortestWrapper?.classList.add('hidden');
-    longestWrapper?.classList.add('hidden');
-  });
-
-  tabLuteal?.addEventListener('click', () => {
-    methodInput.value = 'luteal';
-
-    activateTab(tabLuteal);
-    deactivateTab(tabLmp);
-    deactivateTab(tabIrregular);
-
-    cycleWrapper?.classList.remove('hidden');
-    lutealWrapper?.classList.remove('hidden');
-    shortestWrapper?.classList.add('hidden');
-    longestWrapper?.classList.add('hidden');
-  });
-
-  tabIrregular?.addEventListener('click', () => {
-    methodInput.value = 'irregular';
-
-    activateTab(tabIrregular);
-    deactivateTab(tabLmp);
-    deactivateTab(tabLuteal);
-
-    cycleWrapper?.classList.add('hidden');
-    lutealWrapper?.classList.add('hidden');
-    shortestWrapper?.classList.remove('hidden');
-    longestWrapper?.classList.remove('hidden');
-  });
-
-  // Handle Form Submission
-  const form = document.getElementById('ovulation-form');
-  form?.addEventListener('submit', (e) => {
-    e.preventDefault();
-
-    const rawLmp = lmpDateInput.value;
-    const method = methodInput.value;
-    const lmpDate = parseISO(rawLmp);
-
-    let cycleLen = 28;
-    let lutealLen = 14;
-    let shortestLen = 26;
-    let longestLen = 32;
-
-    let fertileStart: Date;
-    let fertileEnd: Date;
-    let ovulation: Date;
-    let nextPeriod: Date;
-
-    if (method === 'lmp') {
-      cycleLen = Number(cycleInput.value);
-      lutealLen = 14;
-      nextPeriod = addDays(lmpDate, cycleLen);
-      ovulation = subDays(nextPeriod, lutealLen);
-      fertileStart = subDays(ovulation, 5);
-      fertileEnd = ovulation;
-    } else if (method === 'luteal') {
-      cycleLen = Number(cycleInput.value);
-      lutealLen = Number(lutealInput.value);
-      nextPeriod = addDays(lmpDate, cycleLen);
-      ovulation = subDays(nextPeriod, lutealLen);
-      fertileStart = subDays(ovulation, 5);
-      fertileEnd = ovulation;
-    } else {
-      shortestLen = Number(shortestInput.value);
-      longestLen = Number(longestInput.value);
-      cycleLen = Math.round((shortestLen + longestLen) / 2);
-      lutealLen = 14;
-
-      // Ogino-Knaus Method for irregular cycles
-      fertileStart = addDays(lmpDate, shortestLen - 18);
-      fertileEnd = addDays(lmpDate, longestLen - 11);
-      ovulation = addDays(lmpDate, cycleLen - 14);
-      nextPeriod = addDays(lmpDate, cycleLen);
-    }
-
-    // Secondary Dates
-    const implantationStart = addDays(ovulation, 6);
-    const implantationEnd = addDays(ovulation, 10);
-    const testDate = addDays(lmpDate, Math.min(cycleLen, shortestLen)); // day of missed period
-    const dueDate = addDays(lmpDate, 280);
-
-    // List out period days (5 days starting from LMP)
-    const periodDays: string[] = [];
-    for (let i = 0; i < 5; i++) {
-      periodDays.push(format(addDays(lmpDate, i), 'yyyy-MM-dd'));
-    }
-
-    // List out fertile days range
-    const fertileDays: string[] = [];
-    let curDay = fertileStart;
-    while (curDay <= fertileEnd) {
-      fertileDays.push(format(curDay, 'yyyy-MM-dd'));
-      curDay = addDays(curDay, 1);
-    }
-
-    // List out implantation days
-    const implantationWindow: string[] = [];
-    let curImp = implantationStart;
-    while (curImp <= implantationEnd) {
-      implantationWindow.push(format(curImp, 'yyyy-MM-dd'));
-      curImp = addDays(curImp, 1);
-    }
-
-    // List out test days (4 days before missed period to 2 days after)
-    const testDates: string[] = [];
-    for (let i = -4; i <= 2; i++) {
-      testDates.push(format(addDays(testDate, i), 'yyyy-MM-dd'));
-    }
-
-    const calculatedData = {
-      method,
-      inputs: {
-        lmpDate: rawLmp,
-        cycleLength: cycleLen,
-        lutealLength: lutealLen,
-        shortestLength: shortestLen,
-        longestLength: longestLen
-      },
-      dates: {
-        ovulationDay: format(ovulation, 'yyyy-MM-dd'),
-        nextPeriodDate: format(nextPeriod, 'yyyy-MM-dd'),
-        fertileWindowStart: format(fertileStart, 'yyyy-MM-dd'),
-        fertileWindowEnd: format(fertileEnd, 'yyyy-MM-dd'),
-        implantationStart: format(implantationStart, 'yyyy-MM-dd'),
-        implantationEnd: format(implantationEnd, 'yyyy-MM-dd'),
-        testDate: format(testDate, 'yyyy-MM-dd'),
-        dueDate: format(dueDate, 'yyyy-MM-dd')
-      },
-      periodDays,
-      fertileDays,
-      implantationWindow,
-      testDates
-    };
-
-    // Dispatch Custom Event
-    const event = new CustomEvent('ovulation-calculated', {
-      detail: calculatedData
-    });
-    window.dispatchEvent(event);
-
-    // Smooth scroll down to results
-    setTimeout(() => {
-      const calWidget = document.getElementById('calendar-widget');
-      if (calWidget) {
-        calWidget.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      const fertileDays: string[] = [];
+      let curDay = fertileStart;
+      while (curDay <= fertileEnd) {
+        fertileDays.push(format(curDay, 'yyyy-MM-dd'));
+        curDay = addDays(curDay, 1);
       }
-    }, 100);
-  });
 
-  // FAQ Accordion Toggle
-  document.querySelectorAll('.faq-toggle').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const answer = btn.nextElementSibling;
-      const icon = btn.querySelector('.faq-icon');
-      const isOpen = !answer.classList.contains('hidden');
-
-      // Close all other answers
-      document.querySelectorAll('.faq-answer').forEach((el) => el.classList.add('hidden'));
-      document.querySelectorAll('.faq-icon').forEach((el) => el.style.transform = 'rotate(0deg)');
-      document.querySelectorAll('.faq-toggle').forEach((el) => el.setAttribute('aria-expanded', 'false'));
-
-      if (!isOpen) {
-        answer.classList.remove('hidden');
-        if (icon) icon.style.transform = 'rotate(180deg)';
-        btn.setAttribute('aria-expanded', 'true');
+      const implantationWindow: string[] = [];
+      let curImp = implantationStart;
+      while (curImp <= implantationEnd) {
+        implantationWindow.push(format(curImp, 'yyyy-MM-dd'));
+        curImp = addDays(curImp, 1);
       }
+
+      const testDates: string[] = [];
+      for (let i = -4; i <= 2; i++) {
+        testDates.push(format(addDays(testDate, i), 'yyyy-MM-dd'));
+      }
+
+      const calculatedData = {
+        method,
+        inputs: { lmpDate: rawLmp, cycleLength: cycleLen, lutealLength: lutealLen, shortestLength: shortestLen, longestLength: longestLen },
+        dates: {
+          ovulationDay: format(ovulation, 'yyyy-MM-dd'),
+          nextPeriodDate: format(nextPeriod, 'yyyy-MM-dd'),
+          fertileWindowStart: format(fertileStart, 'yyyy-MM-dd'),
+          fertileWindowEnd: format(fertileEnd, 'yyyy-MM-dd'),
+          implantationStart: format(implantationStart, 'yyyy-MM-dd'),
+          implantationEnd: format(implantationEnd, 'yyyy-MM-dd'),
+          testDate: format(testDate, 'yyyy-MM-dd'),
+          dueDate: format(dueDate, 'yyyy-MM-dd')
+        },
+        periodDays, fertileDays, implantationWindow, testDates
+      };
+
+      window.dispatchEvent(new CustomEvent('ovulation-calculated', { detail: calculatedData }));
+
+      setTimeout(() => {
+        const calWidget = document.getElementById('calendar-widget');
+        if (calWidget) calWidget.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 100);
     });
-  });
+
+    // FAQ Accordion Toggle
+    document.querySelectorAll('.faq-toggle').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const answer = btn.nextElementSibling;
+        const icon = btn.querySelector('.faq-icon');
+        const isOpen = !answer.classList.contains('hidden');
+        document.querySelectorAll('.faq-answer').forEach((el) => el.classList.add('hidden'));
+        document.querySelectorAll('.faq-icon').forEach((el) => el.style.transform = 'rotate(0deg)');
+        document.querySelectorAll('.faq-toggle').forEach((el) => el.setAttribute('aria-expanded', 'false'));
+        if (!isOpen) {
+          answer.classList.remove('hidden');
+          if (icon) icon.style.transform = 'rotate(180deg)';
+          btn.setAttribute('aria-expanded', 'true');
+        }
+      });
+    });
+  }
+
+  if ('requestIdleCallback' in window) {
+    requestIdleCallback(initCalculator);
+  } else {
+    setTimeout(initCalculator, 0);
+  }
 </script>

@@ -365,23 +365,30 @@ const homepageSchema = faqSchema;
 </Layout>
 
 <script>
-  // FAQ Accordion Toggle
-  document.querySelectorAll('.faq-toggle').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const answer = btn.nextElementSibling;
-      const icon = btn.querySelector('.faq-icon');
-      const isOpen = !answer.classList.contains('hidden');
+  // FAQ Accordion Toggle - deferred to free main thread on initial paint
+  function initFaqAccordion() {
+    document.querySelectorAll('.faq-toggle').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const answer = btn.nextElementSibling;
+        const icon = btn.querySelector('.faq-icon');
+        const isOpen = !answer.classList.contains('hidden');
 
-      // Close all other answers
-      document.querySelectorAll('.faq-answer').forEach((el) => el.classList.add('hidden'));
-      document.querySelectorAll('.faq-icon').forEach((el) => el.style.transform = 'rotate(0deg)');
-      document.querySelectorAll('.faq-toggle').forEach((el) => el.setAttribute('aria-expanded', 'false'));
+        // Close all other answers
+        document.querySelectorAll('.faq-answer').forEach((el) => el.classList.add('hidden'));
+        document.querySelectorAll('.faq-icon').forEach((el) => el.style.transform = 'rotate(0deg)');
+        document.querySelectorAll('.faq-toggle').forEach((el) => el.setAttribute('aria-expanded', 'false'));
 
-      if (!isOpen) {
-        answer.classList.remove('hidden');
-        if (icon) icon.style.transform = 'rotate(180deg)';
-        btn.setAttribute('aria-expanded', 'true');
-      }
+        if (!isOpen) {
+          answer.classList.remove('hidden');
+          if (icon) icon.style.transform = 'rotate(180deg)';
+          btn.setAttribute('aria-expanded', 'true');
+        }
+      });
     });
-  });
+  }
+  if ('requestIdleCallback' in window) {
+    requestIdleCallback(initFaqAccordion);
+  } else {
+    setTimeout(initFaqAccordion, 0);
+  }
 </script>
