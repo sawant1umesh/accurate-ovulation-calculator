@@ -1,0 +1,36 @@
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/logo-optimized.png
+  Cache-Control: public, max-age=31536000, immutable
+
+/logo.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/favicon*
+  Cache-Control: public, max-age=31536000, immutable
+
+/android-chrome-*
+  Cache-Control: public, max-age=31536000, immutable
+
+/apple-touch-icon.png
+  Cache-Control: public, max-age=31536000, immutable
+
+/site.webmanifest
+  Cache-Control: public, max-age=31536000, immutable
+
+/robots.txt
+  Cache-Control: public, max-age=86400
+
+/*.css
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.js
+  Cache-Control: public, max-age=31536000, immutable
