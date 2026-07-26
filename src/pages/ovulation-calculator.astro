@@ -372,7 +372,8 @@ const signsOfOvulation = [
 </Layout>
 
 <script>
-  import { addDays, subDays, format, parseISO } from 'date-fns';
+  import { addDays, subDays, format } from 'date-fns';
+  import { parseISO } from '../utils/dates';
 
   function initCalculator() {
     // Range Slider Value sync

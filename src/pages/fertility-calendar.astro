@@ -423,7 +423,8 @@ const faqSchema = {
 <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
 
 <script>
-  import { addDays, subDays, startOfMonth, endOfMonth, startOfWeek, endOfWeek, isSameDay, format, parseISO, isAfter } from 'date-fns';
+  import { addDays, subDays, startOfMonth, endOfMonth, startOfWeek, endOfWeek, isSameDay, format, isAfter } from 'date-fns';
+  import { parseISO } from '../utils/dates';
 
   // State
   let cycleData: any = null;
@@ -695,7 +696,6 @@ const faqSchema = {
 
     if (!titleLabel || !grid) return;
 
-    grid.innerHTML = '';
     titleLabel.textContent = format(monthDate, 'MMMM yyyy');
 
     const monthStart = startOfMonth(monthDate);
@@ -703,6 +703,7 @@ const faqSchema = {
     const startDate = startOfWeek(monthStart);
     const endDate = endOfWeek(monthEnd);
 
+    const fragment = document.createDocumentFragment();
     let day = startDate;
 
     while (day <= endDate) {
@@ -714,31 +715,30 @@ const faqSchema = {
       const cell = document.createElement('button');
       cell.setAttribute('data-date', formattedDate);
       cell.setAttribute('type', 'button');
-      cell.className = `h-10 md:h-12 w-full rounded-md flex flex-col items-center justify-center relative transition-all focus:outline-none `;
+      cell.className = 'h-10 md:h-12 w-full rounded-md flex flex-col items-center justify-center relative transition-all focus:outline-none';
 
       if (!isCurrentMonth) {
-        cell.className += ' text-gray-300 pointer-events-none';
+        cell.classList.add('text-gray-300', 'pointer-events-none');
       } else {
-        cell.className += ' hover:bg-canvas-soft-2 cursor-pointer text-primary';
+        cell.classList.add('hover:bg-canvas-soft-2', 'cursor-pointer', 'text-primary');
       }
 
-      // Add highlights
       if (isCurrentMonth) {
         if (dayMeta.type === 'period' || dayMeta.type === 'period-prediction') {
-          cell.className += ' bg-brand-lavender border border-brand-lavender-border text-primary';
+          cell.classList.add('bg-brand-lavender', 'border', 'border-brand-lavender-border', 'text-primary');
         } else if (dayMeta.type === 'ovulation') {
-          cell.className += ' bg-brand-rose text-white shadow-sm';
+          cell.classList.add('bg-brand-rose', 'text-white', 'shadow-sm');
         } else if (dayMeta.type === 'fertile') {
-          cell.className += ' bg-brand-blush border border-brand-rose-border text-primary';
+          cell.classList.add('bg-brand-blush', 'border', 'border-brand-rose-border', 'text-primary');
         } else if (dayMeta.type === 'implantation') {
-          cell.className += ' bg-brand-sage-light border border-brand-sage text-primary';
+          cell.classList.add('bg-brand-sage-light', 'border', 'border-brand-sage', 'text-primary');
         } else if (dayMeta.type === 'test') {
-          cell.className += ' bg-brand-gold/10 border border-brand-gold text-primary';
+          cell.classList.add('bg-brand-gold/10', 'border', 'border-brand-gold', 'text-primary');
         }
       }
 
       if (selectedDate && isSameDay(cellDate, selectedDate)) {
-        cell.className += ' ring-2 ring-primary ring-offset-1';
+        cell.classList.add('ring-2', 'ring-primary', 'ring-offset-1');
       }
 
       const numLabel = document.createElement('span');
@@ -760,9 +760,11 @@ const faqSchema = {
         });
       }
 
-      grid.appendChild(cell);
+      fragment.appendChild(cell);
       day = addDays(day, 1);
     }
+
+    grid.replaceChildren(fragment);
   }
 
   // Run on mount

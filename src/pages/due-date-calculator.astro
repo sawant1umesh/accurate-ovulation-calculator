@@ -400,7 +400,8 @@ const faqSchema = {
 </Layout>
 
 <script>
-  import { addDays, subDays, format, differenceInDays, parseISO, isAfter } from 'date-fns';
+  import { addDays, subDays, format, differenceInDays, isAfter } from 'date-fns';
+  import { parseISO } from '../utils/dates';
 
   // Value sync
   const cycleInput = document.getElementById('due-cycle') as HTMLInputElement;
@@ -594,23 +595,29 @@ const faqSchema = {
     }, 100);
   });
 
-  // FAQ Accordion Toggle
-  document.querySelectorAll('.faq-toggle').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const answer = btn.nextElementSibling;
-      const icon = btn.querySelector('.faq-icon');
-      const isOpen = !answer.classList.contains('hidden');
+  // FAQ Accordion Toggle - deferred with requestIdleCallback
+  function initFaq() {
+    document.querySelectorAll('.faq-toggle').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const answer = btn.nextElementSibling;
+        const icon = btn.querySelector('.faq-icon');
+        const isOpen = !answer.classList.contains('hidden');
 
-      // Close all other answers
-      document.querySelectorAll('.faq-answer').forEach((el) => el.classList.add('hidden'));
-      document.querySelectorAll('.faq-icon').forEach((el) => el.style.transform = 'rotate(0deg)');
-      document.querySelectorAll('.faq-toggle').forEach((el) => el.setAttribute('aria-expanded', 'false'));
+        document.querySelectorAll('.faq-answer').forEach((el) => el.classList.add('hidden'));
+        document.querySelectorAll('.faq-icon').forEach((el) => el.style.transform = 'rotate(0deg)');
+        document.querySelectorAll('.faq-toggle').forEach((el) => el.setAttribute('aria-expanded', 'false'));
 
-      if (!isOpen) {
-        answer.classList.remove('hidden');
-        if (icon) icon.style.transform = 'rotate(180deg)';
-        btn.setAttribute('aria-expanded', 'true');
-      }
+        if (!isOpen) {
+          answer.classList.remove('hidden');
+          if (icon) icon.style.transform = 'rotate(180deg)';
+          btn.setAttribute('aria-expanded', 'true');
+        }
+      });
     });
-  });
+  }
+  if ('requestIdleCallback' in window) {
+    requestIdleCallback(initFaq);
+  } else {
+    setTimeout(initFaq, 0);
+  }
 </script>

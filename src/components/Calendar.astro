@@ -106,7 +106,8 @@
 </div>
 
 <script>
-  import { addDays, subDays, startOfMonth, endOfMonth, startOfWeek, endOfWeek, isSameDay, format, parseISO, isAfter } from 'date-fns';
+  import { addDays, subDays, startOfMonth, endOfMonth, startOfWeek, endOfWeek, isSameDay, format, isAfter } from 'date-fns';
+  import { parseISO } from '../utils/dates';
 
   // State Management
   let currentMonthDate = new Date();
@@ -292,7 +293,6 @@
   function renderCalendar() {
     if (!daysGrid || !monthYearLabel) return;
 
-    daysGrid.innerHTML = '';
     monthYearLabel.textContent = format(currentMonthDate, 'MMMM yyyy');
 
     const monthStart = startOfMonth(currentMonthDate);
@@ -300,6 +300,7 @@
     const startDate = startOfWeek(monthStart);
     const endDate = endOfWeek(monthEnd);
 
+    const fragment = document.createDocumentFragment();
     let day = startDate;
 
     while (day <= endDate) {
@@ -308,46 +309,40 @@
       const isCurrentMonth = cellDate.getMonth() === currentMonthDate.getMonth();
       const dayMeta = getDayType(cellDate);
 
-      // Create cell wrapper
       const cell = document.createElement('button');
       cell.setAttribute('data-date', formattedDate);
       cell.setAttribute('type', 'button');
-      cell.className = `h-10 md:h-12 w-full rounded-md flex flex-col items-center justify-center relative transition-all focus:outline-none `;
+      cell.className = 'h-10 md:h-12 w-full rounded-md flex flex-col items-center justify-center relative transition-all focus:outline-none';
 
-      // Styling based on cycle context
       if (!isCurrentMonth) {
-        cell.className += ' text-gray-300 pointer-events-none';
+        cell.classList.add('text-gray-300', 'pointer-events-none');
       } else {
-        cell.className += ' hover:bg-canvas-soft-2 cursor-pointer text-primary';
+        cell.classList.add('hover:bg-canvas-soft-2', 'cursor-pointer', 'text-primary');
       }
 
-      // Specific Colors based on Type
       if (isCurrentMonth) {
         if (dayMeta.type === 'period') {
-          cell.className += ' bg-brand-lavender border border-brand-lavender-border text-primary';
+          cell.classList.add('bg-brand-lavender', 'border', 'border-brand-lavender-border', 'text-primary');
         } else if (dayMeta.type === 'ovulation') {
-          cell.className += ' bg-brand-rose text-white shadow-sm';
+          cell.classList.add('bg-brand-rose', 'text-white', 'shadow-sm');
         } else if (dayMeta.type === 'fertile') {
-          cell.className += ' bg-brand-blush border border-brand-rose-border text-primary';
+          cell.classList.add('bg-brand-blush', 'border', 'border-brand-rose-border', 'text-primary');
         } else if (dayMeta.type === 'implantation') {
-          cell.className += ' bg-brand-sage-light border border-brand-sage text-primary';
+          cell.classList.add('bg-brand-sage-light', 'border', 'border-brand-sage', 'text-primary');
         } else if (dayMeta.type === 'test') {
-          cell.className += ' bg-brand-gold/10 border border-brand-gold text-primary';
+          cell.classList.add('bg-brand-gold/10', 'border', 'border-brand-gold', 'text-primary');
         }
       }
 
-      // Active Selection Ring
       if (selectedDate && isSameDay(cellDate, selectedDate)) {
-        cell.className += ' ring-2 ring-primary ring-offset-1';
+        cell.classList.add('ring-2', 'ring-primary', 'ring-offset-1');
       }
 
-      // Day Number Label
       const numLabel = document.createElement('span');
       numLabel.textContent = format(cellDate, 'd');
       numLabel.className = 'text-xs md:text-sm font-semibold z-10';
       cell.appendChild(numLabel);
 
-      // Add miniature dot indicator
       if (isCurrentMonth && dayMeta.type !== 'normal' && dayMeta.type !== 'period') {
         const dot = document.createElement('span');
         dot.className = `w-1.5 h-1.5 rounded-full absolute bottom-1.5 ${
@@ -356,15 +351,16 @@
         cell.appendChild(dot);
       }
 
-      // Add click handler
       if (isCurrentMonth) {
         cell.addEventListener('click', () => {
           inspectDate(cellDate);
         });
       }
 
-      daysGrid.appendChild(cell);
+      fragment.appendChild(cell);
       day = addDays(day, 1);
     }
+
+    daysGrid.replaceChildren(fragment);
   }
 </script>
