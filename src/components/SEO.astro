@@ -5,6 +5,7 @@ interface Props {
   canonical?: string;
   ogImage?: string;
   schema?: any;
+  fullTitle?: boolean;
 }
 
 const SITE_NAME = 'Accurate Ovulation Calculator';
@@ -16,11 +17,12 @@ const {
   description,
   canonical = Astro.url.href,
   ogImage = DEFAULT_OG_IMAGE,
-  schema
+  schema,
+  fullTitle = false
 } = Astro.props;
 
-// Title template: "Page Title | Site Name"
-const fullTitle = `${title} | ${SITE_NAME}`;
+// Title template: "Page Title | Site Name" (unless fullTitle is true)
+const renderedTitle = fullTitle ? title : `${title} | ${SITE_NAME}`;
 
 // Default site schema
 const websiteSchema = {
@@ -71,7 +73,7 @@ const breadcrumbSchema = {
 ---
 
 <!-- Standard Meta Tags -->
-<title>{fullTitle}</title>
+<title>{renderedTitle}</title>
 <meta name="description" content={description} />
 <link rel="canonical" href={canonical} />
 <meta name="robots" content="index, follow" />
@@ -80,7 +82,7 @@ const breadcrumbSchema = {
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content={Astro.url.pathname.startsWith('/blog/') ? 'article' : 'website'} />
 <meta property="og:url" content={Astro.url.href} />
-<meta property="og:title" content={title} />
+<meta property="og:title" content={renderedTitle} />
 <meta property="og:description" content={description} />
 <meta property="og:image" content={ogImage} />
 <meta property="og:site_name" content={SITE_NAME} />
@@ -89,7 +91,7 @@ const breadcrumbSchema = {
 <!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:url" content={Astro.url.href} />
-<meta name="twitter:title" content={title} />
+<meta name="twitter:title" content={renderedTitle} />
 <meta name="twitter:description" content={description} />
 <meta name="twitter:image" content={ogImage} />
 <meta name="twitter:site" content="@accurateovulation" />

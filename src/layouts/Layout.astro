@@ -10,6 +10,7 @@ interface Props {
   canonical?: string;
   ogImage?: string;
   schema?: any;
+  fullTitle?: boolean;
 }
 
 const {
@@ -17,7 +18,8 @@ const {
   description = 'Calculate your fertile window, ovulation day, implantation date, and pregnancy test timing with our clinically-accurate ovulation calculator. 100% private.',
   canonical,
   ogImage,
-  schema
+  schema,
+  fullTitle = false
 } = Astro.props;
 ---
 
@@ -51,6 +53,7 @@ const {
       canonical={canonical}
       ogImage={ogImage}
       schema={schema}
+      fullTitle={fullTitle}
     />
 
     <!-- Google Analytics 4 (deferred, non-render-blocking) -->

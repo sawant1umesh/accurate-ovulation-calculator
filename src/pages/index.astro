@@ -1,8 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro';
 
-const pageTitle = "Accurate Ovulation Calculator - Free, Private Fertile Window Predictor";
-const pageDescription = "Calculate your fertile window, ovulation day, implantation date, and pregnancy test timing with our clinically-accurate ovulation calculator. Free, 100% private, no account needed. Evidence-based algorithms including Ogino-Knaus method for irregular cycles.";
+const pageTitle = "Ovulation Calculator – Fertile Window & Ovulation Dates";
+const pageDescription = "Calculate your fertile window, ovulation date, and pregnancy test timing with our free ovulation calculator. Private, evidence-based, and easy to use.";
 
 const relatedTools = [
   {
@@ -117,6 +117,30 @@ const faqSchema = {
         "@type": "Answer",
         "text": "After calculating your ovulation date, you can plan intercourse during your fertile window for the best chances of conception. Consider combining the calculator results with physical fertility tracking — basal body temperature, cervical mucus observation, and LH predictor kits can help confirm ovulation. You may also want to save your dates to our fertility calendar for visual tracking, start or continue prenatal vitamins, and schedule a preconception appointment with your healthcare provider."
       }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I know when I'm ovulating?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Common signs of ovulation include cervical mucus that becomes clear, thin, and stretchy (resembling egg whites), a slight rise in basal body temperature after ovulation, and occasional mild pelvic pain on one side. However, signs vary between individuals and not everyone experiences noticeable symptoms. Combining calendar-based estimates with physical tracking methods like cervical mucus observation and BBT charting can provide a more complete picture."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "When should I take a pregnancy test?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Implantation typically occurs 6–10 days after ovulation, which is when hCG begins to be produced. Blood tests can detect hCG as early as 6–8 days post-ovulation, while early urine tests are most reliable from 10–12 days. Standard home pregnancy tests are most accurate when taken after a missed period. Testing too early can result in false negatives because hCG levels may not yet be detectable."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What if I have irregular cycles?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Calendar-based estimates are most reliable for regular cycles. If your cycles vary significantly from month to month, predictions based solely on cycle length may be less accurate. Our calculator offers an irregular cycle mode that uses your shortest and longest cycle lengths to produce a wider fertile window. For irregular cycles, consider combining calculator estimates with physical fertility tracking methods and consulting a healthcare provider for personalized guidance."
+      }
     }
   ]
 };
@@ -124,7 +148,7 @@ const faqSchema = {
 const homepageSchema = faqSchema;
 ---
 
-<Layout title={pageTitle} description={pageDescription} schema={homepageSchema}>
+<Layout title={pageTitle} description={pageDescription} schema={homepageSchema} fullTitle={true}>
   <!-- Hero Section -->
   <section class="relative overflow-hidden bg-canvas-soft">
     <div class="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8 pt-10 pb-12 md:pt-14 md:pb-16 lg:pt-16 lg:pb-20">
@@ -180,61 +204,145 @@ const homepageSchema = faqSchema;
     </div>
   </section>
 
-  <!-- SEO Content Section: What Is Ovulation & How Calculator Works -->
-  <section class="bg-canvas py-16 md:py-24" aria-labelledby="ovulation-explained-heading">
+  <!-- Educational Content Section -->
+  <section class="bg-canvas py-16 md:py-24" aria-labelledby="education-heading">
     <div class="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
       <div class="max-w-4xl mx-auto space-y-12 md:space-y-16">
 
         <!-- What Is Ovulation -->
         <article class="prose prose-slate max-w-none">
-          <h2 id="ovulation-explained-heading" class="text-2xl md:text-3xl font-semibold tracking-tight text-primary mb-6">What Is Ovulation?</h2>
+          <h2 id="education-heading" class="text-2xl md:text-3xl font-semibold tracking-tight text-primary mb-6">Understanding Ovulation and Your Fertile Window</h2>
 
           <p class="text-base text-secondary leading-relaxed mb-6">
-            Ovulation is the release of a mature egg from the ovary into the fallopian tube, where it can be fertilized by sperm. This typically occurs once per cycle, approximately 14 days before the next menstrual period. The egg survives for only 12 to 24 hours, while sperm can survive up to five days in fertile cervical mucus — creating a <strong class="text-primary">fertile window of about six days</strong> each cycle.
+            Ovulation is the release of a mature egg from the ovary into the fallopian tube, where it can be fertilized by sperm. This typically occurs once per menstrual cycle, approximately 14 days before the next period begins. The egg survives for only 12 to 24 hours, while sperm can survive up to five days in fertile cervical mucus — creating a <strong class="text-primary">fertile window of about six days</strong> each cycle.
           </p>
 
           <h3 class="text-xl font-semibold text-primary mt-8 mb-4">The Four Phases of Your Cycle</h3>
           <ul class="list-disc list-inside space-y-3 text-base text-secondary leading-relaxed">
-            <li><strong class="text-primary">Menstrual (Days 1–5):</strong> Uterine lining sheds. Estrogen and progesterone are at their lowest.</li>
-            <li><strong class="text-primary">Follicular (Days 1–13):</strong> FSH stimulates follicles to mature. Rising estrogen thickens the uterine lining.</li>
-            <li><strong class="text-primary">Ovulation (~Day 14):</strong> An LH surge triggers egg release. This is peak fertility.</li>
-            <li><strong class="text-primary">Luteal (Days 15–28):</strong> The corpus luteum produces progesterone to prepare for potential implantation.</li>
+            <li><strong class="text-primary">Menstrual (Days 1–5):</strong> The uterine lining sheds as estrogen and progesterone reach their lowest levels.</li>
+            <li><strong class="text-primary">Follicular (Days 1–13):</strong> Follicle-stimulating hormone (FSH) prompts follicles in the ovary to mature. Rising estrogen thickens the uterine lining in preparation for potential implantation.</li>
+            <li><strong class="text-primary">Ovulation (~Day 14):</strong> A surge in luteinizing hormone (LH) triggers the release of a mature egg. This is the peak fertility period.</li>
+            <li><strong class="text-primary">Luteal (Days 15–28):</strong> The empty follicle transforms into the corpus luteum, producing progesterone to support the uterine lining. If fertilization does not occur, hormone levels drop and menstruation begins.</li>
           </ul>
         </article>
 
-        <!-- How an Ovulation Calculator Works -->
+        <!-- How the Fertile Window Is Estimated -->
         <article class="prose prose-slate max-w-none">
-          <h2 class="text-2xl md:text-3xl font-semibold tracking-tight text-primary mb-6">How the Ovulation Calculator Works</h2>
+          <h2 class="text-2xl md:text-3xl font-semibold tracking-tight text-primary mb-6">How the Fertile Window Is Estimated</h2>
 
           <p class="text-base text-secondary leading-relaxed mb-6">
-            Our calculator uses the <strong>Ogino-Knaus method</strong> to estimate your fertile window. It subtracts your luteal phase length (typically 14 days) from your cycle length to pinpoint ovulation, then identifies the five days before ovulation plus ovulation day itself as your fertile window. We support three calculation methods for maximum accuracy:
+            The fertile window is determined by two biological factors: sperm can survive up to five days in fertile cervical mucus, and the released egg remains viable for only 12 to 24 hours. This means the six days when conception is possible are the five days leading up to ovulation and ovulation day itself.
           </p>
 
-          <ul class="list-disc list-inside space-y-4 text-base text-secondary leading-relaxed">
-            <li>
-              <strong class="text-primary">Last Menstrual Period (LMP):</strong> Enter your last period date and average cycle length. Best for regular 21–35 day cycles.
-            </li>
-            <li>
-              <strong class="text-primary">Custom Luteal Phase:</strong> If your luteal phase differs from 14 days, customize this value for more precise ovulation estimates.
-            </li>
-            <li>
-              <strong class="text-primary">Irregular Cycle (Ogino-Knaus):</strong> Provide your shortest and longest cycle lengths from the past 6–12 months for a wider, more conservative fertile window.
-            </li>
+          <p class="text-base text-secondary leading-relaxed mb-6">
+            Our calculator uses the <strong class="text-primary">Ogino-Knaus method</strong>, which estimates ovulation by subtracting the luteal phase length (typically 14 days) from your cycle length. For example, with a 28-day cycle, ovulation is estimated around day 14. With a 30-day cycle, it shifts to around day 16. The fertile window is then calculated as the five days before that estimated ovulation date plus ovulation day itself.
+          </p>
+
+          <p class="text-base text-secondary leading-relaxed">
+            We support three calculation methods: <strong class="text-primary">Last Menstrual Period (LMP)</strong> for regular cycles, <strong class="text-primary">Custom Luteal Phase</strong> for those whose luteal phase differs from 14 days, and <strong class="text-primary">Irregular Cycle mode</strong> using shortest and longest cycle lengths from the past 6–12 months to produce a wider, more conservative fertile window estimate.
+          </p>
+        </article>
+
+        <!-- Signs of Ovulation -->
+        <article class="prose prose-slate max-w-none">
+          <h2 class="text-2xl md:text-3xl font-semibold tracking-tight text-primary mb-6">Common Signs of Ovulation</h2>
+
+          <p class="text-base text-secondary leading-relaxed mb-6">
+            While calendar-based estimates provide a helpful starting point, many people supplement them with physical observations. Signs of ovulation vary between individuals, and not everyone experiences all of them.
+          </p>
+
+          <h3 class="text-xl font-semibold text-primary mt-8 mb-4">Cervical Mucus Changes</h3>
+          <p class="text-base text-secondary leading-relaxed mb-6">
+            As ovulation approaches, cervical mucus typically becomes clearer, thinner, and more stretchy — resembling raw egg whites. This fertile mucus helps sperm travel toward the egg. After ovulation, mucus often becomes thicker and less plentiful.
+          </p>
+
+          <h3 class="text-xl font-semibold text-primary mt-8 mb-4">Basal Body Temperature Shift</h3>
+          <p class="text-base text-secondary leading-relaxed mb-6">
+            Basal body temperature (BBT) — your temperature at complete rest — tends to rise slightly (about 0.5–1.0°F) after ovulation due to increased progesterone. Tracking BBT daily can help confirm that ovulation has occurred, though it does not predict ovulation in advance.
+          </p>
+
+          <h3 class="text-xl font-semibold text-primary mt-8 mb-4">Other Possible Signs</h3>
+          <p class="text-base text-secondary leading-relaxed">
+            Some people notice mild mid-cycle pelvic pain (known as mittelschmerz), breast tenderness, or a slight increase in libido around ovulation. These signs are subjective and vary widely. For the most reliable fertility awareness, consider combining multiple tracking methods — cervical mucus observation, BBT charting, and LH predictor kits — alongside calendar-based estimates.
+          </p>
+        </article>
+
+        <!-- Cycle Length and Ovulation -->
+        <article class="prose prose-slate max-w-none">
+          <h2 class="text-2xl md:text-3xl font-semibold tracking-tight text-primary mb-6">How Cycle Length Affects Ovulation Timing</h2>
+
+          <p class="text-base text-secondary leading-relaxed mb-6">
+            Not everyone has a 28-day cycle, and ovulation timing shifts accordingly. The luteal phase (the time between ovulation and your next period) is relatively consistent at 12–16 days for most people. However, the follicular phase (the time before ovulation) can vary significantly.
+          </p>
+
+          <p class="text-base text-secondary leading-relaxed mb-6">
+            This means ovulation typically occurs earlier in shorter cycles and later in longer cycles. For example:
+          </p>
+
+          <ul class="list-disc list-inside space-y-3 text-base text-secondary leading-relaxed">
+            <li><strong class="text-primary">24-day cycle:</strong> Ovulation may occur around day 10</li>
+            <li><strong class="text-primary">28-day cycle:</strong> Ovulation may occur around day 14</li>
+            <li><strong class="text-primary">32-day cycle:</strong> Ovulation may occur around day 18</li>
+            <li><strong class="text-primary">35-day cycle:</strong> Ovulation may occur around day 21</li>
           </ul>
 
           <p class="text-base text-secondary leading-relaxed mt-6">
-            Our <a href="/ovulation-calculator" class="text-brand-rose font-medium hover:underline">free ovulation calculator</a> also calculates your implantation window (6–10 days post-ovulation) and recommended pregnancy test dates.
+            If your cycle length varies by a few days from month to month, the calculator provides an estimate based on the average cycle length you enter. For greater precision, you can track your cycles over several months and use your actual average.
           </p>
         </article>
 
-        <!-- Important Disclaimer -->
+        <!-- Irregular Cycles -->
+        <article class="prose prose-slate max-w-none">
+          <h2 class="text-2xl md:text-3xl font-semibold tracking-tight text-primary mb-6">Irregular Cycles and Additional Considerations</h2>
+
+          <p class="text-base text-secondary leading-relaxed mb-6">
+            Calendar-based estimates are most reliable for people with regular menstrual cycles. If your cycles are irregular — meaning they vary by more than a few days each month — predictions based solely on cycle length may be less accurate.
+          </p>
+
+          <p class="text-base text-secondary leading-relaxed mb-6">
+            For irregular cycles, our calculator offers a specialized mode that uses your shortest and longest cycle lengths from the past 6–12 months. This produces a wider fertile window to account for cycle variability. However, even with this approach, calendar methods have limitations when cycles are highly unpredictable.
+          </p>
+
+          <p class="text-base text-secondary leading-relaxed">
+            If you have irregular cycles, you may benefit from combining calculator estimates with additional fertility-awareness methods such as cervical mucus tracking, BBT charting, and LH predictor kits. Persistent irregularity or difficulty conceiving warrant a consultation with a healthcare provider who can evaluate potential underlying factors.
+          </p>
+        </article>
+
+        <!-- When to Take a Pregnancy Test -->
+        <article class="prose prose-slate max-w-none">
+          <h2 class="text-2xl md:text-3xl font-semibold tracking-tight text-primary mb-6">When to Take a Pregnancy Test</h2>
+
+          <p class="text-base text-secondary leading-relaxed mb-6">
+            After ovulation, implantation typically occurs 6 to 10 days later. This is when a fertilized egg attaches to the uterine lining and begins producing human chorionic gonadotropin (hCG) — the hormone detected by pregnancy tests.
+          </p>
+
+          <p class="text-base text-secondary leading-relaxed mb-6">
+            For the most reliable results:
+          </p>
+
+          <ul class="list-disc list-inside space-y-3 text-base text-secondary leading-relaxed">
+            <li><strong class="text-primary">Blood tests:</strong> Can detect hCG as early as 6–8 days after ovulation</li>
+            <li><strong class="text-primary">Early urine tests:</strong> Most reliable from 10–12 days after ovulation</li>
+            <li><strong class="text-primary">Standard home tests:</strong> Most accurate when taken after a missed period</li>
+          </ul>
+
+          <p class="text-base text-secondary leading-relaxed mt-6">
+            Testing too early can produce false negatives because hCG levels may not yet be detectable. If you test early and get a negative result but still suspect pregnancy, wait a few days and test again.
+          </p>
+        </article>
+
+        <!-- Calculator Limitations -->
         <article class="prose prose-slate max-w-none">
           <div class="rounded-xl bg-canvas-soft-2 p-6 md:p-8 border border-hairline">
+            <h2 class="text-xl md:text-2xl font-semibold text-primary mb-4">Important: What This Calculator Can and Cannot Do</h2>
             <p class="text-base text-secondary leading-relaxed mb-4">
-              <strong class="text-primary">This calculator provides estimates for educational purposes only.</strong> It is based on statistical averages and cannot guarantee ovulation timing, pregnancy, or fertility outcomes. Always consult a qualified healthcare provider for personalized medical guidance.
+              This calculator provides <strong class="text-primary">estimates for educational purposes only</strong>. It uses statistical averages and your reported cycle data to suggest when ovulation and your fertile window may occur. It <strong class="text-primary">cannot confirm ovulation, predict fertility with certainty, or diagnose any medical condition</strong>.
+            </p>
+            <p class="text-base text-secondary leading-relaxed mb-4">
+              Individual biology varies significantly. Even people with regular cycles experience occasional shifts due to stress, illness, travel, or hormonal changes. Results are estimates, not guarantees.
             </p>
             <p class="text-base text-secondary leading-relaxed">
-              Our tools <strong class="text-primary">do not diagnose, treat, prevent, or cure any medical condition</strong> and must never be used as a method of contraception.
+              This tool <strong class="text-primary">does not diagnose, treat, prevent, or cure any medical condition</strong> and must never be used as a method of contraception. Always consult a qualified healthcare provider for personalized medical guidance regarding fertility, pregnancy, or reproductive health concerns.
             </p>
           </div>
         </article>
