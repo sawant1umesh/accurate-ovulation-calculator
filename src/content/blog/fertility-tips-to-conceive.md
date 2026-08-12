@@ -2,7 +2,7 @@
 title: "Top Science-Backed Fertility Tips to Help You Conceive"
 description: "A summary of evidence-based lifestyle changes, nutritional guidance, and tracking advice to support and optimize your fertility."
 pubDate: 2026-07-06
-author: "Dr. Sarah Jenkins, OB-GYN"
+author: "Medical Editor Team"
 category: "Conception"
 readTime: "7 min read"
 ---

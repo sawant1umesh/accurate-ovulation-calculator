@@ -2,7 +2,7 @@
 title: "The Cervical Mucus Tracker: How to Identify Fertile Fluid"
 description: "A clinical guide on tracking the consistency, appearance, and changes in cervical mucus to pinpoint your peak days of fertility."
 pubDate: 2026-07-03
-author: "Dr. Sarah Jenkins, OB-GYN"
+author: "Medical Editor Team"
 category: "Cycle Tracking"
 readTime: "7 min read"
 ---

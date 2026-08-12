@@ -2,7 +2,7 @@
 title: "How to Calculate Your Fertile Window Accurately: A Step-by-Step Guide"
 description: "Learn how to calculate your fertile window with confidence. Discover easy cycle math, fertile body signs, ovulation tracking tips, and peak days to conceive."
 pubDate: 2026-08-07
-author: "Medical Editorial Team"
+author: "Medical Editor Team"
 category: "Fertility & Ovulation"
 readTime: "12 min read"
 ---

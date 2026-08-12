@@ -2,7 +2,7 @@
 title: "Finding the Fertile Window: Maximizing Conception Odds"
 description: "Learn how the lifespan of sperm and eggs defines the 6-day fertile window, and review the clinical probabilities of conceiving on specific days."
 pubDate: 2026-07-02
-author: "Dr. Sarah Jenkins, OB-GYN"
+author: "Medical Editor Team"
 category: "Conception"
 readTime: "5 min read"
 ---

@@ -2,7 +2,7 @@
 title: "Basal Body Temperature (BBT) Charting: Confirming Ovulation"
 description: "Learn the proper protocol for measuring and charting your basal body temperature to recognize the progesterone-driven thermal shift."
 pubDate: 2026-07-04
-author: "Dr. Sarah Jenkins, OB-GYN"
+author: "Medical Editor Team"
 category: "Cycle Tracking"
 readTime: "6 min read"
 ---

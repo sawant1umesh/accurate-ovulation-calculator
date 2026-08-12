@@ -2,7 +2,7 @@
 title: "Early Pregnancy Symptoms: What to Expect Post-Ovulation"
 description: "Recognize the earliest hormonal indicators of pregnancy, from implantation spotting to breast sensitivity, and understand when to test."
 pubDate: 2026-07-05
-author: "Dr. Sarah Jenkins, OB-GYN"
+author: "Medical Editor Team"
 category: "Pregnancy"
 readTime: "5 min read"
 ---

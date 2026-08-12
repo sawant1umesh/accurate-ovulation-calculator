@@ -2,7 +2,7 @@
 title: "Understanding Ovulation: The Science of Your Cycle"
 description: "Explore the physiological phases of the menstrual cycle, the triggers for egg release, and how the LH surge coordinates peak ovulation timing."
 pubDate: 2026-07-01
-author: "Dr. Sarah Jenkins, OB-GYN"
+author: "Medical Editor Team"
 category: "Physiology"
 readTime: "6 min read"
 ---

@@ -2,7 +2,7 @@
 title: "Can You Get Pregnant Right After Your Period? Medical Facts Explained"
 description: "Learn if you can get pregnant right after your period ends. Discover cycle math, sperm survival rates, early ovulation risks, and fertile window timing."
 pubDate: 2026-08-01
-author: "Medical Editorial Team"
+author: "Medical Editor Team"
 category: "Fertility & Ovulation"
 readTime: "14 min read"
 ---
