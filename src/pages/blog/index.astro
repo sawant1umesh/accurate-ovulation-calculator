@@ -6,6 +6,10 @@ const posts = await getCollection('blog');
 // Sort by publication date descending
 const sortedPosts = posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
+// Featured Article
+const featuredSlug = 'how-long-does-ovulation-last';
+const featuredPost = sortedPosts.find((post) => post.id === featuredSlug);
+
 const pageTitle = "Fertility & Ovulation Blog - Evidence-Based Articles on Conception, Cycle Tracking & Pregnancy";
 const pageDescription = "Explore evidence-based articles on ovulation tracking, cervical mucus monitoring, BBT charting, LH testing, early pregnancy symptoms, and conception tips. Medically reviewed fertility education from Accurate Ovulation Calculator.";
 ---
@@ -24,6 +28,55 @@ const pageDescription = "Explore evidence-based articles on ovulation tracking, 
         Understand the biology of conception. Read clinically reviewed insights from fertility specialists covering ovulation, hormonal patterns, and lifestyle tips.
       </p>
     </div>
+
+    <!-- Featured Article -->
+    {featuredPost && (
+      <div class="mb-12 md:mb-20">
+        <div class="flex items-center gap-2 mb-6">
+          <span class="text-[10px] font-mono font-semibold tracking-wider text-brand-rose uppercase">
+            Featured
+          </span>
+          <span class="h-px flex-1 bg-hairline"></span>
+        </div>
+        <article class="card-container flex flex-col md:flex-row gap-6 md:gap-10 items-start hover:-translate-y-1 transition-all duration-300">
+          <div class="flex-1">
+            <div class="flex items-center gap-3 text-[10px] font-mono uppercase tracking-wider text-secondary mb-3">
+              <span class="text-brand-rose font-semibold">{featuredPost.data.category}</span>
+              <span class="w-1 h-1 rounded-full bg-hairline-strong"></span>
+              <span>{featuredPost.data.readTime}</span>
+            </div>
+
+            <a href={`/blog/${featuredPost.id}`} class="group">
+              <h2 class="text-xl md:text-2xl font-semibold text-primary group-hover:text-brand-rose transition-colors leading-snug mb-3">
+                {featuredPost.data.title}
+              </h2>
+            </a>
+
+            <p class="text-sm text-secondary leading-relaxed line-clamp-3 mb-6">
+              {featuredPost.data.description}
+            </p>
+
+            <div class="flex items-center gap-4 pt-4 border-t border-hairline">
+              <span class="text-[10px] text-primary font-medium">{featuredPost.data.author}</span>
+              <span class="text-[10px] font-mono text-secondary">
+                {featuredPost.data.pubDate.toLocaleDateString('en-US', {
+                  month: 'long',
+                  day: 'numeric',
+                  year: 'numeric'
+                })}
+              </span>
+            </div>
+          </div>
+
+          <a
+            href={`/blog/${featuredPost.id}`}
+            class="btn-primary text-xs shrink-0"
+          >
+            Read Article
+          </a>
+        </article>
+      </div>
+    )}
 
     <!-- Blog Posts Grid -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
