@@ -10,6 +10,7 @@ interface Props {
   canonical?: string;
   ogImage?: string;
   schema?: any;
+  schemas?: any[];
   fullTitle?: boolean;
 }
 
@@ -19,6 +20,7 @@ const {
   canonical,
   ogImage,
   schema,
+  schemas,
   fullTitle = false
 } = Astro.props;
 ---
@@ -55,6 +57,11 @@ const {
       schema={schema}
       fullTitle={fullTitle}
     />
+
+    <!-- Additional JSON-LD schemas (e.g. FAQPage) -->
+    {schemas && schemas.map((s: any) => (
+      <script type="application/ld+json" set:html={JSON.stringify(s)} />
+    ))}
 
     <!-- Google Analytics 4 (deferred, non-render-blocking) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-SW9FXD5061"></script>

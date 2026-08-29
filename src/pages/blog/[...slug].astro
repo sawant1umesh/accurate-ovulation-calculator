@@ -15,7 +15,7 @@ const { Content } = await render(post);
 
 const articleSchema = {
   "@context": "https://schema.org",
-  "@type": "Article",
+  "@type": "BlogPosting",
   "headline": post.data.title,
   "description": post.data.description,
   "author": {
@@ -36,12 +36,30 @@ const articleSchema = {
     "@id": `https://accurateovulationcalculator.com/blog/${post.id}`
   }
 };
+
+const schemas = [articleSchema];
+
+if (post.data.faqs && post.data.faqs.length > 0) {
+  const faqPageSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": post.data.faqs.map((faq: { question: string; answer: string }) => ({
+      "@type": "Question",
+      "name": faq.question,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": faq.answer
+      }
+    }))
+  };
+  schemas.push(faqPageSchema);
+}
 ---
 
 <Layout
   title={`${post.data.title} | Accurate Ovulation Calculator`}
   description={post.data.description}
-  schema={articleSchema}
+  schemas={schemas}
 >
   <article class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-10 md:py-16">
     <!-- Back Navigation -->

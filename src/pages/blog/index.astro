@@ -6,9 +6,8 @@ const posts = await getCollection('blog');
 // Sort by publication date descending
 const sortedPosts = posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
-// Featured Article
-const featuredSlug = 'how-long-does-ovulation-last';
-const featuredPost = sortedPosts.find((post) => post.id === featuredSlug);
+// Featured Article (newest post by pubDate)
+const featuredPost = sortedPosts[0];
 
 const pageTitle = "Fertility & Ovulation Blog - Evidence-Based Articles on Conception, Cycle Tracking & Pregnancy";
 const pageDescription = "Explore evidence-based articles on ovulation tracking, cervical mucus monitoring, BBT charting, LH testing, early pregnancy symptoms, and conception tips. Medically reviewed fertility education from Accurate Ovulation Calculator.";
