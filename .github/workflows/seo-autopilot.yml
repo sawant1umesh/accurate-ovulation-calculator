@@ -1,0 +1,175 @@
+name: SEO Autopilot Weekly
+
+on:
+  schedule:
+    # Every Saturday at 02:30 UTC (08:00 AM IST)
+    - cron: '30 2 * * 6'
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'Execution Mode (dry-run: plan only; publish: live generation & deploy)'
+        required: true
+        type: choice
+        default: 'dry-run'
+        options:
+          - 'dry-run'
+          - 'publish'
+      force_topic:
+        description: 'Optional: Force topic title/ID (must pass safety & duplicate checks)'
+        required: false
+        type: string
+        default: ''
+
+# Prevent concurrent or overlapping publishing executions
+concurrency:
+  group: seo-autopilot-pipeline
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  seo-autopilot:
+    name: Execute SEO Autopilot
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci || npm install
+
+      - name: Determine Execution Mode
+        id: config
+        run: |
+          # Scheduled runs default to publish; manual workflow_dispatch respects selected mode
+          if [ "${{ github.event_name }}" = "schedule" ]; then
+            RUN_MODE="publish"
+          else
+            RUN_MODE="${{ github.event.inputs.mode || 'dry-run' }}"
+          fi
+          echo "RUN_MODE=$RUN_MODE" >> $GITHUB_OUTPUT
+          echo "Active Execution Mode: $RUN_MODE"
+
+      - name: Run Pre-Flight Tests
+        run: |
+          echo "Running pre-flight validation and regression test suites..."
+          node scripts/autopilot/phase4-test.js
+          node scripts/autopilot/phase5-test.js
+
+      - name: Run Pre-Flight Build Verification
+        run: |
+          echo "Verifying existing site builds cleanly before generation..."
+          npm run build
+
+      # ─────────────────────────────────────────────────────────────────────────
+      # DRY-RUN EXECUTION BRANCH
+      # ─────────────────────────────────────────────────────────────────────────
+      - name: Execute Autopilot (Dry-Run Mode)
+        if: steps.config.outputs.RUN_MODE == 'dry-run'
+        run: |
+          echo "Executing in DRY-RUN mode (No AI calls, zero drafts, no publish)..."
+          FORCE_ARG=""
+          if [ -n "${{ github.event.inputs.force_topic }}" ]; then
+            FORCE_ARG="--force-topic=\"${{ github.event.inputs.force_topic }}\""
+          fi
+          node scripts/autopilot/index.js --dry-run $FORCE_ARG
+
+      # ─────────────────────────────────────────────────────────────────────────
+      # PUBLISH EXECUTION BRANCH (Strict Fail-Closed Pipeline)
+      # ─────────────────────────────────────────────────────────────────────────
+      - name: Execute Autopilot Live Generation
+        if: steps.config.outputs.RUN_MODE == 'publish'
+        id: generate
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+        run: |
+          echo "Executing in PUBLISH mode (Calling AI pipeline and validating draft)..."
+          FORCE_ARG=""
+          if [ -n "${{ github.event.inputs.force_topic }}" ]; then
+            FORCE_ARG="--force-topic=\"${{ github.event.inputs.force_topic }}\""
+          fi
+          node scripts/autopilot/index.js --generate $FORCE_ARG
+
+      - name: Promote Validated Draft to Production Content
+        if: steps.config.outputs.RUN_MODE == 'publish'
+        id: promote
+        run: |
+          echo "Promoting validated draft to src/content/blog/..."
+          PROMOTED_OUTPUT=$(node scripts/autopilot/promote-draft.js)
+          echo "$PROMOTED_OUTPUT"
+          
+          PROMOTED_FILE=$(echo "$PROMOTED_OUTPUT" | grep -o 'PROMOTED_FILE:.*' | cut -d':' -f2 | xargs)
+          PROMOTED_SLUG=$(echo "$PROMOTED_OUTPUT" | grep -o 'PROMOTED_SLUG:.*' | cut -d':' -f2 | xargs)
+          
+          if [ -z "$PROMOTED_FILE" ]; then
+            echo "Error: Promotion did not return a valid file target."
+            exit 1
+          fi
+          
+          echo "PROMOTED_FILE=$PROMOTED_FILE" >> $GITHUB_OUTPUT
+          echo "PROMOTED_SLUG=$PROMOTED_SLUG" >> $GITHUB_OUTPUT
+
+      - name: Run Post-Promotion Full Site Validation
+        if: steps.config.outputs.RUN_MODE == 'publish'
+        run: |
+          echo "Validating full blog inventory with newly promoted article..."
+          node scripts/autopilot/test-run.js
+
+      - name: Run Production Build with New Content
+        if: steps.config.outputs.RUN_MODE == 'publish'
+        run: |
+          echo "Building production static assets in ./dist/..."
+          npm run build
+
+      - name: Configure Git Bot Identity
+        if: steps.config.outputs.RUN_MODE == 'publish'
+        run: |
+          git config user.name "SEO Autopilot Bot"
+          git config user.email "seo-autopilot-bot@users.noreply.github.com"
+
+      - name: Commit and Push New Article
+        if: steps.config.outputs.RUN_MODE == 'publish'
+        run: |
+          PROMOTED_FILE="${{ steps.promote.outputs.PROMOTED_FILE }}"
+          PROMOTED_SLUG="${{ steps.promote.outputs.PROMOTED_SLUG }}"
+          
+          if [ ! -f "$PROMOTED_FILE" ]; then
+            echo "Fatal: Expected promoted file $PROMOTED_FILE does not exist. Aborting commit."
+            exit 1
+          fi
+          
+          echo "Explicitly staging production article and audit log..."
+          git add "$PROMOTED_FILE"
+          if [ -f "data/autopilot-log.json" ]; then
+            git add "data/autopilot-log.json"
+          fi
+          
+          # Check if there are staged changes
+          if git diff --staged --quiet; then
+            echo "No staged changes detected. Skipping commit."
+            exit 0
+          fi
+          
+          git commit -m "content: publish weekly SEO article [${PROMOTED_SLUG}]"
+          git push origin master
+
+      - name: Deploy to Cloudflare Pages
+        if: steps.config.outputs.RUN_MODE == 'publish'
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          echo "Deploying production build artifacts to Cloudflare Pages..."
+          npx wrangler pages deploy dist --project-name=accurate-ovulation-calculator

@@ -1,0 +1,56 @@
+[
+  {
+    "id": "pcos-irregular-cycles-ovulation",
+    "title": "How to Track Ovulation with Irregular Cycles and PCOS: A Clinical Guide",
+    "slug": "how-to-track-ovulation-with-irregular-cycles-and-pcos",
+    "category": "Cycle Tracking",
+    "targetIntent": "Explains Ogino-Knaus calculation, multiple LH surges in PCOS, BBT confirmation, and cycle variability strategies.",
+    "keywords": ["irregular cycles", "PCOS", "ovulation tracking", "polycystic ovary syndrome", "LH surge", "luteal phase"],
+    "suggestedInternalLinks": ["/ovulation-calculator", "/fertility-calendar", "/blog/when-to-take-an-ovulation-test", "/blog/basal-body-temperature-bbt"]
+  },
+  {
+    "id": "implantation-bleeding-vs-period",
+    "title": "Implantation Bleeding vs. Period: How to Tell the Difference",
+    "slug": "implantation-bleeding-vs-period-differences",
+    "category": "Pregnancy",
+    "targetIntent": "Explains timing (6-10 DPO vs 14 DPO), color (pink/brown vs bright red), duration (hours/1-2 days vs 3-7 days), and pregnancy test timing.",
+    "keywords": ["implantation bleeding", "period bleeding", "spotting vs period", "early pregnancy signs", "DPO timing"],
+    "suggestedInternalLinks": ["/pregnancy-test-calculator", "/ovulation-calculator", "/blog/early-pregnancy-symptoms", "/blog/ovulation-symptoms"]
+  },
+  {
+    "id": "short-luteal-phase-impact",
+    "title": "Short Luteal Phase: Causes, Symptoms, and How It Affects Conception",
+    "slug": "short-luteal-phase-causes-conception-impact",
+    "category": "Fertility & Ovulation",
+    "targetIntent": "Explains what a luteal phase under 10-12 days means for progesterone and implantation, how to calculate it, and when to seek medical evaluation.",
+    "keywords": ["short luteal phase", "luteal phase defect", "progesterone", "implantation timing", "cycle length"],
+    "suggestedInternalLinks": ["/ovulation-calculator", "/fertility-calendar", "/blog/how-to-calculate-your-fertile-window", "/blog/understanding-ovulation"]
+  },
+  {
+    "id": "ovulation-pain-mittelschmerz",
+    "title": "Ovulation Pain (Mittelschmerz): Causes, Duration, and What It Means",
+    "slug": "ovulation-pain-mittelschmerz-guide",
+    "category": "Physiology",
+    "targetIntent": "Explains follicular rupture sensations, normal vs abnormal pelvic pain, left/right alternation, and timing relative to peak fertility.",
+    "keywords": ["mittelschmerz", "ovulation pain", "pelvic twinges", "follicle rupture", "ovulation symptoms"],
+    "suggestedInternalLinks": ["/ovulation-calculator", "/blog/ovulation-symptoms", "/blog/when-to-take-an-ovulation-test", "/blog/understanding-ovulation"]
+  },
+  {
+    "id": "pregnancy-test-sensitivity-dpo",
+    "title": "Pregnancy Test Accuracy by DPO: When Can You Trust the Result?",
+    "slug": "pregnancy-test-accuracy-by-dpo",
+    "category": "Pregnancy",
+    "targetIntent": "Explains hCG doubling curves, 10 mIU/mL vs 25 mIU/mL sensitivity, 9 DPO vs 14 DPO accuracy, and avoiding chemical pregnancy false positives.",
+    "keywords": ["pregnancy test DPO", "hCG levels", "early detection pregnancy test", "10 mIU/mL", "false negative"],
+    "suggestedInternalLinks": ["/pregnancy-test-calculator", "/due-date-calculator", "/blog/early-pregnancy-symptoms", "/blog/how-to-calculate-your-fertile-window"]
+  },
+  {
+    "id": "anovulatory-cycles-explained",
+    "title": "Anovulatory Cycles: How to Know If You Had a Period Without Ovulating",
+    "slug": "anovulatory-cycles-signs-causes",
+    "category": "Physiology",
+    "targetIntent": "Explains withdrawal bleeding vs true menstruation, estrogen breakthrough bleeding, missing thermal shifts on BBT, and common causes.",
+    "keywords": ["anovulatory cycle", "period without ovulation", "breakthrough bleeding", "BBT charting", "hormonal imbalance"],
+    "suggestedInternalLinks": ["/ovulation-calculator", "/fertility-calendar", "/blog/basal-body-temperature-bbt", "/blog/understanding-ovulation"]
+  }
+]
