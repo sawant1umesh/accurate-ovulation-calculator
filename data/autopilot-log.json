@@ -1,0 +1,292 @@
+[
+  {
+    "runId": "run_1788670457939",
+    "timestamp": "2026-09-06T04:54:17.999Z",
+    "mode": "GENERATE",
+    "isDryRun": false,
+    "topic": {
+      "id": "implantation-bleeding-vs-period",
+      "title": "Implantation Bleeding vs. Period: How to Tell the Difference",
+      "slug": "implantation-bleeding-vs-period-differences",
+      "category": "Pregnancy"
+    },
+    "topicEvaluation": {
+      "status": "SAFE",
+      "maxSimilarity": 0.267,
+      "reason": "Distinct search intent and low overlap (max similarity: 27% with \"Ovulation Symptoms: 10 Signs You May Be Ovulating\"). Non-cannibalizing educational gap."
+    },
+    "provider": {
+      "name": "gemini",
+      "model": "gemini-2.5-flash",
+      "fallbackTriggered": false,
+      "attempts": 1
+    },
+    "generationResult": {
+      "success": true,
+      "error": null
+    },
+    "validationResult": {
+      "passed": false,
+      "hasCritical": true,
+      "hasWarnings": true,
+      "wordCount": 3,
+      "internalLinksCount": null,
+      "criticalErrorsCount": 1,
+      "warningsCount": 2
+    },
+    "draftPath": "D:\\Demo\\wretched-wavelength\\scripts\\autopilot\\drafts\\broken-draft-test-2026-09-06T04-54-17-991Z.md",
+    "status": "VALIDATION_FAILED"
+  },
+  {
+    "runId": "run_1788670457877",
+    "timestamp": "2026-09-06T04:54:17.932Z",
+    "mode": "GENERATE",
+    "isDryRun": false,
+    "topic": {
+      "id": "implantation-bleeding-vs-period",
+      "title": "Implantation Bleeding vs. Period: How to Tell the Difference",
+      "slug": "implantation-bleeding-vs-period-differences",
+      "category": "Pregnancy"
+    },
+    "topicEvaluation": {
+      "status": "SAFE",
+      "maxSimilarity": 0.267,
+      "reason": "Distinct search intent and low overlap (max similarity: 27% with \"Ovulation Symptoms: 10 Signs You May Be Ovulating\"). Non-cannibalizing educational gap."
+    },
+    "provider": null,
+    "generationResult": {
+      "success": false,
+      "error": "Simulated 503 Provider Outage"
+    },
+    "validationResult": null,
+    "draftPath": null,
+    "status": "GENERATION_FAILED"
+  },
+  {
+    "runId": "run_1788670457760",
+    "timestamp": "2026-09-06T04:54:17.870Z",
+    "mode": "GENERATE",
+    "isDryRun": false,
+    "topic": {
+      "id": "implantation-bleeding-vs-period",
+      "title": "Implantation Bleeding vs. Period: How to Tell the Difference",
+      "slug": "implantation-bleeding-vs-period-differences",
+      "category": "Pregnancy"
+    },
+    "topicEvaluation": {
+      "status": "SAFE",
+      "maxSimilarity": 0.267,
+      "reason": "Distinct search intent and low overlap (max similarity: 27% with \"Ovulation Symptoms: 10 Signs You May Be Ovulating\"). Non-cannibalizing educational gap."
+    },
+    "provider": {
+      "name": "gemini",
+      "model": "gemini-2.5-flash",
+      "fallbackTriggered": false,
+      "attempts": 1
+    },
+    "generationResult": {
+      "success": true,
+      "error": null
+    },
+    "validationResult": {
+      "passed": true,
+      "hasCritical": false,
+      "hasWarnings": false,
+      "wordCount": 2158,
+      "internalLinksCount": 21,
+      "criticalErrorsCount": 0,
+      "warningsCount": 0
+    },
+    "draftPath": "D:\\Demo\\wretched-wavelength\\scripts\\autopilot\\drafts\\short-luteal-phase-causes-conception-impact-2026-09-06T04-54-17-855Z.md",
+    "status": "SUCCESS"
+  },
+  {
+    "runId": "run_1788670457716",
+    "timestamp": "2026-09-06T04:54:17.755Z",
+    "mode": "DRY_RUN",
+    "isDryRun": true,
+    "topic": {
+      "id": "when-should-you-take-an-ovulation-test-a-practical-guide-to-opks-and-lh-surges",
+      "title": "When Should You Take an Ovulation Test? A Practical Guide to OPKs and LH Surges",
+      "slug": "when-should-you-take-an-ovulation-test-a-practical-guide-to-opks-and-lh-surges",
+      "category": "Fertility & Ovulation"
+    },
+    "topicEvaluation": {
+      "status": "REJECT",
+      "maxSimilarity": 1,
+      "reason": "High title similarity (100%) to existing article \"When Should You Take an Ovulation Test? A Practical Guide to OPKs and LH Surges\". High risk of search cannibalization."
+    },
+    "provider": null,
+    "generationResult": null,
+    "validationResult": null,
+    "draftPath": null,
+    "status": "FORCED_TOPIC_REJECTED"
+  },
+  {
+    "runId": "run_1788670457531",
+    "timestamp": "2026-09-06T04:54:17.647Z",
+    "mode": "DRY_RUN",
+    "isDryRun": true,
+    "topic": {
+      "id": "implantation-bleeding-vs-period",
+      "title": "Implantation Bleeding vs. Period: How to Tell the Difference",
+      "slug": "implantation-bleeding-vs-period-differences",
+      "category": "Pregnancy"
+    },
+    "topicEvaluation": {
+      "status": "SAFE",
+      "maxSimilarity": 0.267,
+      "reason": "Distinct search intent and low overlap (max similarity: 27% with \"Ovulation Symptoms: 10 Signs You May Be Ovulating\"). Non-cannibalizing educational gap."
+    },
+    "provider": null,
+    "generationResult": null,
+    "validationResult": null,
+    "draftPath": null,
+    "status": "DRY_RUN"
+  },
+  {
+    "runId": "run_1788670116365",
+    "timestamp": "2026-09-06T04:48:36.428Z",
+    "mode": "GENERATE",
+    "isDryRun": false,
+    "topic": {
+      "id": "implantation-bleeding-vs-period",
+      "title": "Implantation Bleeding vs. Period: How to Tell the Difference",
+      "slug": "implantation-bleeding-vs-period-differences",
+      "category": "Pregnancy"
+    },
+    "topicEvaluation": {
+      "status": "SAFE",
+      "maxSimilarity": 0.267,
+      "reason": "Distinct search intent and low overlap (max similarity: 27% with \"Ovulation Symptoms: 10 Signs You May Be Ovulating\"). Non-cannibalizing educational gap."
+    },
+    "provider": {
+      "name": "gemini",
+      "model": "gemini-2.5-flash",
+      "fallbackTriggered": false,
+      "attempts": 1
+    },
+    "generationResult": {
+      "success": true,
+      "error": null
+    },
+    "validationResult": {
+      "passed": false,
+      "hasCritical": true,
+      "hasWarnings": true,
+      "wordCount": 3,
+      "internalLinksCount": null,
+      "criticalErrorsCount": 1,
+      "warningsCount": 2
+    },
+    "draftPath": "D:\\Demo\\wretched-wavelength\\scripts\\autopilot\\drafts\\broken-draft-test-2026-09-06T04-48-36-421Z.md",
+    "status": "VALIDATION_FAILED"
+  },
+  {
+    "runId": "run_1788670116309",
+    "timestamp": "2026-09-06T04:48:36.363Z",
+    "mode": "GENERATE",
+    "isDryRun": false,
+    "topic": {
+      "id": "implantation-bleeding-vs-period",
+      "title": "Implantation Bleeding vs. Period: How to Tell the Difference",
+      "slug": "implantation-bleeding-vs-period-differences",
+      "category": "Pregnancy"
+    },
+    "topicEvaluation": {
+      "status": "SAFE",
+      "maxSimilarity": 0.267,
+      "reason": "Distinct search intent and low overlap (max similarity: 27% with \"Ovulation Symptoms: 10 Signs You May Be Ovulating\"). Non-cannibalizing educational gap."
+    },
+    "provider": null,
+    "generationResult": {
+      "success": false,
+      "error": "Simulated 503 Provider Outage"
+    },
+    "validationResult": null,
+    "draftPath": null,
+    "status": "GENERATION_FAILED"
+  },
+  {
+    "runId": "run_1788670116205",
+    "timestamp": "2026-09-06T04:48:36.301Z",
+    "mode": "GENERATE",
+    "isDryRun": false,
+    "topic": {
+      "id": "implantation-bleeding-vs-period",
+      "title": "Implantation Bleeding vs. Period: How to Tell the Difference",
+      "slug": "implantation-bleeding-vs-period-differences",
+      "category": "Pregnancy"
+    },
+    "topicEvaluation": {
+      "status": "SAFE",
+      "maxSimilarity": 0.267,
+      "reason": "Distinct search intent and low overlap (max similarity: 27% with \"Ovulation Symptoms: 10 Signs You May Be Ovulating\"). Non-cannibalizing educational gap."
+    },
+    "provider": {
+      "name": "gemini",
+      "model": "gemini-2.5-flash",
+      "fallbackTriggered": false,
+      "attempts": 1
+    },
+    "generationResult": {
+      "success": true,
+      "error": null
+    },
+    "validationResult": {
+      "passed": false,
+      "hasCritical": true,
+      "hasWarnings": false,
+      "wordCount": 618,
+      "internalLinksCount": 21,
+      "criticalErrorsCount": 1,
+      "warningsCount": 0
+    },
+    "draftPath": "D:\\Demo\\wretched-wavelength\\scripts\\autopilot\\drafts\\short-luteal-phase-causes-conception-impact-2026-09-06T04-48-36-290Z.md",
+    "status": "VALIDATION_FAILED"
+  },
+  {
+    "runId": "run_1788670116162",
+    "timestamp": "2026-09-06T04:48:36.198Z",
+    "mode": "DRY_RUN",
+    "isDryRun": true,
+    "topic": {
+      "id": "when-should-you-take-an-ovulation-test-a-practical-guide-to-opks-and-lh-surges",
+      "title": "When Should You Take an Ovulation Test? A Practical Guide to OPKs and LH Surges",
+      "slug": "when-should-you-take-an-ovulation-test-a-practical-guide-to-opks-and-lh-surges",
+      "category": "Fertility & Ovulation"
+    },
+    "topicEvaluation": {
+      "status": "REJECT",
+      "maxSimilarity": 1,
+      "reason": "High title similarity (100%) to existing article \"When Should You Take an Ovulation Test? A Practical Guide to OPKs and LH Surges\". High risk of search cannibalization."
+    },
+    "provider": null,
+    "generationResult": null,
+    "validationResult": null,
+    "draftPath": null,
+    "status": "FORCED_TOPIC_REJECTED"
+  },
+  {
+    "runId": "run_1788670115942",
+    "timestamp": "2026-09-06T04:48:36.100Z",
+    "mode": "DRY_RUN",
+    "isDryRun": true,
+    "topic": {
+      "id": "implantation-bleeding-vs-period",
+      "title": "Implantation Bleeding vs. Period: How to Tell the Difference",
+      "slug": "implantation-bleeding-vs-period-differences",
+      "category": "Pregnancy"
+    },
+    "topicEvaluation": {
+      "status": "SAFE",
+      "maxSimilarity": 0.267,
+      "reason": "Distinct search intent and low overlap (max similarity: 27% with \"Ovulation Symptoms: 10 Signs You May Be Ovulating\"). Non-cannibalizing educational gap."
+    },
+    "provider": null,
+    "generationResult": null,
+    "validationResult": null,
+    "draftPath": null,
+    "status": "DRY_RUN"
+  }
+]
