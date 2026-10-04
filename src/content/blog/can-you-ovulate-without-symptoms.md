@@ -72,7 +72,7 @@ When physical signs do occur, they are typically driven by the rapid rise and fa
 For a comprehensive breakdown of bodily cues, read our detailed guide on [Ovulation Symptoms: 10 Signs You May Be Ovulating](/blog/ovulation-symptoms). Common signs include:
 
 *   **Changes in Cervical Mucus:** As estrogen peaks before ovulation, cervical fluid transitions from dry or sticky to creamy, then to clear, slippery, and stretchy (resembling raw egg whites). Learn how to identify these patterns in our [Cervical Mucus Tracker guide](/blog/cervical-mucus-guide).
-*   **Mild Pelvic Discomfort (Mittelschmerz):** A dull ache or sharp twinge on one side of the lower abdomen caused by the stretching or rupture of the ovarian follicle.
+*   **Mild Pelvic Discomfort (Mittelschmerz):** A dull ache or sharp twinge on one side of the lower abdomen caused by the stretching or rupture of the ovarian follicle. Learn more in our dedicated guide on [Ovulation Pain (Mittelschmerz)](/blog/ovulation-pain-mittelschmerz).
 *   **Increased Libido:** A natural boost in sex drive often coincides with peak estrogen and modest testosterone increases right before ovulation.
 *   **Breast Tenderness:** Hormonal fluctuations can cause mild swelling or sensitivity in breast tissue around the fertile window or during the luteal phase.
 *   **Changes in Mood or Energy:** Rising estrogen often brings higher energy and positive mood, followed by a slight shift after ovulation.
@@ -288,6 +288,7 @@ Explore our evidence-based guides to better understand your cycle and optimize y
 *   [Understanding Ovulation: The Science of Your Cycle](/blog/understanding-ovulation)
 *   [Finding the Fertile Window: Maximizing Conception Odds](/blog/finding-fertile-window)
 *   [Can You Get Pregnant Right After Your Period?](/blog/can-you-get-pregnant-right-after-your-period)
+*   [Ovulation Pain (Mittelschmerz): Causes, Timing & Signs](/blog/ovulation-pain-mittelschmerz)
 
 ---
 

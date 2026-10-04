@@ -72,7 +72,7 @@ A positive OPK displays a test line as dark as or darker than the control line, 
 
 Roughly one in three women notices mild pelvic discomfort near mid-cycle. Known clinically as *mittelschmerz* (German for "middle pain"), this sensation usually presents as a brief twinge or dull ache on one side of the lower abdomen.
 
-The discomfort stems from follicle expansion stretching the ovarian surface, followed by fluid release that briefly irritates the pelvic lining. It usually resolves within hours. While mild aching is normal, severe or worsening pain requires medical evaluation.
+The discomfort stems from follicle expansion stretching the ovarian surface, followed by fluid release that briefly irritates the pelvic lining. It usually resolves within hours. While mild aching is normal, severe or worsening pain requires medical evaluation. For an in-depth breakdown of causes, duration, and pelvic pain differences, read our complete guide on [Ovulation Pain (Mittelschmerz)](/blog/ovulation-pain-mittelschmerz).
 
 ### 4. Basal Body Temperature Changes
 
@@ -277,6 +277,7 @@ Explore more evidence-based guides to support your fertility journey:
 *   [The Cervical Mucus Tracker: How to Identify Fertile Fluid](/blog/cervical-mucus-guide)
 *   [Basal Body Temperature (BBT) Charting: Confirming Ovulation](/blog/basal-body-temperature-bbt)
 *   [How Accurate Is an Ovulation Calculator?](/blog/how-accurate-is-an-ovulation-calculator)
+*   [Ovulation Pain (Mittelschmerz): Causes, Timing & Signs](/blog/ovulation-pain-mittelschmerz)
 
 ---
 

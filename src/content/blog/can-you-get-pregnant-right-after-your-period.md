@@ -254,6 +254,7 @@ Explore more fertility and cycle tracking guides from our team:
 * [Finding Your Fertile Window: Best Time to Get Pregnant](/blog/finding-fertile-window) — Combine BBT and cervical mucus tracking to pinpoint your fertile days.
 * [Cervical Mucus Guide & Ovulation Symptoms](/blog/cervical-mucus-guide) — How to identify fertile cervical mucus and ovulation signs.
 * [Fertility Tips & Conception Timing Strategies](/blog/fertility-tips-to-conceive) — Evidence-based strategies to support natural conception.
+* [Ovulation Pain (Mittelschmerz): Causes, Timing & Signs](/blog/ovulation-pain-mittelschmerz) — Causes, timing, and when mid-cycle pelvic pain needs medical care.
 * [Pregnancy Test Calculator Guide](/pregnancy-test-calculator) — Find out when to take an at-home test for accurate results.
 
 ---
